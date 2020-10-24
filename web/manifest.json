@@ -1,6 +1,6 @@
 {
-    "name": "rendicontation_platform_leo",
-    "short_name": "rendicontation_platform_leo",
+    "name": "RendicontationPlatformLeo_Client",
+    "short_name": "RendicontationPlatformLeo_Client",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

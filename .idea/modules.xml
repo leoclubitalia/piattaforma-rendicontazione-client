@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/rendicontation_platform_leo/rendicontation_platform_leo.iml" filepath="$PROJECT_DIR$/rendicontation_platform_leo/rendicontation_platform_leo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rendicontation_platform_leo.iml" filepath="$PROJECT_DIR$/rendicontation_platform_leo.iml" />
     </modules>
   </component>
 </project>
