@@ -4,5 +4,10 @@
   "log_in_as": "Log in as:",
   "log_in_as_description": "By entering as a club you will have the opportunity to enter the services and activities carried out by your club, you will also have some statistics on your work, instead by entering as a guest you will be able to search and see the services and activities carried out by each Italian club.",
   "club": "club",
-  "guest": "guest"
+  "guest": "guest",
+  "this_app_was_developed_by": "This app was developed by Leo MD 108's Information Technology Team",
+  "developers_title": "Developers",
+  "developers_manager": "Software Engineer and Project Manager:",
+  "developers_manager_name": "Francesco Scala",
+  "developers_team": "Developers:"
 }
