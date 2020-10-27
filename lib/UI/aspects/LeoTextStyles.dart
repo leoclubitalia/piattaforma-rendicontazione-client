@@ -21,6 +21,6 @@ class LeoParagraphStyle extends TextStyle {
   @override
   FontWeight get fontWeight => FontWeight.w300;
   @override
-  Color get color => Colors.black.withOpacity(0.6);
+  Color get color => Colors.grey;
 
 }

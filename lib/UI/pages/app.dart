@@ -26,11 +26,11 @@ class App extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.white,
-        backgroundColor: Colors.cyan,
+        backgroundColor: Colors.amber,
         buttonColor: Colors.deepOrangeAccent,
         indicatorColor: Colors.white,
         canvasColor: Colors.grey[100], // app background
-        cardColor: Colors.cyan,
+        cardColor: Colors.amber,
         hoverColor: Colors.deepOrange,
         accentColor: Colors.white,
         splashColor: Colors.black,
