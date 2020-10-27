@@ -14,24 +14,27 @@ class StadiumButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding (
       padding: EdgeInsets.all(10),
-      child: RaisedButton.icon(
-        onPressed: () {
-          if ( !disabled ) {
-            onPressed();
-          }
-        },
-        color: Theme.of(context).buttonColor,
-        splashColor: Colors.transparent,
-        shape: StadiumBorder(),
-        padding: EdgeInsets.all(13),
-        icon: Icon(icon, color: Theme.of(context).indicatorColor),
-        label: Text(title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Theme.of(context).indicatorColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 21,
-            )
+      child: ButtonTheme(
+        minWidth: 150.0,
+        height: 25.0,
+        child: RaisedButton.icon(
+          onPressed: () {
+            if ( !disabled ) {
+              onPressed();
+            }
+          },
+          color: Theme.of(context).buttonColor,
+          shape: StadiumBorder(),
+          padding: EdgeInsets.all(20),
+          icon: Icon(icon, color: Theme.of(context).indicatorColor),
+          label: Text(title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).indicatorColor,
+                fontWeight: FontWeight.w300,
+                fontSize: 20,
+              ),
+          ),
         ),
       ),
     );

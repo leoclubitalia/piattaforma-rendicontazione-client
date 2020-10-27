@@ -1,3 +1,4 @@
+import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/guest.dart';
@@ -26,11 +27,11 @@ class App extends StatelessWidget {
         brightness: Brightness.light,
         primaryColor: Colors.white,
         backgroundColor: Colors.cyan,
-        buttonColor: Colors.cyan,
+        buttonColor: Colors.deepOrangeAccent,
         indicatorColor: Colors.white,
         canvasColor: Colors.grey[100], // app background
         cardColor: Colors.cyan,
-        hoverColor: Colors.red,
+        hoverColor: Colors.deepOrange,
         accentColor: Colors.white,
         splashColor: Colors.black,
 
@@ -67,13 +68,27 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate("app_title")
+        title: Text(AppLocalizations.of(context).translate("app_title")),
+        centerTitle: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
         ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 30),
+              child: Text(
+                AppLocalizations.of(context).translate("welcome") + "!",
+                textAlign: TextAlign.center,
+                textScaleFactor: 3,
+                style: LeoBigTitleStyle()
+              ),
+            ),
             Padding(
               padding: EdgeInsets.all(20),
               child: ColorFiltered(
@@ -86,9 +101,17 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
                 ),
               ),
             ),
-            Text(AppLocalizations.of(context).translate("log_in_as")),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+              child: Text(
+                AppLocalizations.of(context).translate("log_in_as"),
+                textAlign: TextAlign.center,
+                textScaleFactor: 2,
+                style: LeoTitleStyle()
+              ),
+            ),
             StadiumButton(
-              icon: Icons.people_sharp,
+              icon: Icons.people,
               title: AppLocalizations.of(context).translate("club"),
               onPressed: () {
                 Navigator.of(context).push(
@@ -101,7 +124,7 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
               },
             ),
             StadiumButton(
-              icon: Icons.perm_identity_sharp,
+              icon: Icons.person,
               title: AppLocalizations.of(context).translate("guest"),
               onPressed: () {
                 Navigator.of(context).push(
@@ -112,10 +135,20 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
                     )
                 );
               },
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+              child: Text(
+                AppLocalizations.of(context).translate("log_in_as_description"),
+                textAlign: TextAlign.center,
+                style: LeoParagraphStyle()
+              ),
             )
           ],
         ),
       ),
     );
   }
+
+
 }

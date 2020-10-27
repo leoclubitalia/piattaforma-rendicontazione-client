@@ -1,7 +1,8 @@
 {
   "welcome": "Benvenuto",
-  "app_title": "Piattaforma di rendicontazione Leo MD 108",
+  "app_title": "MyLeo MD 108",
   "log_in_as": "Entra come:",
+  "log_in_as_description": "Entrando come club avarai la possibilità di inserire i service e le attività svolte dal tuo club, inoltre avrai alcune satistiche sul vostro operato, invece entrando come ospite potrai cercare e vedere i service e le attività svolte da ogni club italiano.",
   "club": "club",
   "guest": "ospite"
 }
