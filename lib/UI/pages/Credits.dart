@@ -44,9 +44,9 @@ class _Credits extends GlobalState<Credits> {
                   textAlign: TextAlign.center,
                   text: new TextSpan(
                     style: new TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w200
+                      fontSize: 20.0,
+                      color: Theme.of(context).splashColor,
+                      fontWeight: FontWeight.w200
                     ),
                     children: [
                       new TextSpan(text: "\n\n"),

@@ -104,7 +104,7 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
                 child: Text(
                     AppLocalizations.of(context).translate("log_in_as"),
                     textAlign: TextAlign.center,
