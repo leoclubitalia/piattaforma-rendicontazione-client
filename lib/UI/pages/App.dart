@@ -1,8 +1,8 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/guest.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/login.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/Guest.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/LogIn.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
