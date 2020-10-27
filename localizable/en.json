@@ -1,4 +1,7 @@
 {
   "welcome": "Welcome",
-  "app_title": "Rendicontation Platform Leo MD 108"
+  "app_title": "Rendicontation Platform Leo MD 108",
+  "log_in_as": "Log in as:",
+  "club": "club",
+  "guest": "guest"
 }

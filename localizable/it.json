@@ -1,4 +1,7 @@
 {
   "welcome": "Benvenuto",
-  "app_title": "Piattaforma di rendicontazione Leo MD 108"
+  "app_title": "Piattaforma di rendicontazione Leo MD 108",
+  "log_in_as": "Entra come:",
+  "club": "club",
+  "guest": "ospite"
 }
