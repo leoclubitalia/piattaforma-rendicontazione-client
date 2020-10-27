@@ -35,7 +35,6 @@ class App extends StatelessWidget {
         hoverColor: Colors.deepOrange,
         accentColor: Colors.white,
         splashColor: Colors.black,
-
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,

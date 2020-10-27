@@ -1,4 +1,7 @@
+import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputFiled.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +16,7 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogIn extends GlobalState<LogIn> {
+  final inputController = TextEditingController();
 
   @override
   void refreshState() {
@@ -21,8 +25,29 @@ class _LogIn extends GlobalState<LogIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(),
+      body: Center(
+        child: Column(
+          children: [
+            InputField(
+              hintText: AppLocalizations.of(context).translate("email"),
+              controller: inputController,
+            ),
+            InputField(
+              hintText: AppLocalizations.of(context).translate("password"),
+              controller: inputController,
+            ),
+            StadiumButton(
+              icon: Icons.login,
+              title: AppLocalizations.of(context).translate("log_in"),
+              onPressed: () {
+                
+              },
+            )
+          ],
+        ),
+      ),
     );
   }
+
 
 }

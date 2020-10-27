@@ -9,5 +9,8 @@
   "developers_title": "Developers",
   "developers_manager": "Software Engineer and Project Manager:",
   "developers_manager_name": "Francesco Scala",
-  "developers_team": "Developers:"
+  "developers_team": "Developers:",
+  "email": "email",
+  "password": "password",
+  "log_in": "log in"
 }
