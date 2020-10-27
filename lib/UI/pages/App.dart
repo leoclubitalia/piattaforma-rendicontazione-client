@@ -85,10 +85,10 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
                 child: Text(
-                    AppLocalizations.of(context).translate("welcome") + "!",
-                    textAlign: TextAlign.center,
-                    textScaleFactor: 3,
-                    style: LeoBigTitleStyle()
+                  AppLocalizations.of(context).translate("welcome") + "!",
+                  textAlign: TextAlign.center,
+                  textScaleFactor: 3,
+                  style: LeoBigTitleStyle()
                 ),
               ),
               Padding(
@@ -106,10 +106,10 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
                 child: Text(
-                    AppLocalizations.of(context).translate("log_in_as"),
-                    textAlign: TextAlign.center,
-                    textScaleFactor: 2,
-                    style: LeoTitleStyle()
+                  AppLocalizations.of(context).translate("log_in_as"),
+                  textAlign: TextAlign.center,
+                  textScaleFactor: 2,
+                  style: LeoTitleStyle()
                 ),
               ),
               StadiumButton(
@@ -117,11 +117,11 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
                 title: AppLocalizations.of(context).translate("club"),
                 onPressed: () {
                   Navigator.of(context).push(
-                      PageRouteBuilder(
-                          opaque: false,
-                          transitionDuration: Duration(milliseconds: 700),
-                          pageBuilder: (BuildContext context, _, __) => LogIn()
-                      )
+                    PageRouteBuilder(
+                      opaque: false,
+                      transitionDuration: Duration(milliseconds: 700),
+                      pageBuilder: (BuildContext context, _, __) => LogIn()
+                    ),
                   );
                 },
               ),
@@ -130,20 +130,20 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
                 title: AppLocalizations.of(context).translate("guest"),
                 onPressed: () {
                   Navigator.of(context).push(
-                      PageRouteBuilder(
-                          opaque: false,
-                          transitionDuration: Duration(milliseconds: 700),
-                          pageBuilder: (BuildContext context, _, __) => Guest()
-                      )
+                    PageRouteBuilder(
+                      opaque: false,
+                      transitionDuration: Duration(milliseconds: 700),
+                      pageBuilder: (BuildContext context, _, __) => Guest()
+                    ),
                   );
                 },
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
                 child: Text(
-                    AppLocalizations.of(context).translate("log_in_as_description"),
-                    textAlign: TextAlign.center,
-                    style: LeoParagraphStyle()
+                  AppLocalizations.of(context).translate("log_in_as_description"),
+                  textAlign: TextAlign.center,
+                  style: LeoParagraphStyle()
                 ),
               ),
               Padding (
@@ -154,11 +154,11 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
                   hoverColor: Colors.transparent,
                   onPressed: () {
                     Navigator.of(context).push(
-                        PageRouteBuilder(
-                            opaque: false,
-                            transitionDuration: Duration(milliseconds: 700),
-                            pageBuilder: (BuildContext context, _, __) => Credits()
-                        )
+                      PageRouteBuilder(
+                        opaque: false,
+                        transitionDuration: Duration(milliseconds: 700),
+                        pageBuilder: (BuildContext context, _, __) => Credits()
+                      ),
                     );
                   },
                   child: Text(
