@@ -40,7 +40,7 @@ class _LogIn extends GlobalState<LogIn> {
               icon: Icons.login,
               title: AppLocalizations.of(context).translate("log_in"),
               onPressed: () {
-                
+
               },
             )
           ],
