@@ -2,7 +2,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Credits.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/Guest.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/Search.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/LogIn.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:flutter/material.dart';
@@ -132,7 +132,7 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
                     PageRouteBuilder(
                       opaque: false,
                       transitionDuration: Duration(milliseconds: 700),
-                      pageBuilder: (BuildContext context, _, __) => Guest()
+                      pageBuilder: (BuildContext context, _, __) => Search(true)
                     ),
                   );
                 },
