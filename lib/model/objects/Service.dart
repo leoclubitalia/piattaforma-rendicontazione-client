@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
@@ -29,6 +31,7 @@ class Service {
       id: json['id'],
       title: json['title'],
       description: json['description'],
+      date: json['date'],
       quantityParticipants: json['quantityParticipants'],
       satisfactionDegree: json['satisfactionDegree'],
       impact: json['impact'],
@@ -42,6 +45,24 @@ class Service {
       competenceAreasService: json['competenceAreasService'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'description': description,
+    'date': date,
+    'quantityParticipants': quantityParticipants,
+    'satisfactionDegree': satisfactionDegree,
+    'impact': impact,
+    'duration': duration,
+    'otherAssociations': otherAssociations,
+    'moneyRaised': moneyRaised,
+    'quantityServedPeople': quantityServedPeople,
+    'city': city.toJson(),
+    'club': club.toJson(),
+    'typesService': jsonEncode(typesService),
+    'competenceAreasService': jsonEncode(competenceAreasService),
+  };
 
 
 }

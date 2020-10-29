@@ -12,5 +12,10 @@ class TypeService {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+  };
+
 
 }

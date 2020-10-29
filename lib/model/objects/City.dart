@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:RendicontationPlatformLeo_Client/model/objects/Cap.dart';
 
 
@@ -16,6 +18,12 @@ class City {
       caps: json['cap'],
     );
   }
+
+  Map<String, String> toJson() => {
+    'id': id.toString(),
+    //'name': name, unnecessary
+    //'caps': jsonEncode(caps), unnecessary
+  };
 
 
 }

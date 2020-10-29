@@ -12,5 +12,10 @@ class Cap {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'number': number,
+  };
+
 
 }

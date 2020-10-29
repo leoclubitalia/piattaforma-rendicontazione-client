@@ -12,5 +12,9 @@ class CompetenceArea {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+  };
 
 }

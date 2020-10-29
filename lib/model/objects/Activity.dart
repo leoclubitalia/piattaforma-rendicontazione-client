@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
@@ -32,6 +34,19 @@ class Activity {
       typesActivity: json['typesActivity'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'description': description,
+    'date': date,
+    'quantityLeo': quantityLeo,
+    'lionsParticipation': lionsParticipation,
+    'satisfactionDegree': satisfactionDegree,
+    'city': city.toJson(),
+    'club': club.toJson(),
+    'typesActivity': jsonEncode(typesActivity),
+  };
 
 
 }

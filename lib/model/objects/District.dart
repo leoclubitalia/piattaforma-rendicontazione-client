@@ -12,5 +12,10 @@ class District {
     );
   }
 
+  Map<String, String> toJson() => {
+    'id': id.toString(),
+    //'name': name, unnecessary
+  };
+
 
 }

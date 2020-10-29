@@ -1,5 +1,6 @@
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/Quantity.dart';
 
 
 class Club {
@@ -8,9 +9,11 @@ class Club {
   String email;
   City city;
   District district;
+  Quantity quantityServices;
+  Quantity quantityActivities;
 
 
-  Club({this.id, this.name, this.email, this.city, this.district});
+  Club({this.id, this.name, this.email, this.city, this.district, this.quantityServices, this.quantityActivities});
 
   factory Club.fromJson(Map<String, dynamic> json) {
     return Club(
@@ -21,6 +24,14 @@ class Club {
       district: District.fromJson(json['district'])
     );
   }
+
+  Map<String, String> toJson() => {
+    'id': id.toString(),
+    //'name': name, unnecessary
+    //'email': email, unnecessary
+    //'city': city.toJson().toString(), unnecessary
+    //'district': district.toJson().toString(), unnecessary
+  };
 
   @override
   String toString() {
