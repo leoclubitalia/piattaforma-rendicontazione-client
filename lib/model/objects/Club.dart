@@ -17,9 +17,14 @@ class Club {
       id: json['id'],
       name: json['name'],
       email: json['email'],
-      city: json['city'],
-      district: json['district']
+      city: City.fromJson(json['city']),
+      district: District.fromJson(json['district'])
     );
+  }
+
+  @override
+  String toString() {
+    return "name: " + name + " email: " + email + " city: " + city.name + " district: " + district.name;
   }
 
 

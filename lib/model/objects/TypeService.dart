@@ -4,7 +4,7 @@ class TypeService {
 
 
   TypeService({this.id, this.title});
-  
+
   factory TypeService.fromJson(Map<String, dynamic> json) {
     return TypeService(
       id: json['id'],
