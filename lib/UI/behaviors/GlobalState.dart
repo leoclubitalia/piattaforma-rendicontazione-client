@@ -11,13 +11,13 @@ abstract class GlobalState<T extends StatefulWidget> extends State<T> {
 
   @override
   void initState() {
-    ModelFacade.sharedInstance.addStateListener(_setState);
+    ModelFacade.sharedInstance.appState.addStateListener(_setState);
     super.initState();
   }
 
   @override
   void deactivate() {
-    ModelFacade.sharedInstance.removeStateListener(_setState);
+    ModelFacade.sharedInstance.appState.removeStateListener(_setState);
     super.deactivate();
   }
 

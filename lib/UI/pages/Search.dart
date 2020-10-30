@@ -1,5 +1,6 @@
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
@@ -27,7 +28,7 @@ class _Search extends GlobalState<Search> {
 
   @override
   void refreshState() {
-    club = ModelFacade.sharedInstance.club;
+    club = ModelFacade.sharedInstance.appState.getClub();
   }
 
   @override
@@ -36,6 +37,9 @@ class _Search extends GlobalState<Search> {
       Future.delayed(Duration.zero, () => showAlert(context));
     }
     return Scaffold(
+      appBar: RoundedAppBar(
+        title: AppLocalizations.of(context).translate("search"),
+      ),
       body: Center(
         child: Column(
           children: [
@@ -54,5 +58,6 @@ class _Search extends GlobalState<Search> {
       )
     );
   }
+
 
 }

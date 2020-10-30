@@ -4,6 +4,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Credits.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Search.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/LogIn.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -67,14 +68,8 @@ class _WelcomePageState extends GlobalState<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate("app_title")),
-        centerTitle: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),
-          ),
-        ),
+      appBar: RoundedAppBar(
+        title: AppLocalizations.of(context).translate("app_title"),
       ),
       body: SingleChildScrollView(
         child: Center(
