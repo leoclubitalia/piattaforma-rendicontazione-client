@@ -8,4 +8,8 @@ class Constants {
   static final String REQUEST_CLUB_QUANTITY_ACTIVITIES = "/club/quantity_activities_made";
 
 
+  static final String STATE_CLUB = "club";
+  
+
+
 }

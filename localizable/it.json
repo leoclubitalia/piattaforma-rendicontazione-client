@@ -13,5 +13,7 @@
   "password": "password",
   "log_in": "entra",
   "description_search_for_guest": "In virtù della trasparenza che abbiano voluto adottare qui potrai vedere tutte i service e le attività svolte da ogni leo club italiano in completa libertà!\nÈ possibile fare le ricerche per qualsiasi parametro tu voglia!",
-  "search": "cerca"
+  "search": "cerca",
+  "service": "service",
+  "activity": "attività"
 }

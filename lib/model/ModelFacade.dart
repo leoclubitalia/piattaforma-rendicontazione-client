@@ -19,7 +19,7 @@ class ModelFacade {
     club.quantityServices = quantityServices;
     Quantity quantityActivities = await _restManager.makeQuantityRequest(Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, club.id);
     club.quantityActivities = quantityActivities;
-    appState.setClub(club);
+    appState.addValue(Constants.STATE_CLUB, club);
   }
 
 

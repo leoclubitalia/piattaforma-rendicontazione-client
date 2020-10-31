@@ -1,9 +1,10 @@
+import 'package:RendicontationPlatformLeo_Client/UI/aspects/UIConstants.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class _Search extends GlobalState<Search> {
 
   @override
   void refreshState() {
-    club = ModelFacade.sharedInstance.appState.getClub();
+    club = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB);
   }
 
   @override
@@ -36,14 +37,27 @@ class _Search extends GlobalState<Search> {
     if ( isGuest ) {
       Future.delayed(Duration.zero, () => showAlert(context));
     }
-    return Scaffold(
-      appBar: RoundedAppBar(
-        title: AppLocalizations.of(context).translate("search"),
-      ),
-      body: Center(
-        child: Column(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(30),
+            ),
+          ),
+          title: Text(AppLocalizations.of(context).translate("search")),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: AppLocalizations.of(context).translate("service"), icon: UIConstants.ICON_SERVICE),
+              Tab(text: AppLocalizations.of(context).translate("activity"), icon: UIConstants.ICON_ACTIVITY),
+            ],
+          ),
+        ),
+        body: TabBarView(
           children: [
-            Text("search page") //TODO
+            Center(child: Text('DOGS')),
+            Center(child: Text('CATS')),
           ],
         ),
       ),

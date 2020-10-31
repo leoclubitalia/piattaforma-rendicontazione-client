@@ -1,18 +1,22 @@
 import 'package:RendicontationPlatformLeo_Client/model/GlobalStateManager.dart';
-import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 
 
 class StateManager extends GlobalStateManager {
-  Club _club;
+  Map<String, dynamic> _statesContainer = new Map();
 
 
-  void setClub(Club club) {
-    _club = club;
+  void addValue(String key, dynamic value) {
+    _statesContainer[key] = value;
     refreshStates();
   }
 
-  Club getClub() {
-    return _club;
+  dynamic getValue(String key) {
+    return _statesContainer[key];
+  }
+
+  void resetState() {
+    _statesContainer = new Map();
+    refreshStates();
   }
 
 
