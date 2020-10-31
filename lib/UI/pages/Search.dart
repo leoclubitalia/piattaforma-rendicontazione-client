@@ -1,6 +1,8 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/UIConstants.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/SearchActivity.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/SearchService.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
@@ -24,6 +26,7 @@ class Search extends StatefulWidget {
 class _Search extends GlobalState<Search> {
   bool isGuest;
   Club club;
+
 
   _Search(this.isGuest);
 
@@ -56,8 +59,8 @@ class _Search extends GlobalState<Search> {
         ),
         body: TabBarView(
           children: [
-            Center(child: Text('DOGS')),
-            Center(child: Text('CATS')),
+            SearchService(),
+            SearchActivity(),
           ],
         ),
       ),
