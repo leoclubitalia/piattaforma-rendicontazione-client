@@ -1,37 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 
 class InputField extends StatelessWidget {
-  final String hintText;
+  final String labelText;
   final Function onSubmit;
   final TextEditingController controller;
+  final double padding;
+  final TextInputType keyboardType;
 
 
-  const InputField({Key key, this.hintText, this.controller, this.onSubmit}) : super(key: key);
+  const InputField({Key key, this.labelText, this.controller, this.onSubmit, this.padding, this.keyboardType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      onSubmitted: onSubmit,
-      controller: controller,
-      cursorColor: Theme.of(context).hoverColor,
-      style: TextStyle(height: 1.0),
-      decoration: InputDecoration(
-        fillColor: Theme.of(context).primaryColor,
-        focusedBorder: OutlineInputBorder(
+    return Padding(
+      padding: EdgeInsets.all(padding),
+      child: TextField(
+        keyboardType: keyboardType,
+        inputFormatters: keyboardType == TextInputType.number ? <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+        ] : null,
+        onSubmitted: onSubmit,
+        controller: controller,
+        cursorColor: Theme.of(context).hoverColor,
+        style: TextStyle(height: 1.0),
+        decoration: InputDecoration(
+          fillColor: Theme.of(context).primaryColor,
+          focusedBorder: OutlineInputBorder(
+              borderRadius: new BorderRadius.circular(30.0),
+              borderSide: BorderSide(
+                color: Theme.of(context).unselectedWidgetColor,
+              )
+          ),
+          border: new OutlineInputBorder(
             borderRadius: new BorderRadius.circular(30.0),
             borderSide: BorderSide(
-              color: Theme.of(context).hoverColor,
-            )
-        ),
-        border: new OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(30.0),
-          borderSide: BorderSide(
-            color: Theme.of(context).hoverColor,
+              color: Theme.of(context).unselectedWidgetColor,
+            ),
           ),
-        ),
-        hintText: hintText,
-      )
+          labelText: labelText,
+          labelStyle: TextStyle(
+            color: Theme.of(context).unselectedWidgetColor,
+          ),
+        )
+      ),
     );
   }
 

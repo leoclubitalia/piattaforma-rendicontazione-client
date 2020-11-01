@@ -16,5 +16,13 @@
   "description_search_for_guest": "By virtue of the transparency that we have adopted, here you will be able to see all the services and activities carried out by each Italian leo club in complete freedom!\nYou can search for any parameter you want!",
   "search": "search",
   "service": "service",
-  "activity": "activity"
+  "activity": "activity",
+  "title": "title",
+  "other_associations": "other associations",
+  "start_date": "start date",
+  "end_date": "end_date",
+  "quantity_participants": "participants",
+  "duration": "duration",
+  "min_money_raised": "min money raised",
+  "max_money_raised": "max money raised"
 }

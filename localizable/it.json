@@ -15,5 +15,13 @@
   "description_search_for_guest": "In virtù della trasparenza che abbiano voluto adottare qui potrai vedere tutte i service e le attività svolte da ogni leo club italiano in completa libertà!\nÈ possibile fare le ricerche per qualsiasi parametro tu voglia!",
   "search": "cerca",
   "service": "service",
-  "activity": "attività"
+  "activity": "attività",
+  "title": "titolo",
+  "other_associations": "altre associazioni",
+  "start_date": "data iniziale",
+  "end_date": "data finale",
+  "quantity_participants": "partecipanti",
+  "duration": "durata",
+  "min_money_raised": "Fondi raccolti min",
+  "max_money_raised": "Fondi raccolti max"
 }

@@ -29,11 +29,11 @@ class _LogIn extends GlobalState<LogIn> {
         child: Column(
           children: [
             InputField(
-              hintText: AppLocalizations.of(context).translate("email"),
+              labelText: AppLocalizations.of(context).translate("email"),
               controller: inputController,
             ),
             InputField(
-              hintText: AppLocalizations.of(context).translate("password"),
+              labelText: AppLocalizations.of(context).translate("password"),
               controller: inputController,
             ),
             StadiumButton(
