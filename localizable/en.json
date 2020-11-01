@@ -19,10 +19,20 @@
   "activity": "activity",
   "title": "title",
   "other_associations": "other associations",
-  "start_date": "start date",
-  "end_date": "end_date",
+  "start_date": "from",
+  "end_date": "to",
   "quantity_participants": "participants",
   "duration": "duration",
   "min_money_raised": "min money raised",
-  "max_money_raised": "max money raised"
+  "max_money_raised": "max money raised",
+  "impact": "impact",
+  "all": "all",
+  "limiteted": "limiteted",
+  "moderated": "moderated",
+  "elevated": "elevated",
+  "quantity_served_people": "served people",
+  "district": "district",
+  "city": "city",
+  "type_service": "type",
+  "compentece_area": "area"
 }

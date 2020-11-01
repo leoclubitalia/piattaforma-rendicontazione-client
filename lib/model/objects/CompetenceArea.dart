@@ -17,4 +17,10 @@ class CompetenceArea {
     'title': title,
   };
 
+  @override
+  String toString() {
+    return title;
+  }
+
+
 }

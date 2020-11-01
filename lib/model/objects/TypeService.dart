@@ -17,5 +17,10 @@ class TypeService {
     'title': title,
   };
 
+  @override
+  String toString() {
+    return title;
+  }
+
 
 }

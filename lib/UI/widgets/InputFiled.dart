@@ -6,16 +6,15 @@ class InputField extends StatelessWidget {
   final String labelText;
   final Function onSubmit;
   final TextEditingController controller;
-  final double padding;
   final TextInputType keyboardType;
 
 
-  const InputField({Key key, this.labelText, this.controller, this.onSubmit, this.padding, this.keyboardType}) : super(key: key);
+  const InputField({Key key, this.labelText, this.controller, this.onSubmit, this.keyboardType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(padding),
+      padding: EdgeInsets.all(5),
       child: TextField(
         keyboardType: keyboardType,
         inputFormatters: keyboardType == TextInputType.number ? <TextInputFormatter>[

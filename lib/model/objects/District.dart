@@ -17,5 +17,10 @@ class District {
     //'name': name, unnecessary
   };
 
+  @override
+  String toString() {
+    return name;
+  }
+
 
 }

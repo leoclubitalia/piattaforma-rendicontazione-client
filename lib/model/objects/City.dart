@@ -25,5 +25,10 @@ class City {
     //'caps': jsonEncode(caps), unnecessary
   };
 
+  @override
+  String toString() {
+    return name;
+  }
+
 
 }

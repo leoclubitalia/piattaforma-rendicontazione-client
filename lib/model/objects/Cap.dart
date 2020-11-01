@@ -17,5 +17,10 @@ class Cap {
     'number': number,
   };
 
+  @override
+  String toString() {
+    return number;
+  }
+
 
 }

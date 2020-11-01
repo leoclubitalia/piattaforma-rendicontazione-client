@@ -17,5 +17,10 @@ class TypeActivity {
     'title': title,
   };
 
+  @override
+  String toString() {
+    return title;
+  }
+
 
 }

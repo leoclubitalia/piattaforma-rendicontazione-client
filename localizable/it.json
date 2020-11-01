@@ -18,10 +18,20 @@
   "activity": "attività",
   "title": "titolo",
   "other_associations": "altre associazioni",
-  "start_date": "data iniziale",
-  "end_date": "data finale",
+  "start_date": "dal",
+  "end_date": "al",
   "quantity_participants": "partecipanti",
   "duration": "durata",
   "min_money_raised": "Fondi raccolti min",
-  "max_money_raised": "Fondi raccolti max"
+  "max_money_raised": "Fondi raccolti max",
+  "impact": "impatto",
+  "all": "tutti",
+  "limiteted": "limitato",
+  "moderated": "moderato",
+  "elevated": "elevato",
+  "quantity_served_people": "persone servite",
+  "district": "distretto",
+  "city": "città",
+  "type_service": "tipo",
+  "compentece_area": "area"
 }

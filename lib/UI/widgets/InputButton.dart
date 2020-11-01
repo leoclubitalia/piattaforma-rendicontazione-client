@@ -5,15 +5,14 @@ class InputButton extends StatelessWidget {
   final String text;
   final Function onPressed;
   final TextEditingController controller;
-  final double padding;
 
 
-  const InputButton({Key key, this.text, this.controller, this.onPressed, this.padding}) : super(key: key);
+  const InputButton({Key key, this.text, this.controller, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(padding),
+      padding: EdgeInsets.all(5),
       child: TextField(
           onTap: onPressed,
           controller: controller,
@@ -22,13 +21,13 @@ class InputButton extends StatelessWidget {
           decoration: InputDecoration(
             fillColor: Theme.of(context).primaryColor,
             focusedBorder: OutlineInputBorder(
-                borderRadius: new BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(30.0),
                 borderSide: BorderSide(
                   color: Theme.of(context).unselectedWidgetColor,
                 )
             ),
-            border: new OutlineInputBorder(
-              borderRadius: new BorderRadius.circular(30.0),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
               borderSide: BorderSide(
                 color: Theme.of(context).unselectedWidgetColor,
               ),
@@ -37,10 +36,11 @@ class InputButton extends StatelessWidget {
             labelStyle: TextStyle(
               color: Theme.of(context).unselectedWidgetColor,
             ),
-          )
+          ),
       ),
     );
   }
 
 
 }
+
