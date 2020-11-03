@@ -9,7 +9,12 @@ class Constants {
 
 
   static final String STATE_CLUB = "club";
-  
+  static final String STATE_ALL_IMPACT_VALUES = "all_impact_values";
+  static final String STATE_ALL_DISTRICTS = "all_districts";
+  static final String STATE_ALL_CITIES = "all_cities";
+  static final String STATE_ALL_TYPE_SERVICE = "all_type_service";
+  static final String STATE_ALL_AREAS = "all_areas";
+  static final String STATE_ALL_CLUBS = "all_club";
 
 
 }

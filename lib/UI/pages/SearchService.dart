@@ -5,15 +5,16 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputDropdown.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
+import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 
 class SearchService extends StatefulWidget {
@@ -56,61 +57,39 @@ class _SearchService extends GlobalState<SearchService> {
 
   @override
   void refreshState() {
+    _impactValues = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_IMPACT_VALUES);
+    _districts = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_DISTRICTS);
+    _cities = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CITIES);
+    _types = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_SERVICE);
+    _areas = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS);
+    _clubs = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CLUBS);
+    if ( _impactValues != null ) {
+      _dropdownValue = _impactValues[0];
+    }
+  }
+
+  bool isLoading() {
+    return !(_impactValues != null && _districts != null && _cities != null && _types != null && _areas != null && _clubs != null);
   }
 
   @override
   Widget build(BuildContext context) {
-    _impactValues = [
-      AppLocalizations.of(context).translate("all"),
-      AppLocalizations.of(context).translate("limiteted"),
-      AppLocalizations.of(context).translate("moderated"),
-      AppLocalizations.of(context).translate("elevated"),
-    ];
-    _dropdownValue = _impactValues[0];
-
-
-
-//TODO to retrieve from server
-    _districts = [
-      District(id: 1, name: "ya"),
-      District(id: 2, name: "yb"),
-      District(id: 3, name: "ia1"),
-      District(id: 4, name: "ia2"),
-      District(id: 5, name: "tb"),
-    ];
-
-    _cities = [
-      City(name: "Cirò"),
-      City(name: "Roma"),
-      City(name: "Caccuri"),
-      City(name: "Palemmo"),
-    ];
-
-    _types = [
-      TypeService(title: "Service storico"),
-      TypeService(title: "Service innovativo"),
-      TypeService(title: "Service online"),
-    ];
-
-    _areas = [
-      CompetenceArea(title: "ambiente"),
-      CompetenceArea(title: "fame"),
-      CompetenceArea(title: "sport"),
-    ];
-
-    _clubs = [
-      Club(name: "Leo Club Cirò Kirimisa", city: City(name: "Cirò"), district: District(name: "ya")),
-      Club(name: "Leo Club Roma Parioli", city: City(name: "Cirò"), district: District(name: "ya")),
-      Club(name: "Leo Club Crotone", city: City(name: "Cirò"), district: District(name: "ya")),
-    ];
-
-
+    ModelFacade.sharedInstance.loadAllImpactValues();
+    ModelFacade.sharedInstance.loadAllDistricts();
+    ModelFacade.sharedInstance.loadAllCities();
+    ModelFacade.sharedInstance.loadAllTypesService();
+    ModelFacade.sharedInstance.loadAllAreas();
+    ModelFacade.sharedInstance.loadAllClubs();
     _startDateTextController.text = _startDate.day.toString() + "/" + _startDate.month.toString() + "/" + _startDate.year.toString();
     _endDateTextController.text = _endDate.day.toString() + "/" + _endDate.month.toString() + "/" + _endDate.year.toString();
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-        child: GridView.count(
+        child: isLoading() ?
+        Center(
+          child: CircularProgressIndicator(),
+        ) :
+        GridView.count(
           shrinkWrap: true,
           childAspectRatio: 1 / 0.25,
           crossAxisCount: MediaQuery.of(context).size.width > 650 ? 4 : 2,
