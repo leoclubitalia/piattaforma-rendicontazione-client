@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/RestManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/StateManager.dart';
@@ -8,6 +10,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Quantity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/Searcher.dart';
 
 
 class ModelFacade {
@@ -49,13 +52,20 @@ class ModelFacade {
   }
 
   void loadAllCities() async {
+    print("loadAllCities");
     List<City> _cities = [
       City(name: "Cirò"),
       City(name: "Roma"),
       City(name: "Caccuri"),
       City(name: "Palemmo"),
     ];
-    appState.addValue(Constants.STATE_ALL_CITIES, _cities);
+    //sleep(const Duration(seconds:1));
+    print("loadAllCities2");
+    Future.delayed(const Duration(seconds: 1), () => {
+      appState.addValue(Constants.STATE_ALL_CITIES, _cities)
+    });
+
+
   }
 
   void loadAllTypesService() async {
@@ -83,6 +93,31 @@ class ModelFacade {
       Club(name: "Leo Club Crotone", city: City(name: "Cirò"), district: District(name: "ya")),
     ];
     appState.addValue(Constants.STATE_ALL_CLUBS, _clubs);
+  }
+
+  Future<List<District>> suggestDistrict(String value) async {
+    List<District> all = appState.getValue(Constants.STATE_ALL_DISTRICTS);
+    return all.getSuggestions(value);
+  }
+
+  Future<List<City>> suggestCity(String value) async {
+    List<City> all = appState.getValue(Constants.STATE_ALL_CITIES);
+    return all.getSuggestions(value);
+  }
+
+  Future<List<TypeService>> suggestTypeService(String value) async {
+    List<TypeService> all = appState.getValue(Constants.STATE_ALL_TYPE_SERVICE);
+    return all.getSuggestions(value);
+  }
+
+  Future<List<CompetenceArea>> suggestArea(String value) async {
+    List<CompetenceArea> all = appState.getValue(Constants.STATE_ALL_AREAS);
+    return all.getSuggestions(value);
+  }
+
+  Future<List<Club>> suggestClub(String value) async {
+    List<Club> all = appState.getValue(Constants.STATE_ALL_CLUBS);
+    return all.getSuggestions(value);
   }
 
 

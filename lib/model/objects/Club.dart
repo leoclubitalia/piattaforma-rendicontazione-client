@@ -35,7 +35,7 @@ class Club {
 
   @override
   String toString() {
-    return "name: " + name + " email: " + email + " city: " + city.name + " district: " + district.name;
+    return name;
   }
 
 

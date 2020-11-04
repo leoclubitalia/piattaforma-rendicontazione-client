@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 
 
 class GlobalStateManager {
-  List<Function> delegatedFunctions = new List();
+  List<Function> delegatedFunctions = new List<Function>();
 
 
   void addStateListener(Function delegatedFunction) {
@@ -13,9 +13,8 @@ class GlobalStateManager {
     delegatedFunctions.remove(delegatedFunction);
   }
 
-  @protected
   void refreshStates() {
-    for (Function delegatedFunction in delegatedFunctions) {
+    for ( Function delegatedFunction in delegatedFunctions ) {
       delegatedFunction();
     }
   }
