@@ -84,9 +84,12 @@ class _SearchService extends GlobalState<SearchService> {
       _impactValue = _impactValues[0];
     }
     _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SERVICE_SEARCH_RESULT);
+    if ( _searchResult != null ) {
+      _isSearching = false;
+    }
   }
 
-  bool isLoading() {
+  bool isCircularMoment() {
     return !(_impactValues != null && _districts != null && _cities != null && _types != null && _areas != null && _clubs != null) || _isSearching;
   }
 
@@ -97,7 +100,7 @@ class _SearchService extends GlobalState<SearchService> {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-        child: isLoading() ?
+        child: isCircularMoment() ?
         Center(
           child: CircularProgressIndicator(),
         ) :
@@ -271,6 +274,14 @@ class _SearchService extends GlobalState<SearchService> {
                 ),
                 //TODO put here list results
                 //TODO add scroll bottom per others
+                _searchResult == null ?
+                Text("") :
+                ListView.builder(
+                  itemCount: _searchResult.length,
+                  itemBuilder: (context, index) {
+                    return Text(_searchResult[index].title);
+                  },
+                ),
               ],
             ),
           ),

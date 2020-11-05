@@ -39,6 +39,7 @@ class _Search extends GlobalState<Search> {
   Widget build(BuildContext context) {
     if ( isGuest ) {
       Future.delayed(Duration.zero, () => showAlert(context));
+      isGuest = false;
     }
     return DefaultTabController(
       length: 2,

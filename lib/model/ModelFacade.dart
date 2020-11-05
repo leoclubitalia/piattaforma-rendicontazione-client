@@ -185,10 +185,10 @@ class ModelFacade {
       params["clubId"] = club.id.toString();
     }
     if ( startDate != null ) {
-      params["startDate"] = formatter.format(startDate.day) + "-" + formatter.format(startDate.month) + "-" + formatter.format(startDate.year);
+      params["startDate"] = formatter.format(startDate.day) + formatter.format(startDate.month) + formatter.format(startDate.year);
     }
     if ( endDate != null ) {
-      params["endDate"] = formatter.format(endDate.day) + "-" + formatter.format(endDate.month) + "-" + formatter.format(endDate.year);
+      params["endDate"] = formatter.format(endDate.day) + formatter.format(endDate.month) + formatter.format(endDate.year);
     }
     if ( page != null ) {
       params["pageNumber"] = page.toString();
