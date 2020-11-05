@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/RestManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/StateManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
@@ -12,6 +9,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Searcher.dart';
+import 'package:intl/intl.dart';
 
 
 class ModelFacade {
@@ -136,8 +134,9 @@ class ModelFacade {
                       Club club,
                       DateTime startDate,
                       DateTime endDate,
-                      int page ) async {
+                      int page) async {
     Map<String, String> params = Map();
+    NumberFormat formatter = new NumberFormat("00");
     if ( title != null && title != "" ) {
       params["title"] = title;
     }
@@ -186,10 +185,10 @@ class ModelFacade {
       params["clubId"] = club.id.toString();
     }
     if ( startDate != null ) {
-      params["startDate"] = startDate.year.toString() + "-" + startDate.month.toString() + "-" + startDate.day.toString();
+      params["startDate"] = formatter.format(startDate.day) + "-" + formatter.format(startDate.month) + "-" + formatter.format(startDate.year);
     }
     if ( endDate != null ) {
-      params["endDate"] = endDate.year.toString() + "-" + endDate.month.toString() + "-" + endDate.day.toString();
+      params["endDate"] = formatter.format(endDate.day) + "-" + formatter.format(endDate.month) + "-" + formatter.format(endDate.year);
     }
     if ( page != null ) {
       params["pageNumber"] = page.toString();
@@ -198,6 +197,7 @@ class ModelFacade {
       params["pageNumber"] = 0.toString();
     }
     params["pageSize"] = Constants.REQUEST_DEFAULT_PAGE_SIZE;
+    print(params);
     List<Service> services = await _restManager.makeListServiceRequest(Constants.REQUEST_SEARCH_SERVICES_ADVANCED, params);
     appState.addValue(Constants.STATE_SERVICE_SEARCH_RESULT, services);
   }

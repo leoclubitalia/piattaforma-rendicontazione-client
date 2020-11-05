@@ -20,7 +20,7 @@ class InputField extends StatelessWidget {
         inputFormatters: keyboardType == TextInputType.number ? <TextInputFormatter>[
           FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
         ] : null,
-        onSubmitted: onSubmit,
+        onChanged: onSubmit,
         controller: controller,
         cursorColor: Theme.of(context).hoverColor,
         style: TextStyle(height: 1.0),

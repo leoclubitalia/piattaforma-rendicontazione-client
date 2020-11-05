@@ -10,6 +10,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,6 +50,9 @@ class _SearchService extends GlobalState<SearchService> {
   List<CompetenceArea> _areas;
   List<Club> _clubs;
 
+  List<Service> _searchResult;
+  bool _isSearching = false;
+
   TextEditingController _startDateTextController = TextEditingController();
   TextEditingController _endDateTextController = TextEditingController();
   TextEditingController _dropDownImpactController = TextEditingController();
@@ -79,10 +83,11 @@ class _SearchService extends GlobalState<SearchService> {
     if ( _impactValues != null ) {
       _impactValue = _impactValues[0];
     }
+    _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SERVICE_SEARCH_RESULT);
   }
 
   bool isLoading() {
-    return !(_impactValues != null && _districts != null && _cities != null && _types != null && _areas != null && _clubs != null);
+    return !(_impactValues != null && _districts != null && _cities != null && _types != null && _areas != null && _clubs != null) || _isSearching;
   }
 
   @override
@@ -255,13 +260,17 @@ class _SearchService extends GlobalState<SearchService> {
                     StadiumButton(
                       title: AppLocalizations.of(context).translate("search"),
                       onPressed: () {
-
+                        ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _minMoneyRaised, _maxMoneyRaised, _quantityServedPeople, _district, _impactValue, _city, _type, _area, _club, _startDate, _endDate, 0);
+                        setState(() {
+                          _isSearching = true;
+                        });
                       },
                       icon: Icons.search_rounded,
                     )
                   ],
                 ),
                 //TODO put here list results
+                //TODO add scroll bottom per others
               ],
             ),
           ),
