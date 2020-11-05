@@ -34,6 +34,11 @@ class _SearchService extends GlobalState<SearchService> {
   int _maxMoneyRaised;
   int _quantityServedPeople;
   District _district;
+  String _impactValue;
+  City _city;
+  TypeService _type;
+  CompetenceArea _area;
+  Club _club;
   DateTime _startDate = DateTime(2000, 1, 1);
   DateTime _endDate = DateTime.now();
 
@@ -43,7 +48,6 @@ class _SearchService extends GlobalState<SearchService> {
   List<TypeService> _types;
   List<CompetenceArea> _areas;
   List<Club> _clubs;
-  String _dropdownValue;
 
   TextEditingController _startDateTextController = TextEditingController();
   TextEditingController _endDateTextController = TextEditingController();
@@ -66,7 +70,6 @@ class _SearchService extends GlobalState<SearchService> {
 
   @override
   void refreshState() {
-    print("refreshing");
     _impactValues = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_IMPACT_VALUES);
     _districts = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_DISTRICTS);
     _cities = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CITIES);
@@ -74,12 +77,11 @@ class _SearchService extends GlobalState<SearchService> {
     _areas = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS);
     _clubs = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CLUBS);
     if ( _impactValues != null ) {
-      _dropdownValue = _impactValues[0];
+      _impactValue = _impactValues[0];
     }
   }
 
   bool isLoading() {
-    print("called laoded");
     return !(_impactValues != null && _districts != null && _cities != null && _types != null && _areas != null && _clubs != null);
   }
 
@@ -184,7 +186,7 @@ class _SearchService extends GlobalState<SearchService> {
                       controller: _dropDownImpactController,
                       items: _impactValues,
                       onChanged: (String value) {
-                        _dropdownValue = value;
+                        _impactValue = value;
                         _dropDownImpactController.text = value;
                       },
                     ),
@@ -199,56 +201,61 @@ class _SearchService extends GlobalState<SearchService> {
                       labelText: AppLocalizations.of(context).translate("city"),
                       controller: _autocompleteCityController,
                       onSuggestion: (String pattern) async {
-                        return await ModelFacade.sharedInstance.suggestCity(pattern);
+                        return await ModelFacade.sharedInstance.suggestCities(pattern);
                       },
                       onSelect: (suggestion) {
                         _autocompleteCityController.text = suggestion.toString();
+                        _city = suggestion;
                       },
                     ),
                     InputAutocomplete(
                       labelText: AppLocalizations.of(context).translate("type_service"),
                       controller: _autocompleteTypeServiceController,
                       onSuggestion: (String pattern) async {
-                        return await ModelFacade.sharedInstance.suggestTypeService(pattern);
+                        return await ModelFacade.sharedInstance.suggestTypesService(pattern);
                       },
                       onSelect: (suggestion) {
                         _autocompleteTypeServiceController.text = suggestion.toString();
+                        _type = suggestion;
                       },
                     ),
                     InputAutocomplete(
                       labelText: AppLocalizations.of(context).translate("compentece_area"),
                       controller: _autocompleteCompetenceAreaController,
                       onSuggestion: (String pattern) async {
-                        return await ModelFacade.sharedInstance.suggestArea(pattern);
+                        return await ModelFacade.sharedInstance.suggestAreas(pattern);
                       },
                       onSelect: (suggestion) {
                         _autocompleteCompetenceAreaController.text = suggestion.toString();
+                        _area = suggestion;
                       },
                     ),
                     InputAutocomplete(
                       labelText: AppLocalizations.of(context).translate("district"),
                       controller: _autocompleteDistrictController,
                       onSuggestion: (String pattern) async {
-                        return await ModelFacade.sharedInstance.suggestDistrict(pattern);
+                        return await ModelFacade.sharedInstance.suggestDistricts(pattern);
                       },
                       onSelect: (suggestion) {
                         _autocompleteDistrictController.text = suggestion.toString();
+                        _district = suggestion;
                       },
                     ),
                     InputAutocomplete(
                       labelText: AppLocalizations.of(context).translate("club"),
                       controller: _autocompleteClubController,
                       onSuggestion: (String pattern) async {
-                        return await ModelFacade.sharedInstance.suggestClub(pattern);
+                        return await ModelFacade.sharedInstance.suggestClubs(pattern);
                       },
                       onSelect: (suggestion) {
                         _autocompleteClubController.text = suggestion.toString();
+                        _club = suggestion;
                       },
                     ),
                     StadiumButton(
                       title: AppLocalizations.of(context).translate("search"),
                       onPressed: () {
-                        //TODO load search
+
                       },
                       icon: Icons.search_rounded,
                     )
