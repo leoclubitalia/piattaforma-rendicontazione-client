@@ -14,8 +14,8 @@ class City {
   factory City.fromJson(Map<String, dynamic> json) {
     return City(
       id: json['id'],
-      name: json['title'],
-      caps: json['cap'],
+      name: json['name'],
+      //caps: json['cap'],
     );
   }
 

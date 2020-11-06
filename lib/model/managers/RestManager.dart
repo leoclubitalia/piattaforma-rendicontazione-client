@@ -34,6 +34,7 @@ class RestManager {
       //HttpHeaders.authorizationHeader: 'Token $token',
       HttpHeaders.contentTypeHeader: 'application/json',
     });
+    print(response.body);
     return List<Service>.from(json.decode(response.body).map((i) => Service.fromJson(i)).toList());
   }
 

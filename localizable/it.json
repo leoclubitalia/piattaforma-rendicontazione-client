@@ -33,5 +33,13 @@
   "district": "distretto",
   "city": "città",
   "type_service": "tipo",
-  "compentece_area": "area"
+  "compentece_area": "area",
+  "no_results": "Oops... nessun risultato!",
+  "made_in_date": "Svolto il",
+  "in_place": "a",
+  "areas": "Aree",
+  "no_one": "Nessuna",
+  "served_People": "persone servite",
+  "money_raised": "fondi raccolti",
+  "advanced": "avanzata"
 }

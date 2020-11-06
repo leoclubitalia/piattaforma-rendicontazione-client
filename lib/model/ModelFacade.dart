@@ -9,8 +9,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Searcher.dart';
-import 'package:intl/intl.dart';
-
+import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
 
 class ModelFacade {
   static ModelFacade sharedInstance = new ModelFacade();
@@ -136,7 +135,6 @@ class ModelFacade {
                       DateTime endDate,
                       int page) async {
     Map<String, String> params = Map();
-    NumberFormat formatter = new NumberFormat("00");
     if ( title != null && title != "" ) {
       params["title"] = title;
     }
@@ -185,10 +183,10 @@ class ModelFacade {
       params["clubId"] = club.id.toString();
     }
     if ( startDate != null ) {
-      params["startDate"] = formatter.format(startDate.day) + formatter.format(startDate.month) + formatter.format(startDate.year);
+      params["startDate"] = startDate.toStringUnslashed();
     }
     if ( endDate != null ) {
-      params["endDate"] = formatter.format(endDate.day) + formatter.format(endDate.month) + formatter.format(endDate.year);
+      params["endDate"] = endDate.toStringUnslashed();
     }
     if ( page != null ) {
       params["pageNumber"] = page.toString();
