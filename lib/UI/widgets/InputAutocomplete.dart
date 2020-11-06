@@ -13,43 +13,40 @@ class InputAutocomplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: EdgeInsets.all(5),
-          child: TypeAheadField(
-            textFieldConfiguration: TextFieldConfiguration(
-              controller: controller,
-              decoration: InputDecoration(
-                fillColor: Theme.of(context).primaryColor,
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).unselectedWidgetColor,
-                    )
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                  borderSide: BorderSide(
-                    color: Theme.of(context).unselectedWidgetColor,
-                  ),
-                ),
-                labelText: labelText,
-                labelStyle: TextStyle(
+    return Padding(
+      padding: EdgeInsets.all(5),
+      child: TypeAheadField(
+        textFieldConfiguration: TextFieldConfiguration(
+          autofocus: false,
+          controller: controller,
+          decoration: InputDecoration(
+            fillColor: Theme.of(context).primaryColor,
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30.0),
+                borderSide: BorderSide(
                   color: Theme.of(context).unselectedWidgetColor,
-                ),
+                )
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide(
+                color: Theme.of(context).unselectedWidgetColor,
               ),
             ),
-            suggestionsCallback: onSuggestion,
-            itemBuilder: (context, suggestion) {
-              return ListTile(
-                title: Text(suggestion.toString()),
-              );
-            },
-            onSuggestionSelected: onSelect,
+            labelText: labelText,
+            labelStyle: TextStyle(
+              color: Theme.of(context).unselectedWidgetColor,
+            ),
           ),
         ),
-      ],
+        suggestionsCallback: onSuggestion,
+        itemBuilder: (context, suggestion) {
+          return ListTile(
+            title: Text(suggestion.toString()),
+          );
+        },
+        onSuggestionSelected: onSelect,
+      ),
     );
   }
 
