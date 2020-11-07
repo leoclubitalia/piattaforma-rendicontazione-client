@@ -45,5 +45,6 @@
   "advanced": "advanced",
   "advanced_search": "Advanced Search",
   "types_service": "Types service",
-  "message_error": "Oops... something went wrong!"
+  "message_error": "Oops... something went wrong!",
+  "type_activity": "type"
 }

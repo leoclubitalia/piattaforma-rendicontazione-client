@@ -93,7 +93,7 @@ class _SearchService extends GlobalState<SearchService> {
     if ( _impactValues != null ) {
       _impactValue = _impactValues[0];
     }
-    _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SERVICE_SEARCH_RESULT);
+    _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SERVICE_SEARCH_SERVICE_RESULT);
     if ( _searchResult != null ) {
       _isSearching = false;
     }

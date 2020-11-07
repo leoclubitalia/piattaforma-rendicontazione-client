@@ -199,17 +199,17 @@ class ModelFacade {
     try {
       List<Service> services = await _restManager.makeListServiceRequest(Constants.REQUEST_SEARCH_SERVICES_ADVANCED, params);
       if ( page == 0 ) {
-        appState.addValue(Constants.STATE_SERVICE_SEARCH_RESULT, services);
+        appState.addValue(Constants.STATE_SERVICE_SEARCH_SERVICE_RESULT, services);
         if ( services.isEmpty ) {
           appState.addValue(Constants.STATE_MESSAGE, "no_results");
         }
       }
       else {
-        appState.addValue(Constants.STATE_SERVICE_SEARCH_RESULT, appState.getValue(Constants.STATE_SERVICE_SEARCH_RESULT) + services);
+        appState.addValue(Constants.STATE_SERVICE_SEARCH_SERVICE_RESULT, appState.getValue(Constants.STATE_SERVICE_SEARCH_SERVICE_RESULT) + services);
       }
     }
     catch(e) {
-      appState.addValue(Constants.STATE_SERVICE_SEARCH_RESULT, List<Service>());
+      appState.addValue(Constants.STATE_SERVICE_SEARCH_SERVICE_RESULT, List<Service>());
       appState.addValue(Constants.STATE_MESSAGE, "message_error");
     }
   }

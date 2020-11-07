@@ -44,5 +44,6 @@
   "advanced": "avanzata",
   "advanced_search": "Ricerca avanzata",
   "types_service": "Tipologia di service",
-  "message_error": "Oops... qualcosa è andato storto!"
+  "message_error": "Oops... qualcosa è andato storto!",
+  "type_activity": "tipo"
 }
