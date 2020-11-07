@@ -1,13 +1,14 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:flutter/material.dart';
 
 
-class RoundedDialog extends StatelessWidget {
-  final String text;
+class ServiceDialog extends StatelessWidget {
+  final Service service;
 
 
-  const RoundedDialog({Key key, this.text}) : super(key: key);
+  const ServiceDialog({Key key, this.service}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class RoundedDialog extends StatelessWidget {
         Padding(
           padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
           child: Text(
-            text,
+            service.title,
             style: LeoParagraphStyle(),
             textAlign: TextAlign.center,
           ),

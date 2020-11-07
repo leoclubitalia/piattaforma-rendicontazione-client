@@ -86,7 +86,7 @@ class ModelFacade {
   void loadAllClubs() async {
     //TODO
     List<Club> _clubs = [
-      Club(name: "Leo Club Cirò Kirimisa", city: City(name: "Cirò"), district: District(name: "ya")),
+      Club(id: 1, name: "Leo Club Cirò Kirimisa", city: City(name: "Cirò"), district: District(name: "ya")),
       Club(name: "Leo Club Roma Parioli", city: City(name: "Cirò"), district: District(name: "ya")),
       Club(name: "Leo Club Crotone", city: City(name: "Cirò"), district: District(name: "ya")),
     ];
@@ -197,7 +197,12 @@ class ModelFacade {
     params["pageSize"] = Constants.REQUEST_DEFAULT_PAGE_SIZE;
     print(params);
     List<Service> services = await _restManager.makeListServiceRequest(Constants.REQUEST_SEARCH_SERVICES_ADVANCED, params);
-    appState.addValue(Constants.STATE_SERVICE_SEARCH_RESULT, services);
+    if ( page == 0 ) {
+      appState.addValue(Constants.STATE_SERVICE_SEARCH_RESULT, services);
+    }
+    else {
+      appState.addValue(Constants.STATE_SERVICE_SEARCH_RESULT, appState.getValue(Constants.STATE_SERVICE_SEARCH_RESULT) + services);
+    }
   }
 
 

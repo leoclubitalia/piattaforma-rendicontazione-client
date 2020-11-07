@@ -3,7 +3,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.d
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/SearchActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/SearchService.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedDialog.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
@@ -71,7 +71,7 @@ class _Search extends GlobalState<Search> {
   void showAlert(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => RoundedDialog(
+      builder: (context) => MessageDialog(
         text: AppLocalizations.of(context).translate("description_search_for_guest"),
       )
     );

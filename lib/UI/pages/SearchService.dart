@@ -6,7 +6,6 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputDropdown.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ServiceTile.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
@@ -19,7 +18,6 @@ import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 
 class SearchService extends StatefulWidget {
@@ -56,6 +54,7 @@ class _SearchService extends GlobalState<SearchService> {
 
   List<Service> _searchResult;
   bool _isSearching = false;
+  int _currentPage = 0;
 
   TextEditingController _startDateTextController = TextEditingController();
   TextEditingController _endDateTextController = TextEditingController();
@@ -65,6 +64,13 @@ class _SearchService extends GlobalState<SearchService> {
   TextEditingController _autocompleteTypeServiceController = TextEditingController();
   TextEditingController _autocompleteCompetenceAreaController = TextEditingController();
   TextEditingController _autocompleteClubController = TextEditingController();
+  TextEditingController _inputFieldTitleController = TextEditingController();
+  TextEditingController _inputFieldParticipantsController = TextEditingController();
+  TextEditingController _inputFieldDurationController = TextEditingController();
+  TextEditingController _inputFieldMinMoneyRaisedController = TextEditingController();
+  TextEditingController _inputFieldMaxMoneyRaisedController = TextEditingController();
+  TextEditingController _inputFieldServedPeopleController = TextEditingController();
+  TextEditingController _inputFieldOtherAssociationsController = TextEditingController();
 
 
   _SearchService() {
@@ -136,10 +142,7 @@ class _SearchService extends GlobalState<SearchService> {
                 ),
                 CircularIconButton(
                   onPressed: () {
-                    ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _minMoneyRaised, _maxMoneyRaised, _quantityServedPeople, _district, _impactValue, _city, _type, _area, _club, _startDate, _endDate, 0);
-                    setState(() {
-                      _isSearching = true;
-                    });
+                    loadSearch();
                   },
                   icon: Icons.search_rounded,
                 ),
@@ -167,11 +170,24 @@ class _SearchService extends GlobalState<SearchService> {
               child: Container(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: ListView.builder(
-                  itemCount: _searchResult.length,
+                  itemCount: _searchResult.length + 1,
                   itemBuilder: (context, index) {
-                    return ServiceTile(
-                      service: _searchResult[index],
-                    );
+                    if ( index < _searchResult.length ) {
+                      return ServiceTile(
+                        service: _searchResult[index],
+                      );
+                    }
+                    else {
+                      return Padding(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        child: CircularIconButton(
+                          icon: Icons.arrow_downward_rounded,
+                          onPressed: () {
+                            loadMore();
+                          },
+                        ),
+                      );
+                    }
                   },
                 ),
               ),
@@ -181,7 +197,6 @@ class _SearchService extends GlobalState<SearchService> {
       ),
     );
   }
-
 
   void showAdvancedSearch(BuildContext context) {
     showDialog(
@@ -231,6 +246,7 @@ class _SearchService extends GlobalState<SearchService> {
                     Flexible(
                       child: InputField(
                         labelText: AppLocalizations.of(context).translate("title"),
+                        controller: _inputFieldTitleController,
                         onSubmit: (String value) {
                           _title = value;
                         },
@@ -300,6 +316,7 @@ class _SearchService extends GlobalState<SearchService> {
                     Flexible(
                       child: InputField(
                         labelText: AppLocalizations.of(context).translate("quantity_participants"),
+                        controller: _inputFieldParticipantsController,
                         keyboardType: TextInputType.number,
                         onSubmit: (String value) {
                           _quantityParticipants = int.parse(value);
@@ -309,6 +326,7 @@ class _SearchService extends GlobalState<SearchService> {
                     Flexible(
                       child: InputField(
                         labelText: AppLocalizations.of(context).translate("duration"),
+                        controller: _inputFieldDurationController,
                         keyboardType: TextInputType.number,
                         onSubmit: (String value) {
                           _duration = int.parse(value);
@@ -322,6 +340,7 @@ class _SearchService extends GlobalState<SearchService> {
                     Flexible(
                       child: InputField(
                         labelText: AppLocalizations.of(context).translate("min_money_raised"),
+                        controller: _inputFieldMinMoneyRaisedController,
                         keyboardType: TextInputType.number,
                         onSubmit: (String value) {
                           _minMoneyRaised = int.parse(value);
@@ -331,6 +350,7 @@ class _SearchService extends GlobalState<SearchService> {
                     Flexible(
                       child: InputField(
                         labelText: AppLocalizations.of(context).translate("max_money_raised"),
+                        controller: _inputFieldMaxMoneyRaisedController,
                         keyboardType: TextInputType.number,
                         onSubmit: (String value) {
                           _maxMoneyRaised = int.parse(value);
@@ -355,6 +375,7 @@ class _SearchService extends GlobalState<SearchService> {
                     Flexible(
                       child: InputField(
                         labelText: AppLocalizations.of(context).translate("quantity_served_people"),
+                        controller: _inputFieldServedPeopleController,
                         keyboardType: TextInputType.number,
                         onSubmit: (String value) {
                           _quantityServedPeople = int.parse(value);
@@ -398,6 +419,7 @@ class _SearchService extends GlobalState<SearchService> {
                     Flexible(
                       child: InputField(
                         labelText: AppLocalizations.of(context).translate("other_associations"),
+                        controller: _inputFieldOtherAssociationsController,
                         onSubmit: (String value) {
                           _otherAssociations = value;
                         },
@@ -406,10 +428,7 @@ class _SearchService extends GlobalState<SearchService> {
                     CircularIconButton(
                       onPressed: () async {
                         Navigator.pop(context);
-                        ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _minMoneyRaised, _maxMoneyRaised, _quantityServedPeople, _district, _impactValue, _city, _type, _area, _club, _startDate, _endDate, 0);
-                        setState(() {
-                          _isSearching = true;
-                        });
+                        loadSearch();
                       },
                       icon: Icons.search_rounded,
                     ),
@@ -421,6 +440,63 @@ class _SearchService extends GlobalState<SearchService> {
         ],
       ),
     );
+    if ( _impactValue != null ) {
+      _dropDownImpactController.text = _impactValue;
+    }
+    if ( _district != null ) {
+      _autocompleteDistrictController.text = _district.name;
+    }
+    if ( _city != null ) {
+      _autocompleteCityController.text = _city.name;
+    }
+    if ( _type != null ) {
+      _autocompleteTypeServiceController.text = _type.title;
+    }
+    if ( _area != null ) {
+      _autocompleteCompetenceAreaController.text = _area.title;
+    }
+    if ( _club != null ) {
+      _autocompleteClubController.text = _club.name;
+    }
+    if ( _title != null ) {
+      _inputFieldTitleController.text = _title;
+    }
+    if ( _quantityParticipants != null ) {
+      _inputFieldParticipantsController.text = _quantityParticipants.toString();
+    }
+    if ( _duration != null ) {
+      _inputFieldDurationController.text = _duration.toString();
+    }
+    if ( _minMoneyRaised != null ) {
+      _inputFieldMinMoneyRaisedController.text = _minMoneyRaised.toString();
+    }
+    if ( _maxMoneyRaised != null ) {
+      _inputFieldMaxMoneyRaisedController.text = _maxMoneyRaised.toString();
+    }
+    if ( _quantityServedPeople != null ) {
+      _inputFieldServedPeopleController.text = _quantityServedPeople.toString();
+    }
+    if ( _otherAssociations != null ) {
+      _inputFieldOtherAssociationsController.text = _otherAssociations.toString();
+    }
   }
+
+  void loadSearch() {
+    _currentPage = 0;
+    _search();
+  }
+
+  void loadMore() {
+    _currentPage ++;
+    _search();
+  }
+
+  void _search() {
+    ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _minMoneyRaised, _maxMoneyRaised, _quantityServedPeople, _district, _impactValue, _city, _type, _area, _club, _startDate, _endDate, _currentPage);
+    setState(() {
+      _isSearching = true;
+    });
+  }
+
 
 }
