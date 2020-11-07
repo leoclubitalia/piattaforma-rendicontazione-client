@@ -109,89 +109,101 @@ class _SearchService extends GlobalState<SearchService> {
     _endDateTextController.text = _endDate.day.toString() + "/" + _endDate.month.toString() + "/" + _endDate.year.toString();
     return Scaffold(
       body: Center(
-        child: Column(
-          //mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Row(
-              children: [
-                Flexible(
-                  child: InputAutocomplete(
-                    labelText: AppLocalizations.of(context).translate("club"),
-                    controller: _autocompleteClubController,
-                    onSuggestion: (String pattern) async {
-                      return await ModelFacade.sharedInstance.suggestClubs(pattern);
-                    },
-                    onSelect: (suggestion) {
-                      _autocompleteClubController.text = suggestion.toString();
-                      _club = suggestion;
-                    },
-                  ),
-                ),
-                Flexible(
-                  child: InputAutocomplete(
-                    labelText: AppLocalizations.of(context).translate("district"),
-                    controller: _autocompleteDistrictController,
-                    onSuggestion: (String pattern) async {
-                      return await ModelFacade.sharedInstance.suggestDistricts(pattern);
-                    },
-                    onSelect: (suggestion) {
-                      _autocompleteDistrictController.text = suggestion.toString();
-                      _district = suggestion;
-                    },
-                  ),
-                ),
-                CircularIconButton(
-                  onPressed: () {
-                    loadSearch();
-                  },
-                  icon: Icons.search_rounded,
-                ),
-                CircularIconButton(
-                  onPressed: () {
-                    showAdvancedSearch(context);
-                  },
-                  icon: Icons.add,
-                ),
-              ],
-            ),
-            _searchResult == null ?
-            Padding(
-              padding: EdgeInsets.all(0),
+        child: Stack(
+          children: [
+            isCircularMoment() ?
+            Center(
+              child: CircularProgressIndicator(),
             ) :
-            _searchResult.length == 0 ?
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: Text(
-                AppLocalizations.of(context).translate("no_results"),
-                style: LeoTitleStyle(),
-              ),
-            ) :
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                child: ListView.builder(
-                  itemCount: _searchResult.length + 1,
-                  itemBuilder: (context, index) {
-                    if ( index < _searchResult.length ) {
-                      return ServiceTile(
-                        service: _searchResult[index],
-                      );
-                    }
-                    else {
-                      return Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: CircularIconButton(
-                          icon: Icons.arrow_downward_rounded,
-                          onPressed: () {
-                            loadMore();
+            Padding(padding: EdgeInsets.all(0)),
+            Column(
+              //mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: InputAutocomplete(
+                          labelText: AppLocalizations.of(context).translate("club"),
+                          controller: _autocompleteClubController,
+                          onSuggestion: (String pattern) async {
+                            return await ModelFacade.sharedInstance.suggestClubs(pattern);
+                          },
+                          onSelect: (suggestion) {
+                            _autocompleteClubController.text = suggestion.toString();
+                            _club = suggestion;
                           },
                         ),
-                      );
-                    }
-                  },
+                      ),
+                      Flexible(
+                        child: InputAutocomplete(
+                          labelText: AppLocalizations.of(context).translate("district"),
+                          controller: _autocompleteDistrictController,
+                          onSuggestion: (String pattern) async {
+                            return await ModelFacade.sharedInstance.suggestDistricts(pattern);
+                          },
+                          onSelect: (suggestion) {
+                            _autocompleteDistrictController.text = suggestion.toString();
+                            _district = suggestion;
+                          },
+                        ),
+                      ),
+                      CircularIconButton(
+                        onPressed: () {
+                          loadSearch();
+                        },
+                        icon: Icons.search_rounded,
+                      ),
+                      CircularIconButton(
+                        onPressed: () {
+                          showAdvancedSearch(context);
+                        },
+                        icon: Icons.add,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            )
+                _searchResult == null ?
+                Padding(
+                  padding: EdgeInsets.all(0),
+                ) :
+                _searchResult.length == 0 ?
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: Text(
+                    AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_MESSAGE)),
+                    style: LeoTitleStyle(),
+                  ),
+                ) :
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: ListView.builder(
+                      itemCount: _searchResult.length + 1,
+                      itemBuilder: (context, index) {
+                        if ( index < _searchResult.length ) {
+                          return ServiceTile(
+                            service: _searchResult[index],
+                          );
+                        }
+                        else {
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: CircularIconButton(
+                              icon: Icons.arrow_downward_rounded,
+                              onPressed: () {
+                                loadMore();
+                              },
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -319,7 +331,12 @@ class _SearchService extends GlobalState<SearchService> {
                         controller: _inputFieldParticipantsController,
                         keyboardType: TextInputType.number,
                         onSubmit: (String value) {
-                          _quantityParticipants = int.parse(value);
+                          if ( value == null || value == "" ) {
+                            _quantityParticipants = null;
+                          }
+                          else {
+                            _quantityParticipants = int.parse(value);
+                          }
                         },
                       ),
                     ),
@@ -329,7 +346,12 @@ class _SearchService extends GlobalState<SearchService> {
                         controller: _inputFieldDurationController,
                         keyboardType: TextInputType.number,
                         onSubmit: (String value) {
-                          _duration = int.parse(value);
+                          if ( value == null || value == "" ) {
+                            _duration = null;
+                          }
+                          else {
+                            _duration = int.parse(value);
+                          }
                         },
                       ),
                     ),
@@ -343,7 +365,12 @@ class _SearchService extends GlobalState<SearchService> {
                         controller: _inputFieldMinMoneyRaisedController,
                         keyboardType: TextInputType.number,
                         onSubmit: (String value) {
-                          _minMoneyRaised = int.parse(value);
+                          if ( value == null || value == "" ) {
+                            _minMoneyRaised = null;
+                          }
+                          else {
+                            _minMoneyRaised = int.parse(value);
+                          }
                         },
                       ),
                     ),
@@ -353,7 +380,12 @@ class _SearchService extends GlobalState<SearchService> {
                         controller: _inputFieldMaxMoneyRaisedController,
                         keyboardType: TextInputType.number,
                         onSubmit: (String value) {
-                          _maxMoneyRaised = int.parse(value);
+                          if ( value == null || value == "" ) {
+                            _maxMoneyRaised = null;
+                          }
+                          else {
+                            _maxMoneyRaised = int.parse(value);
+                          }
                         },
                       ),
                     ),
@@ -378,7 +410,12 @@ class _SearchService extends GlobalState<SearchService> {
                         controller: _inputFieldServedPeopleController,
                         keyboardType: TextInputType.number,
                         onSubmit: (String value) {
-                          _quantityServedPeople = int.parse(value);
+                          if ( value == null || value == "" ) {
+                            _quantityServedPeople = null;
+                          }
+                          else {
+                            _quantityServedPeople = int.parse(value);
+                          }
                         },
                       ),
                     ),

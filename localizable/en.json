@@ -44,5 +44,6 @@
   "money_raised": "money raised",
   "advanced": "advanced",
   "advanced_search": "Advanced Search",
-  "types_service": "Types service"
+  "types_service": "Types service",
+  "message_error": "Oops... something went wrong!"
 }

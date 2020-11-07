@@ -14,6 +14,12 @@ class StateManager extends GlobalStateManager {
     return _statesContainer[key];
   }
 
+  dynamic getAndDestroyValue(String key) {
+    var result = _statesContainer[key];
+    _statesContainer.remove(key);
+    return result;
+  }
+
   void resetState() {
     _statesContainer = new Map();
     refreshStates();

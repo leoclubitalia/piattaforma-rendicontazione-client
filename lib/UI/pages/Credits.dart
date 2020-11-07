@@ -1,6 +1,6 @@
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/DeveloperTile.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/DeveloperTile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

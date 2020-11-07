@@ -19,6 +19,7 @@ class Constants {
   static final String STATE_ALL_AREAS = "all_areas";
   static final String STATE_ALL_CLUBS = "all_club";
   static final String STATE_SERVICE_SEARCH_RESULT = "search_result";
+  static final String STATE_MESSAGE = "message";
 
 
 }

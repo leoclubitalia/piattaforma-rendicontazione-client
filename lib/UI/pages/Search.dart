@@ -7,6 +7,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialo
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/StringCapitalization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +51,7 @@ class _Search extends GlobalState<Search> {
               bottom: Radius.circular(30),
             ),
           ),
-          title: Text(AppLocalizations.of(context).translate("search")),
+          title: Text(AppLocalizations.of(context).translate("search").capitalize),
           bottom: TabBar(
             tabs: [
               Tab(text: AppLocalizations.of(context).translate("service"), icon: UIConstants.ICON_SERVICE),
