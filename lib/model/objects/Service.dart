@@ -12,14 +12,14 @@ class Service {
   DateTime date;
   int quantityParticipants;
   int satisfactionDegree;
-  int impact;
+  int impact; //***
   int duration;
-  String otherAssociations;
+  String otherAssociations; //***
   double moneyRaised;
   int quantityServedPeople;
   City city;
   Club club;
-  List<TypeService> typesService;
+  List<TypeService> typesService; //***
   List<CompetenceArea> competenceAreasService;
 
 
