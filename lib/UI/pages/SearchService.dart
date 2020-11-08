@@ -545,6 +545,7 @@ class _SearchService extends GlobalState<SearchService> {
     }
     ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _minMoneyRaised, _maxMoneyRaised, _quantityServedPeople, _district, _satisfactionDegree, _city, _type, _area, _club, _startDate, _endDate, _currentPage);
     setState(() {
+      _searchResult = null;
       _isSearching = true;
     });
   }

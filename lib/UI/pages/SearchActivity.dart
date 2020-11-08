@@ -275,16 +275,16 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                         controller: _startDateTextController,
                         onPressed: () {
                           DatePicker.showDatePicker(
-                              context,
-                              showTitleActions: true,
-                              minTime: DateTime(2000, 1, 1),
-                              maxTime: DateTime.now(),
-                              onConfirm: (date) {
-                                _startDate = date;
-                                _startDateTextController.text = date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
-                              },
-                              currentTime: DateTime.now(),
-                              locale: LocaleType.it
+                            context,
+                            showTitleActions: true,
+                            minTime: DateTime(2000, 1, 1),
+                            maxTime: DateTime.now(),
+                            onConfirm: (date) {
+                              _startDate = date;
+                              _startDateTextController.text = date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
+                            },
+                            currentTime: DateTime.now(),
+                            locale: LocaleType.it
                           );
                         },
                       ),
@@ -295,16 +295,16 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                         controller: _endDateTextController,
                         onPressed: () {
                           DatePicker.showDatePicker(
-                              context,
-                              showTitleActions: true,
-                              minTime: DateTime(2000, 1, 1),
-                              maxTime: DateTime.now(),
-                              onConfirm: (date) {
-                                _endDate = date;
-                                _endDateTextController.text = date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
-                              },
-                              currentTime: DateTime.now(),
-                              locale: LocaleType.it
+                            context,
+                            showTitleActions: true,
+                            minTime: DateTime(2000, 1, 1),
+                            maxTime: DateTime.now(),
+                            onConfirm: (date) {
+                              _endDate = date;
+                              _endDateTextController.text = date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
+                            },
+                            currentTime: DateTime.now(),
+                            locale: LocaleType.it
                           );
                         },
                       ),
@@ -433,6 +433,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
     }
     ModelFacade.sharedInstance.searchActivities(_title, _quantityLeo, _district, _satisfactionDegree, _city, _type, _club, _startDate, _endDate, _lionsParticipation, _currentPage);
     setState(() {
+      _searchResult = null;
       _isSearching = true;
     });
   }

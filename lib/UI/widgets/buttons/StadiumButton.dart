@@ -26,11 +26,11 @@ class StadiumButton extends StatelessWidget {
           color: Theme.of(context).buttonColor,
           shape: StadiumBorder(),
           padding: EdgeInsets.all(20),
-          icon: Icon(icon, color: Theme.of(context).primaryColor),
+          icon: Icon(icon, color: Theme.of(context).accentColor),
           label: Text(title,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).accentColor,
               fontWeight: FontWeight.w300,
               fontSize: 20,
             ),

@@ -24,6 +24,10 @@ class StateManager extends GlobalStateManager {
     return result;
   }
 
+  void removeValue(String key) {
+    _statesContainer.remove(key);
+  }
+
   void resetState() {
     _statesContainer = new Map();
     refreshStates();

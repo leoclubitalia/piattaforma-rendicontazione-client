@@ -216,7 +216,7 @@ class ModelFacade {
                         Club club,
                         DateTime startDate,
                         DateTime endDate,
-                        String lionsParticipations,
+                        String lionsParticipation,
                         int page) async {
     Map<String, String> params = Map();
     if ( title != null && title != "" ) {
@@ -254,11 +254,11 @@ class ModelFacade {
     if ( endDate != null ) {
       params["endDate"] = endDate.toStringUnslashed();
     }
-    if ( lionsParticipations != null ) {
-      if ( lionsParticipations == appState.getValue(Constants.STATE_ALL_BOOLS)[1] ) {
+    if ( lionsParticipation != null ) {
+      if ( lionsParticipation == appState.getValue(Constants.STATE_ALL_BOOLS)[1] ) {
         params["lionsParticipation"] = 1.toString();
       }
-      else if ( lionsParticipations == appState.getValue(Constants.STATE_ALL_BOOLS)[2] ) {
+      else if ( lionsParticipation == appState.getValue(Constants.STATE_ALL_BOOLS)[2] ) {
         params["lionsParticipation"] = 0.toString();
       }
     }
@@ -269,7 +269,6 @@ class ModelFacade {
       params["pageNumber"] = 0.toString();
     }
     params["pageSize"] = Constants.REQUEST_DEFAULT_PAGE_SIZE;
-    print(params);
     try {
       List<Activity> activities = await _restManager.makeListActivityRequest(Constants.REQUEST_SEARCH_ACTIVITIES_ADVANCED, params);
       if ( page == 0 ) {

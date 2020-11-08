@@ -49,7 +49,7 @@ class InputDropdown extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
+          padding: EdgeInsets.fromLTRB(10, 9, 10, 0),
           child: DropdownButton<String>(
             isExpanded: true,
             underline: Container(

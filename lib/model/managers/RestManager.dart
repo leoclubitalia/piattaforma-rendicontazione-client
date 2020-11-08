@@ -49,7 +49,6 @@ class RestManager {
       //HttpHeaders.authorizationHeader: 'Token $token',
       HttpHeaders.contentTypeHeader: 'application/json',
     });
-    print(response.body);
     return List<Activity>.from(json.decode(response.body).map((i) => Activity.fromJson(i)).toList());
   }
 
