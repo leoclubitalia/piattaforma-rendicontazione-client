@@ -37,7 +37,7 @@ class _SearchService extends GlobalState<SearchService> {
   int _maxMoneyRaised;
   int _quantityServedPeople;
   District _district;
-  String _impactValue;
+  String _satisfactionDegree;
   City _city;
   TypeService _type;
   CompetenceArea _area;
@@ -45,7 +45,7 @@ class _SearchService extends GlobalState<SearchService> {
   DateTime _startDate = DateTime(2000, 1, 1);
   DateTime _endDate = DateTime.now();
 
-  List<String> _impactValues;
+  List<String> _satisfactionDegrees;
   List<District> _districts;
   List<City> _cities;
   List<TypeService> _types;
@@ -58,7 +58,7 @@ class _SearchService extends GlobalState<SearchService> {
 
   TextEditingController _startDateTextController = TextEditingController();
   TextEditingController _endDateTextController = TextEditingController();
-  TextEditingController _dropDownImpactController = TextEditingController();
+  TextEditingController _dropDownSatisfactionDegreeController = TextEditingController();
   TextEditingController _autocompleteDistrictController = TextEditingController();
   TextEditingController _autocompleteCityController = TextEditingController();
   TextEditingController _autocompleteTypeServiceController = TextEditingController();
@@ -74,7 +74,7 @@ class _SearchService extends GlobalState<SearchService> {
 
 
   _SearchService() {
-    ModelFacade.sharedInstance.loadAllImpactValues();
+    ModelFacade.sharedInstance.loadAllSatisfactionDegrees();
     ModelFacade.sharedInstance.loadAllDistricts();
     ModelFacade.sharedInstance.loadAllCities();
     ModelFacade.sharedInstance.loadAllTypesService();
@@ -84,23 +84,23 @@ class _SearchService extends GlobalState<SearchService> {
 
   @override
   void refreshState() {
-    _impactValues = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_IMPACT_VALUES);
+    _satisfactionDegrees = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES);
     _districts = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_DISTRICTS);
     _cities = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CITIES);
     _types = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_SERVICE);
     _areas = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS);
     _clubs = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CLUBS);
-    if ( _impactValues != null ) {
-      _impactValue = _impactValues[0];
+    if ( _satisfactionDegrees != null ) {
+      _satisfactionDegree = _satisfactionDegrees[0];
     }
-    _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SERVICE_SEARCH_SERVICE_RESULT);
+    _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_SERVICE_RESULT);
     if ( _searchResult != null ) {
       _isSearching = false;
     }
   }
 
   bool isCircularMoment() {
-    return !(_impactValues != null && _districts != null && _cities != null && _types != null && _areas != null && _clubs != null) || _isSearching;
+    return !(_satisfactionDegrees != null && _districts != null && _cities != null && _types != null && _areas != null && _clubs != null) || _isSearching;
   }
 
   @override
@@ -113,7 +113,9 @@ class _SearchService extends GlobalState<SearchService> {
           children: [
             isCircularMoment() ?
             Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).buttonColor),
+              ),
             ) :
             Padding(padding: EdgeInsets.all(0)),
             Column(
@@ -172,7 +174,7 @@ class _SearchService extends GlobalState<SearchService> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                   child: Text(
-                    AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_MESSAGE)),
+                    AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_MESSAGE)),
                     style: LeoTitleStyle(),
                   ),
                 ) :
@@ -395,12 +397,12 @@ class _SearchService extends GlobalState<SearchService> {
                   children: [
                     Flexible(
                       child: InputDropdown(
-                        labelText: AppLocalizations.of(context).translate("impact"),
-                        controller: _dropDownImpactController,
-                        items: _impactValues,
+                        labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
+                        controller: _dropDownSatisfactionDegreeController,
+                        items: _satisfactionDegrees,
                         onChanged: (String value) {
-                          _impactValue = value;
-                          _dropDownImpactController.text = value;
+                          _satisfactionDegree = value;
+                          _dropDownSatisfactionDegreeController.text = value;
                         },
                       ),
                     ),
@@ -477,8 +479,8 @@ class _SearchService extends GlobalState<SearchService> {
         ],
       ),
     );
-    if ( _impactValue != null ) {
-      _dropDownImpactController.text = _impactValue;
+    if ( _satisfactionDegree != null ) {
+      _dropDownSatisfactionDegreeController.text = _satisfactionDegree;
     }
     if ( _district != null ) {
       _autocompleteDistrictController.text = _district.name;
@@ -529,7 +531,22 @@ class _SearchService extends GlobalState<SearchService> {
   }
 
   void _search() {
-    ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _minMoneyRaised, _maxMoneyRaised, _quantityServedPeople, _district, _impactValue, _city, _type, _area, _club, _startDate, _endDate, _currentPage);
+    if ( _autocompleteClubController.text == null || _autocompleteClubController.text == "" ) {
+      _club = null;
+    }
+    if ( _autocompleteDistrictController.text == null || _autocompleteDistrictController.text == "" ) {
+      _district = null;
+    }
+    if ( _autocompleteCityController.text == null || _autocompleteCityController.text == "" ) {
+      _city = null;
+    }
+    if ( _autocompleteTypeServiceController.text == null || _autocompleteTypeServiceController.text == "" ) {
+      _type = null;
+    }
+    if ( _autocompleteCompetenceAreaController.text == null || _autocompleteCompetenceAreaController.text == "" ) {
+      _area = null;
+    }
+    ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _minMoneyRaised, _maxMoneyRaised, _quantityServedPeople, _district, _satisfactionDegree, _city, _type, _area, _club, _startDate, _endDate, _currentPage);
     setState(() {
       _isSearching = true;
     });

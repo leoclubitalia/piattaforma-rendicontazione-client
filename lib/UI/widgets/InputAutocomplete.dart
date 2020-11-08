@@ -17,7 +17,6 @@ class InputAutocomplete extends StatelessWidget {
       padding: EdgeInsets.all(5),
       child: TypeAheadField(
         textFieldConfiguration: TextFieldConfiguration(
-          autofocus: false,
           controller: controller,
           decoration: InputDecoration(
             fillColor: Theme.of(context).primaryColor,

@@ -13,7 +13,7 @@ class CircularIconButton extends StatelessWidget {
       onPressed: onPressed,
       elevation: 2.0,
       fillColor: Theme.of(context).buttonColor,
-      child: Icon(icon, color: Theme.of(context).indicatorColor),
+      child: Icon(icon, color: Theme.of(context).primaryColor),
       padding: EdgeInsets.all(15.0),
       shape: CircleBorder(),
     );

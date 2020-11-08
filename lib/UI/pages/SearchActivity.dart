@@ -6,16 +6,13 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputDropdown.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ServiceTile.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ActivityTile.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
-import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
-import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
-import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,12 +34,13 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   City _city;
   TypeActivity _type;
   Club _club;
-  bool _lionsParticipation;
+  String _lionsParticipation;
   String _satisfactionDegree;
   DateTime _startDate = DateTime(2000, 1, 1);
   DateTime _endDate = DateTime.now();
 
   List<String> _satisfactionDegrees;
+  List<String> _lionsParticipationsValues;
   List<District> _districts;
   List<City> _cities;
   List<TypeActivity> _types;
@@ -55,26 +53,28 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   TextEditingController _startDateTextController = TextEditingController();
   TextEditingController _endDateTextController = TextEditingController();
   TextEditingController _dropDownSatisfactionDegreeController = TextEditingController();
+  TextEditingController _dropDownLionsParticipationController = TextEditingController();
   TextEditingController _autocompleteDistrictController = TextEditingController();
   TextEditingController _autocompleteCityController = TextEditingController();
   TextEditingController _autocompleteTypeActivityController = TextEditingController();
   TextEditingController _autocompleteClubController = TextEditingController();
   TextEditingController _inputFieldTitleController = TextEditingController();
   TextEditingController _inputFieldQuantityLeoController = TextEditingController();
-  TextEditingController _inputFieldLionsParticipationController = TextEditingController();
 
 
-  _SearchService() {
-    ModelFacade.sharedInstance.loadAllImpactValues();
+  _SearchActivity() {
+    ModelFacade.sharedInstance.loadAllSatisfactionDegrees();
     ModelFacade.sharedInstance.loadAllDistricts();
     ModelFacade.sharedInstance.loadAllCities();
-    ModelFacade.sharedInstance.loadAllTypesService();
+    ModelFacade.sharedInstance.loadAllTypesActivity();
     ModelFacade.sharedInstance.loadAllClubs();
+    ModelFacade.sharedInstance.loadAllBools();
   }
 
   @override
   void refreshState() {
-    _satisfactionDegrees = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_IMPACT_VALUES);
+    _satisfactionDegrees = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES);
+    _lionsParticipationsValues = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_BOOLS);
     _districts = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_DISTRICTS);
     _cities = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CITIES);
     _types = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_ACTIVITY);
@@ -82,7 +82,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
     if ( _satisfactionDegrees != null ) {
       _satisfactionDegree = _satisfactionDegrees[0];
     }
-    _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SERVICE_SEARCH_ACTIVITY_RESULT);
+    _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
     if ( _searchResult != null ) {
       _isSearching = false;
     }
@@ -102,7 +102,9 @@ class _SearchActivity extends GlobalState<SearchActivity> {
           children: [
             isCircularMoment() ?
             Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).buttonColor),
+              ),
             ) :
             Padding(padding: EdgeInsets.all(0)),
             Column(
@@ -161,7 +163,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                   child: Text(
-                    AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_MESSAGE)),
+                    AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_MESSAGE)),
                     style: LeoTitleStyle(),
                   ),
                 ) :
@@ -172,8 +174,8 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                       itemCount: _searchResult.length + 1,
                       itemBuilder: (context, index) {
                         if ( index < _searchResult.length ) {
-                          return ServiceTile(
-                            service: _searchResult[index],
+                          return ActivityTile(
+                            activity: _searchResult[index],
                           );
                         }
                         else {
@@ -253,6 +255,19 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                         },
                       ),
                     ),
+                    Flexible(
+                      child: InputAutocomplete(
+                        labelText: AppLocalizations.of(context).translate("type_activity"),
+                        controller: _autocompleteTypeActivityController,
+                        onSuggestion: (String pattern) async {
+                          return await ModelFacade.sharedInstance.suggestTypesActivity(pattern);
+                        },
+                        onSelect: (suggestion) {
+                          _autocompleteTypeActivityController.text = suggestion.toString();
+                          _type = suggestion;
+                        },
+                      ),
+                    ),
                   ],
                 ),
                 Row(
@@ -316,33 +331,14 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                         },
                       ),
                     ),
-                  ],
-                ),
-                Row(
-                  children: [
                     Flexible(
                       child: InputDropdown(
-                        labelText: AppLocalizations.of(context).translate("impact"),
-                        controller: _dropDownSatisfactionDegreeController,
-                        items: _satisfactionDegrees,
+                        labelText: AppLocalizations.of(context).translate("lions_participation"),
+                        controller: _dropDownLionsParticipationController,
+                        items: _lionsParticipationsValues,
                         onChanged: (String value) {
-                          _satisfactionDegree = value;
-                          _dropDownSatisfactionDegreeController.text = value;
-                        },
-                      ),
-                    ),
-                    Flexible(
-                      child: InputField(
-                        labelText: AppLocalizations.of(context).translate("quantity_served_people"),
-                        controller: _inputFieldServedPeopleController,
-                        keyboardType: TextInputType.number,
-                        onSubmit: (String value) {
-                          if ( value == null || value == "" ) {
-                            _quantityServedPeople = null;
-                          }
-                          else {
-                            _quantityServedPeople = int.parse(value);
-                          }
+                          _lionsParticipation = value;
+                          _dropDownLionsParticipationController.text = value;
                         },
                       ),
                     ),
@@ -364,28 +360,13 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                       ),
                     ),
                     Flexible(
-                      child: InputAutocomplete(
-                        labelText: AppLocalizations.of(context).translate("type_activity"),
-                        controller: _autocompleteTypeActivityController,
-                        onSuggestion: (String pattern) async {
-                          return await ModelFacade.sharedInstance.suggestTypesActivity(pattern);
-                        },
-                        onSelect: (suggestion) {
-                          _autocompleteTypeActivityController.text = suggestion.toString();
-                          _type = suggestion;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      child: InputField(
-                        labelText: AppLocalizations.of(context).translate("other_associations"),
-                        controller: _inputFieldOtherAssociationsController,
-                        onSubmit: (String value) {
-                          _otherAssociations = value;
+                      child: InputDropdown(
+                        labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
+                        controller: _dropDownSatisfactionDegreeController,
+                        items: _satisfactionDegrees,
+                        onChanged: (String value) {
+                          _satisfactionDegree = value;
+                          _dropDownSatisfactionDegreeController.text = value;
                         },
                       ),
                     ),
@@ -407,6 +388,9 @@ class _SearchActivity extends GlobalState<SearchActivity> {
     if ( _satisfactionDegree != null ) {
       _dropDownSatisfactionDegreeController.text = _satisfactionDegree;
     }
+    if ( _lionsParticipation != null ) {
+      _dropDownLionsParticipationController.text = _lionsParticipation.toString();
+    }
     if ( _district != null ) {
       _autocompleteDistrictController.text = _district.name;
     }
@@ -425,21 +409,6 @@ class _SearchActivity extends GlobalState<SearchActivity> {
     if ( _quantityLeo != null ) {
       _inputFieldQuantityLeoController.text = _quantityLeo.toString();
     }
-    if ( _duration != null ) {
-      _inputFieldDurationController.text = _duration.toString();
-    }
-    if ( _minMoneyRaised != null ) {
-      _inputFieldMinMoneyRaisedController.text = _minMoneyRaised.toString();
-    }
-    if ( _maxMoneyRaised != null ) {
-      _inputFieldMaxMoneyRaisedController.text = _maxMoneyRaised.toString();
-    }
-    if ( _quantityServedPeople != null ) {
-      _inputFieldServedPeopleController.text = _quantityServedPeople.toString();
-    }
-    if ( _otherAssociations != null ) {
-      _inputFieldOtherAssociationsController.text = _otherAssociations.toString();
-    }
   }
 
   void loadSearch() {
@@ -453,7 +422,19 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   }
 
   void _search() {
-    ModelFacade.sharedInstance.searchActivity(_title, _otherAssociations, _quantityLeo, _duration, _minMoneyRaised, _maxMoneyRaised, _quantityServedPeople, _district, _impactValue, _city, _type, _area, _club, _startDate, _endDate, _currentPage);
+    if ( _autocompleteClubController.text == null || _autocompleteClubController.text == "" ) {
+      _club = null;
+    }
+    if ( _autocompleteDistrictController.text == null || _autocompleteDistrictController.text == "" ) {
+      _district = null;
+    }
+    if ( _autocompleteCityController.text == null || _autocompleteCityController.text == "" ) {
+      _city = null;
+    }
+    if ( _autocompleteTypeActivityController.text == null || _autocompleteTypeActivityController.text == "" ) {
+      _type = null;
+    }
+    ModelFacade.sharedInstance.searchActivities(_title, _quantityLeo, _district, _satisfactionDegree, _city, _type, _club, _startDate, _endDate, _lionsParticipation, _currentPage);
     setState(() {
       _isSearching = true;
     });

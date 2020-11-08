@@ -45,5 +45,9 @@
   "advanced_search": "Ricerca avanzata",
   "types_service": "Tipologia di service",
   "message_error": "Oops... qualcosa è andato storto!",
-  "type_activity": "tipo"
+  "type_activity": "tipo",
+  "yes": "si",
+  "no": "no",
+  "satisfaction_degree": "grado di soddisfazione",
+  "lions_participation": "partecipazione lions"
 }

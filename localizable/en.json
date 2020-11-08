@@ -46,5 +46,10 @@
   "advanced_search": "Advanced Search",
   "types_service": "Types service",
   "message_error": "Oops... something went wrong!",
-  "type_activity": "type"
+  "type_activity": "type",
+  "yes": "yes",
+  "no": "no",
+  "satisfaction_degree": "satisfaction degree",
+  "lions_participation": "lions participation"
+
 }

@@ -30,7 +30,7 @@ class App extends StatelessWidget {
         primaryColor: Colors.white,
         backgroundColor: Colors.amber,
         buttonColor: Colors.deepOrangeAccent,
-        indicatorColor: Colors.white,
+        indicatorColor: Colors.deepOrangeAccent,
         canvasColor: Colors.grey[100], // app background
         cardColor: Colors.white,
         unselectedWidgetColor: Colors.grey[500],

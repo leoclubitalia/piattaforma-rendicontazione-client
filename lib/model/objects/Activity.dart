@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
@@ -15,23 +14,27 @@ class Activity {
   int satisfactionDegree;
   City city;
   Club club;
-  Set<TypeActivity> typesActivity;
+  List<TypeActivity> typesActivity;
   
 
   Activity({this.id, this.title, this.description, this.date, this.quantityLeo, this.lionsParticipation, this.satisfactionDegree, this.city, this.club, this.typesActivity});
 
   factory Activity.fromJson(Map<String, dynamic> json) {
+    List<TypeActivity> typesActivity = List();
+    for ( Map<String, dynamic> rawTypeActivity in json['typesActivity'] ) {
+      typesActivity.add(TypeActivity.fromJson(rawTypeActivity));
+    }
     return Activity(
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      date: json['date'],
+      date: DateTime.fromMillisecondsSinceEpoch(json['date']),
       quantityLeo: json['quantityLeo'],
       lionsParticipation: json['lionsParticipation'],
       satisfactionDegree: json['satisfactionDegree'],
-      city: json['city'],
-      club: json['club'],
-      typesActivity: json['typesActivity'],
+      city: City.fromJson(json['city']),
+      club: Club.fromJson(json['club']),
+      typesActivity: typesActivity,
     );
   }
 

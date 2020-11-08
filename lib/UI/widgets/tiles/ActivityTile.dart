@@ -1,30 +1,30 @@
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
-import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/StringCapitalization.dart';
 import 'package:flutter/material.dart';
 
 
-class ServiceTile extends StatefulWidget {
-  ServiceTile({Key key, this.service}) : super(key: key);
+class ActivityTile extends StatefulWidget {
+  ActivityTile({Key key, this.activity}) : super(key: key);
 
-  final Service service;
+  final Activity activity;
 
   @override
-  _ServiceTile createState() => _ServiceTile(service);
+  _ActivityTile createState() => _ActivityTile(activity);
 }
 
-class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderStateMixin {
-  final Service service;
+class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderStateMixin {
+  final Activity activity;
 
   AnimationController animationController;
   Animation<double> collapseAnimation;
 
 
-  _ServiceTile(this.service);
+  _ActivityTile(this.activity);
 
   @override
   void initState() {
@@ -68,7 +68,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        service.title,
+                        activity.title,
                         style: TextStyle(
                           fontSize: 19,
                         ),
@@ -83,7 +83,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                               color: Theme.of(context).splashColor,
                             ),
                             children: [
-                              TextSpan(text: service.club.name),
+                              TextSpan(text: activity.club.name),
                               TextSpan(text: " "),
                               TextSpan(
                                 text: AppLocalizations.of(context).translate("district"),
@@ -92,7 +92,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                                 ),
                               ),
                               TextSpan(text: " "),
-                              TextSpan(text: service.club.district.name),
+                              TextSpan(text: activity.club.district.name),
                             ],
                           ),
                         ),
@@ -110,7 +110,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                             ),
                             TextSpan(text: " "),
                             TextSpan(
-                              text: service.date.toStringSlashed(),
+                              text: activity.date.toStringSlashed(),
                               style: TextStyle(
                                 fontStyle: FontStyle.italic,
                               ),
@@ -123,7 +123,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                               ),
                             ),
                             TextSpan(text: " "),
-                            TextSpan(text: service.city.name),
+                            TextSpan(text: activity.city.name),
                           ],
                         ),
                       ),
@@ -132,18 +132,18 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                   Column(
                     children: [
                       Text(
-                        AppLocalizations.of(context).translate("areas") + ":",
+                        AppLocalizations.of(context).translate("type_activity") + ":",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      service.competenceAreasService == null ?
+                      activity.typesActivity == null ?
                       Text(
                         AppLocalizations.of(context).translate("no_one") + "!",
                       ) :
                       Column(
                         children: <Widget>[
-                          for( var item in service.competenceAreasService ) Text(item.title)
+                          for( var item in activity.typesActivity ) Text(item.title)
                         ],
                       ),
                     ],
@@ -165,18 +165,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                             ),
                             TextSpan(text: ": "),
                             TextSpan(
-                              text: ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[service.satisfactionDegree],
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                            TextSpan(text: "\n"),
-                            TextSpan(
-                                text: AppLocalizations.of(context).translate("served_People")
-                            ),
-                            TextSpan(text: ": "),
-                            TextSpan(
-                              text: service.quantityServedPeople.toString(),
+                              text: ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[activity.satisfactionDegree],
                               style: TextStyle(
                                 fontStyle: FontStyle.italic,
                               ),
@@ -187,18 +176,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                             ),
                             TextSpan(text: ": "),
                             TextSpan(
-                              text: service.quantityParticipants.toString(),
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                            TextSpan(text: "\n"),
-                            TextSpan(
-                                text: AppLocalizations.of(context).translate("duration")
-                            ),
-                            TextSpan(text: ": "),
-                            TextSpan(
-                              text: service.duration.toString() + " h",
+                              text: activity.quantityLeo.toString(),
                               style: TextStyle(
                                 fontStyle: FontStyle.italic,
                               ),
@@ -229,70 +207,11 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                               ),
                               children: [
                                 TextSpan(
-                                  text: AppLocalizations.of(context).translate("types_service")
-                                ),
-                                TextSpan(text: ": "),
-                                for( var item in service.typesService )
-                                  TextSpan(
-                                    text: item.title + " ",
-                                    style: TextStyle(
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      child: Row(
-                        children: [
-                          RichText(
-                            textAlign: TextAlign.start,
-                            text: TextSpan(
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Theme.of(context).splashColor,
-                                fontStyle: FontStyle.normal,
-                              ),
-                              children: [
-                                TextSpan(
-                                    text: AppLocalizations.of(context).translate("money_raised").capitalize
+                                    text: AppLocalizations.of(context).translate("lions_participation").capitalize
                                 ),
                                 TextSpan(text: ": "),
                                 TextSpan(
-                                  text: service.moneyRaised.toStringAsFixed(2) + " €",
-                                  style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      child: Row(
-                        children: [
-                          RichText(
-                            textAlign: TextAlign.start,
-                            text: TextSpan(
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Theme.of(context).splashColor,
-                                fontStyle: FontStyle.normal,
-                              ),
-                              children: [
-                                TextSpan(
-                                    text: AppLocalizations.of(context).translate("other_associations").capitalize
-                                ),
-                                TextSpan(text: ": "),
-                                TextSpan(
-                                  text: service.otherAssociations,
+                                  text: activity.lionsParticipation ? AppLocalizations.of(context).translate("yes") : AppLocalizations.of(context).translate("no"),
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                   ),
@@ -306,7 +225,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                     Padding(
                       padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
                       child: Text(
-                        service.description,
+                        activity.description,
                         textAlign: TextAlign.justify,
                         style: TextStyle(
                           fontSize: 15,

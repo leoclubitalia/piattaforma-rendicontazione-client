@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Quantity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
@@ -36,6 +37,16 @@ class RestManager {
     });
     print(response.body);
     return List<Service>.from(json.decode(response.body).map((i) => Service.fromJson(i)).toList());
+  }
+
+  Future<List<Activity>> makeListActivityRequest(String url, Map<String, String> params) async {
+    Uri uri = Uri.http(Constants.BASE_URL, url, params);
+    var response = await get(uri, headers: {
+      //HttpHeaders.authorizationHeader: 'Token $token',
+      HttpHeaders.contentTypeHeader: 'application/json',
+    });
+    print(response.body);
+    return List<Activity>.from(json.decode(response.body).map((i) => Activity.fromJson(i)).toList());
   }
 
 

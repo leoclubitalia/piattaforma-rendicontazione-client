@@ -41,7 +41,6 @@ class Service {
       date: DateTime.fromMillisecondsSinceEpoch(json['date']),
       quantityParticipants: json['quantityParticipants'],
       satisfactionDegree: json['satisfactionDegree'],
-      impact: json['impact'],
       duration: json['duration'],
       otherAssociations: json['otherAssociations'],
       moneyRaised: json['moneyRaised'],
