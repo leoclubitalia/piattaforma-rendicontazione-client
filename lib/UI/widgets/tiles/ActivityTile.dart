@@ -161,17 +161,6 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
                           ),
                           children: [
                             TextSpan(
-                                text: AppLocalizations.of(context).translate("impact")
-                            ),
-                            TextSpan(text: ": "),
-                            TextSpan(
-                              text: ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[activity.satisfactionDegree],
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                            TextSpan(text: "\n"),
-                            TextSpan(
                                 text: AppLocalizations.of(context).translate("quantity_participants")
                             ),
                             TextSpan(text: ": "),
@@ -193,6 +182,35 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
                 sizeFactor: collapseAnimation,
                 child: Column(
                   children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Row(
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.end,
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).splashColor,
+                                fontStyle: FontStyle.normal,
+                              ),
+                              children: [
+                                TextSpan(
+                                    text: AppLocalizations.of(context).translate("satisfaction_degree").capitalize
+                                ),
+                                TextSpan(text: ": "),
+                                TextSpan(
+                                  text: ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[activity.satisfactionDegree],
+                                  style: TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: Row(

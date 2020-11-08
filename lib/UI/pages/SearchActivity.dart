@@ -1,10 +1,10 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputAutocomplete.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputButton.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputDropdown.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputFiled.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputAutocomplete.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputButton.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputDropdown.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ActivityTile.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
@@ -42,7 +42,6 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   List<String> _satisfactionDegrees;
   List<String> _lionsParticipationsValues;
   List<District> _districts;
-  List<City> _cities;
   List<TypeActivity> _types;
   List<Club> _clubs;
 
@@ -65,7 +64,6 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   _SearchActivity() {
     ModelFacade.sharedInstance.loadAllSatisfactionDegrees();
     ModelFacade.sharedInstance.loadAllDistricts();
-    ModelFacade.sharedInstance.loadAllCities();
     ModelFacade.sharedInstance.loadAllTypesActivity();
     ModelFacade.sharedInstance.loadAllClubs();
     ModelFacade.sharedInstance.loadAllBools();
@@ -76,7 +74,6 @@ class _SearchActivity extends GlobalState<SearchActivity> {
     _satisfactionDegrees = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES);
     _lionsParticipationsValues = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_BOOLS);
     _districts = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_DISTRICTS);
-    _cities = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CITIES);
     _types = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_ACTIVITY);
     _clubs = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CLUBS);
     if ( _satisfactionDegrees != null ) {
@@ -89,7 +86,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   }
 
   bool isCircularMoment() {
-    return !(_satisfactionDegrees != null && _districts != null && _cities != null && _types != null && _clubs != null) || _isSearching;
+    return !(_satisfactionDegrees != null && _districts != null && _types != null && _clubs != null) || _isSearching;
   }
 
   @override

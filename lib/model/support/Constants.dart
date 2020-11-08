@@ -7,13 +7,18 @@ class Constants {
   static final String REQUEST_CLUB_QUANTITY_ACTIVITIES = "/club/quantity_activities_made";
   static final String REQUEST_SEARCH_SERVICES_ADVANCED = "/search/service/advanced";
   static final String REQUEST_SEARCH_ACTIVITIES_ADVANCED = "/search/activity/advanced";
+  static final String REQUEST_SEARCH_CITIES = "/search/city/by_name";
+  static final String REQUEST_SEARCH_ALL_DISTRICTS = "/search/district/all";
+  static final String REQUEST_SEARCH_ALL_TYPES_SERVICE = "/search/type/service/all";
+  static final String REQUEST_SEARCH_ALL_TYPES_ACTIVITY = "/search/type/activity/all";
+  static final String REQUEST_SEARCH_ALL_AREAS = "/search/competence_area/all";
+  static final String REQUEST_SEARCH_ALL_CLUBS = "/search/club/all";
 
   static final String REQUEST_DEFAULT_PAGE_SIZE = "30";
 
   static final String STATE_CLUB = "club";
   static final String STATE_ALL_SATISFACTION_DEGREES = "all_satisfaction_degrees";
   static final String STATE_ALL_DISTRICTS = "all_districts";
-  static final String STATE_ALL_CITIES = "all_cities";
   static final String STATE_ALL_TYPE_SERVICE = "all_type_service";
   static final String STATE_ALL_TYPE_ACTIVITY = "all_type_activity";
   static final String STATE_ALL_AREAS = "all_areas";

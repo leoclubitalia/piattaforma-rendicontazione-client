@@ -161,17 +161,6 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                           ),
                           children: [
                             TextSpan(
-                                text: AppLocalizations.of(context).translate("impact")
-                            ),
-                            TextSpan(text: ": "),
-                            TextSpan(
-                              text: ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[service.satisfactionDegree],
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                            TextSpan(text: "\n"),
-                            TextSpan(
                                 text: AppLocalizations.of(context).translate("served_People")
                             ),
                             TextSpan(text: ": "),
@@ -215,6 +204,35 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                 sizeFactor: collapseAnimation,
                 child: Column(
                   children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Row(
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.end,
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).splashColor,
+                                fontStyle: FontStyle.normal,
+                              ),
+                              children: [
+                                TextSpan(
+                                    text: AppLocalizations.of(context).translate("satisfaction_degree").capitalize
+                                ),
+                                TextSpan(text: ": "),
+                                TextSpan(
+                                  text: ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[service.satisfactionDegree],
+                                  style: TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: Row(

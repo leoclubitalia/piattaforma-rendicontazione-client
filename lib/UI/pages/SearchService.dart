@@ -1,10 +1,10 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputAutocomplete.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputButton.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputDropdown.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/InputFiled.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputAutocomplete.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputButton.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputDropdown.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ServiceTile.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
@@ -47,7 +47,6 @@ class _SearchService extends GlobalState<SearchService> {
 
   List<String> _satisfactionDegrees;
   List<District> _districts;
-  List<City> _cities;
   List<TypeService> _types;
   List<CompetenceArea> _areas;
   List<Club> _clubs;
@@ -76,7 +75,6 @@ class _SearchService extends GlobalState<SearchService> {
   _SearchService() {
     ModelFacade.sharedInstance.loadAllSatisfactionDegrees();
     ModelFacade.sharedInstance.loadAllDistricts();
-    ModelFacade.sharedInstance.loadAllCities();
     ModelFacade.sharedInstance.loadAllTypesService();
     ModelFacade.sharedInstance.loadAllAreas();
     ModelFacade.sharedInstance.loadAllClubs();
@@ -86,7 +84,6 @@ class _SearchService extends GlobalState<SearchService> {
   void refreshState() {
     _satisfactionDegrees = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES);
     _districts = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_DISTRICTS);
-    _cities = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CITIES);
     _types = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_SERVICE);
     _areas = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS);
     _clubs = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CLUBS);
@@ -100,7 +97,7 @@ class _SearchService extends GlobalState<SearchService> {
   }
 
   bool isCircularMoment() {
-    return !(_satisfactionDegrees != null && _districts != null && _cities != null && _types != null && _areas != null && _clubs != null) || _isSearching;
+    return !(_satisfactionDegrees != null && _districts != null && _types != null && _areas != null && _clubs != null) || _isSearching;
   }
 
   @override

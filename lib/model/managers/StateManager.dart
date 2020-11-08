@@ -14,6 +14,10 @@ class StateManager extends GlobalStateManager {
     return _statesContainer[key];
   }
 
+  bool existsValue(String key) {
+    return _statesContainer.containsKey(key);
+  }
+
   dynamic getAndDestroyValue(String key) {
     var result = _statesContainer[key];
     _statesContainer.remove(key);

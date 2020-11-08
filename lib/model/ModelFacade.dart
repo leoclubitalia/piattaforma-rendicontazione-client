@@ -13,6 +13,7 @@ import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Searcher.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
 
+
 class ModelFacade {
   static ModelFacade sharedInstance = ModelFacade();
 
@@ -31,83 +32,52 @@ class ModelFacade {
   }
 
   void loadAllBools() async {
-    List<String> _boolValues = ["all", "yes", "no"];
-    appState.addValue(Constants.STATE_ALL_BOOLS, _boolValues);
+    if ( !appState.existsValue(Constants.STATE_ALL_BOOLS) ) {
+      List<String> boolValues = ["all", "yes", "no"];
+      appState.addValue(Constants.STATE_ALL_BOOLS, boolValues);
+    }
   }
 
   void loadAllSatisfactionDegrees() async {
-    List<String> _impactValues = ["all", "limited", "moderated", "elevated"];
-    appState.addValue(Constants.STATE_ALL_SATISFACTION_DEGREES, _impactValues);
+    if ( !appState.existsValue(Constants.STATE_ALL_SATISFACTION_DEGREES) ) {
+      List<String> impactValues = ["all", "limited", "moderated", "elevated"];
+      appState.addValue(Constants.STATE_ALL_SATISFACTION_DEGREES, impactValues);
+    }
   }
 
   void loadAllDistricts() async {
-    //TODO
-    List<District> _districts = [
-      District(id: 1, name: "ya"),
-      District(id: 2, name: "yb"),
-      District(id: 3, name: "ia1"),
-      District(id: 4, name: "ia2"),
-      District(id: 5, name: "tb"),
-    ];
-    appState.addValue(Constants.STATE_ALL_DISTRICTS, _districts);
-  }
-
-  void loadAllCities() async {
-    //TODO
-    print("loadAllCities");
-    List<City> _cities = [
-      City(name: "Cirò"),
-      City(name: "Roma"),
-      City(name: "Caccuri"),
-      City(name: "Palemmo"),
-    ];
-    //sleep(const Duration(seconds:1));
-    print("loadAllCities2");
-    Future.delayed(const Duration(seconds: 1), () => {
-      appState.addValue(Constants.STATE_ALL_CITIES, _cities)
-    });
-
-
+    if ( !appState.existsValue(Constants.STATE_ALL_DISTRICTS) ) {
+      List<District> districts = await _restManager.makeListDistrictsRequest(Constants.REQUEST_SEARCH_ALL_DISTRICTS);
+      appState.addValue(Constants.STATE_ALL_DISTRICTS, districts);
+    }
   }
 
   void loadAllTypesService() async {
-    //TODO
-    List<TypeService> _types = [
-      TypeService(title: "storico"),
-      TypeService(title: "innovativo"),
-      TypeService(title: "online"),
-    ];
-    appState.addValue(Constants.STATE_ALL_TYPE_SERVICE, _types);
+    if ( !appState.existsValue(Constants.STATE_ALL_TYPE_SERVICE) ) {
+      List<TypeService> types = await _restManager.makeListTypeServiceRequest(Constants.REQUEST_SEARCH_ALL_TYPES_SERVICE);
+      appState.addValue(Constants.STATE_ALL_TYPE_SERVICE, types);
+    }
   }
 
   void loadAllTypesActivity() async {
-    //TODO
-    List<TypeActivity> _types = [
-      TypeActivity(title: "gemellaggio"),
-      TypeActivity(title: "riunione"),
-      TypeActivity(title: "formazione"),
-    ];
-    appState.addValue(Constants.STATE_ALL_TYPE_ACTIVITY, _types);
+    if ( !appState.existsValue(Constants.STATE_ALL_TYPE_ACTIVITY) ) {
+      List<TypeActivity> types = await _restManager.makeListTypeActivityRequest(Constants.REQUEST_SEARCH_ALL_TYPES_ACTIVITY);
+      appState.addValue(Constants.STATE_ALL_TYPE_ACTIVITY, types);
+    }
   }
 
   void loadAllAreas() async {
-    //TODO
-    List<CompetenceArea> _areas = [
-      CompetenceArea(title: "ambiente"),
-      CompetenceArea(title: "fame"),
-      CompetenceArea(title: "sport"),
-    ];
-    appState.addValue(Constants.STATE_ALL_AREAS, _areas);
+    if ( !appState.existsValue(Constants.STATE_ALL_AREAS) ) {
+      List<CompetenceArea> types = await _restManager.makeListAreasRequest(Constants.REQUEST_SEARCH_ALL_AREAS);
+      appState.addValue(Constants.STATE_ALL_AREAS, types);
+    }
   }
 
   void loadAllClubs() async {
-    //TODO
-    List<Club> _clubs = [
-      Club(id: 1, name: "Leo Club Cirò Kirimisa", city: City(name: "Cirò"), district: District(name: "ya")),
-      Club(name: "Leo Club Roma Parioli", city: City(name: "Cirò"), district: District(name: "ya")),
-      Club(name: "Leo Club Crotone", city: City(name: "Cirò"), district: District(name: "ya")),
-    ];
-    appState.addValue(Constants.STATE_ALL_CLUBS, _clubs);
+    if ( !appState.existsValue(Constants.STATE_ALL_CLUBS) ) {
+      List<Club> types = await _restManager.makeListClubsRequest(Constants.REQUEST_SEARCH_ALL_CLUBS);
+      appState.addValue(Constants.STATE_ALL_CLUBS, types);
+    }
   }
 
   Future<List<District>> suggestDistricts(String value) async {
@@ -116,8 +86,10 @@ class ModelFacade {
   }
 
   Future<List<City>> suggestCities(String value) async {
-    List<City> all = appState.getValue(Constants.STATE_ALL_CITIES);
-    return all.getSuggestions(value);
+    if ( value != null && value.replaceAll(" ", "") != "" ) {
+      return await _restManager.makeListCityRequest(Constants.REQUEST_SEARCH_CITIES, value);
+    }
+    return List<City>();
   }
 
   Future<List<TypeService>> suggestTypesService(String value) async {
@@ -217,7 +189,6 @@ class ModelFacade {
       params["pageNumber"] = 0.toString();
     }
     params["pageSize"] = Constants.REQUEST_DEFAULT_PAGE_SIZE;
-    print(params);
     try {
       List<Service> services = await _restManager.makeListServiceRequest(Constants.REQUEST_SEARCH_SERVICES_ADVANCED, params);
       if ( page == 0 ) {
@@ -230,7 +201,7 @@ class ModelFacade {
         appState.addValue(Constants.STATE_SEARCH_SERVICE_RESULT, appState.getValue(Constants.STATE_SEARCH_SERVICE_RESULT) + services);
       }
     }
-    catch(e) {
+    catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");
       appState.addValue(Constants.STATE_SEARCH_SERVICE_RESULT, List<Service>());
     }
@@ -285,10 +256,10 @@ class ModelFacade {
     }
     if ( lionsParticipations != null ) {
       if ( lionsParticipations == appState.getValue(Constants.STATE_ALL_BOOLS)[1] ) {
-        params["lionsParticipations"] = 1.toString();
+        params["lionsParticipation"] = 1.toString();
       }
       else if ( lionsParticipations == appState.getValue(Constants.STATE_ALL_BOOLS)[2] ) {
-        params["lionsParticipations"] = 2.toString();
+        params["lionsParticipation"] = 0.toString();
       }
     }
     if ( page != null ) {
@@ -311,7 +282,7 @@ class ModelFacade {
         appState.addValue(Constants.STATE_SEARCH_ACTIVITY_RESULT, appState.getValue(Constants.STATE_SEARCH_ACTIVITY_RESULT) + activities);
       }
     }
-    catch(e) {
+    catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");
       appState.addValue(Constants.STATE_SEARCH_ACTIVITY_RESULT, List<Activity>());
     }
