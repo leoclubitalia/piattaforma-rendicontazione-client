@@ -9,11 +9,12 @@ class Club {
   String email;
   City city;
   District district;
+  DateTime foundationDate;
   Quantity quantityServices;
   Quantity quantityActivities;
 
 
-  Club({this.id, this.name, this.email, this.city, this.district, this.quantityServices, this.quantityActivities});
+  Club({this.id, this.name, this.email, this.city, this.district, this.foundationDate, this.quantityServices, this.quantityActivities});
 
   factory Club.fromJson(Map<String, dynamic> json) {
     return Club(
@@ -21,7 +22,8 @@ class Club {
       name: json['name'],
       email: json['email'],
       city: City.fromJson(json['city']),
-      district: District.fromJson(json['district'])
+      district: District.fromJson(json['district']),
+      foundationDate: DateTime.fromMillisecondsSinceEpoch(json['foundationDate']),
     );
   }
 

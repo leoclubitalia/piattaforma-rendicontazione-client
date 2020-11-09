@@ -54,8 +54,8 @@ class _Search extends GlobalState<Search> {
           title: Text(AppLocalizations.of(context).translate("search").capitalize),
           bottom: TabBar(
             tabs: [
-              Tab(text: AppLocalizations.of(context).translate("service"), icon: UIConstants.ICON_SERVICE),
-              Tab(text: AppLocalizations.of(context).translate("activity"), icon: UIConstants.ICON_ACTIVITY),
+              Tab(text: AppLocalizations.of(context).translate("service"), icon: Icon(UIConstants.ICON_SERVICE)),
+              Tab(text: AppLocalizations.of(context).translate("activity"), icon: Icon(UIConstants.ICON_ACTIVITY)),
             ],
           ),
         ),

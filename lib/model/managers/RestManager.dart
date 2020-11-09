@@ -16,8 +16,8 @@ import 'package:http/http.dart';
 class RestManager {
 
 
-  Future<Club> makeClubRequest(String url, String name) async {
-    Uri uri = Uri.http(Constants.BASE_URL, url, {"name": name});
+  Future<Club> makeClubRequest(String url, int id) async {
+    Uri uri = Uri.http(Constants.BASE_URL, url, {"id": id.toString()});
     var response = await get(uri, headers: {
       //HttpHeaders.authorizationHeader: 'Token $token',
       HttpHeaders.contentTypeHeader: 'application/json',
@@ -26,7 +26,7 @@ class RestManager {
   }
 
   Future<Quantity> makeQuantityRequest(String url, int clubId) async {
-    Uri uri = Uri.http(Constants.BASE_URL, url, {"club_id": clubId.toString()});
+    Uri uri = Uri.http(Constants.BASE_URL, url, {"clubId": clubId.toString()});
     var response = await get(uri, headers: {
       //HttpHeaders.authorizationHeader: 'Token $token',
       HttpHeaders.contentTypeHeader: 'application/json',

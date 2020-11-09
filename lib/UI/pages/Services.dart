@@ -8,16 +8,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
-class LogIn extends StatefulWidget {
-  LogIn({Key key, this.title}) : super(key: key);
+class Services extends StatefulWidget {
+  Services({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _LogIn createState() => _LogIn();
+  _Services createState() => _Services();
 }
 
-class _LogIn extends GlobalState<LogIn> {
+class _Services extends GlobalState<Services> {
   final inputController = TextEditingController();
 
   @override
@@ -27,6 +27,16 @@ class _LogIn extends GlobalState<LogIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        //title: Text(AppLocalizations.of(context).translate("home").capitalize),
+        centerTitle: true,
+        automaticallyImplyLeading: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
+        ),
+      ),
       body: Center(
         child: Column(
           children: [
@@ -38,20 +48,6 @@ class _LogIn extends GlobalState<LogIn> {
               labelText: AppLocalizations.of(context).translate("password"),
               controller: inputController,
             ),
-            StadiumButton(
-              icon: Icons.login,
-              title: AppLocalizations.of(context).translate("log_in"),
-              onPressed: () {
-                ModelFacade.sharedInstance.loadInfoCurrentClub();
-                Navigator.of(context).push(
-                  PageRouteBuilder(
-                      opaque: false,
-                      transitionDuration: Duration(milliseconds: 700),
-                      pageBuilder: (BuildContext context, _, __) => Home()
-                  ),
-                );
-              },
-            )
           ],
         ),
       ),
