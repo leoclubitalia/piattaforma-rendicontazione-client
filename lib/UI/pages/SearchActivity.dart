@@ -61,12 +61,15 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   TextEditingController _inputFieldQuantityLeoController = TextEditingController();
 
 
-  _SearchActivity() {
+  @override
+  void initState() {
+    ModelFacade.sharedInstance.appState.removeValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
     ModelFacade.sharedInstance.loadAllSatisfactionDegrees();
     ModelFacade.sharedInstance.loadAllDistricts();
     ModelFacade.sharedInstance.loadAllTypesActivity();
     ModelFacade.sharedInstance.loadAllClubs();
     ModelFacade.sharedInstance.loadAllBools();
+    super.initState();
   }
 
   @override

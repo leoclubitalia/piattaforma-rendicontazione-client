@@ -72,12 +72,15 @@ class _SearchService extends GlobalState<SearchService> {
   TextEditingController _inputFieldOtherAssociationsController = TextEditingController();
 
 
-  _SearchService() {
+  @override
+  void initState() {
+    ModelFacade.sharedInstance.appState.removeValue(Constants.STATE_SEARCH_SERVICE_RESULT);
     ModelFacade.sharedInstance.loadAllSatisfactionDegrees();
     ModelFacade.sharedInstance.loadAllDistricts();
     ModelFacade.sharedInstance.loadAllTypesService();
     ModelFacade.sharedInstance.loadAllAreas();
     ModelFacade.sharedInstance.loadAllClubs();
+    super.initState();
   }
 
   @override
