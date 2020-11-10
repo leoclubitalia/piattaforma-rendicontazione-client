@@ -56,6 +56,7 @@ class _Credits extends GlobalState<Credits> {
                         child: DeveloperTile (
                           name: "Francesco Scala",
                           imageName: "images/developers/scala.png",
+                          mailToAddress: "francesco8ball@gmail.com",
                         ),
                       ),
                       new TextSpan(text: "\n\n\n\n"),
@@ -65,18 +66,21 @@ class _Credits extends GlobalState<Credits> {
                         child: DeveloperTile (
                           name: "Francesco Scala",
                           imageName: "images/developers/scala.png",
+                          mailToAddress: "francesco8ball@gmail.com",
                         ),
                       ),
                       WidgetSpan(
                         child: DeveloperTile (
                           name: "Mattia Ricco",
                           imageName: "images/developers/ricco.jpg",
+                          mailToAddress: "mattia.ricco.mr@gmail.com",
                         ),
                       ),
                       WidgetSpan(
                         child: DeveloperTile (
                           name: "Andrea Germanà",
                           imageName: "images/developers/germana.jpg",
+                          mailToAddress: "andrea@germana.me",
                         ),
                       ),
                     ],
