@@ -3,6 +3,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.d
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Activities.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Credits.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/Search.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Services.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
@@ -201,6 +202,22 @@ class _Home extends GlobalState<Home> {
                     ),
                   ),
                 ],
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: StadiumButton(
+                    icon: Icons.search_rounded,
+                    title: AppLocalizations.of(context).translate("search"),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                            opaque: false,
+                            transitionDuration: Duration(milliseconds: 700),
+                            pageBuilder: (BuildContext context, _, __) => Search(false)
+                        ),
+                      );
+                    }
+                ),
               ),
               Padding (
                 padding: EdgeInsets.fromLTRB(0, 25, 0, 20),
