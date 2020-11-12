@@ -1,6 +1,7 @@
 class TypeActivity {
   int id;
   String title;
+  bool selected = false;
 
 
   TypeActivity({this.id, this.title});

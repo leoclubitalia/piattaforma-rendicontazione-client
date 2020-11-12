@@ -1,6 +1,7 @@
 class TypeService {
   int id;
   String title;
+  bool selected = false;
 
 
   TypeService({this.id, this.title});

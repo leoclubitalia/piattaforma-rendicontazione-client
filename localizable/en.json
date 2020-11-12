@@ -55,5 +55,8 @@
   "hi": "hi",
   "this_year": "This year",
   "since_the_foundation": "Since the foundation",
-  "since": "since"
+  "since": "since",
+  "add": "add",
+  "date": "date",
+  "description": "description"
 }

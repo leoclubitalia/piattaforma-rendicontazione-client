@@ -1,6 +1,7 @@
 class CompetenceArea {
   int id;
   String title;
+  bool selected = false;
 
 
   CompetenceArea({this.id, this.title});

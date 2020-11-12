@@ -54,5 +54,8 @@
   "hi": "ciao",
   "this_year": "Quest'anno",
   "since_the_foundation": "Dalla fondazione",
-  "since": "dal"
+  "since": "dal",
+  "add": "aggiungi",
+  "date": "data",
+  "description": "descrizione"
 }

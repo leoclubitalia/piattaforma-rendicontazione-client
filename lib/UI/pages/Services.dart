@@ -1,6 +1,7 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/AddService.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/StringCapitalization.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ServiceTile.dart';
@@ -81,7 +82,7 @@ class _Services extends GlobalState<Services> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  //TODO
+                  showAddService(context);
                 },
                 child: Icon(
                     Icons.add_rounded
@@ -145,6 +146,21 @@ class _Services extends GlobalState<Services> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void showAddService(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Text(AppLocalizations.of(context).translate("add").capitalize),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        children: [
+          AddService(),
+        ],
       ),
     );
   }

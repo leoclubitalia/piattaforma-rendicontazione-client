@@ -4,18 +4,20 @@ import 'package:flutter/services.dart';
 
 class InputField extends StatelessWidget {
   final String labelText;
+  final bool multiline;
   final Function onSubmit;
   final TextEditingController controller;
   final TextInputType keyboardType;
 
 
-  const InputField({Key key, this.labelText, this.controller, this.onSubmit, this.keyboardType}) : super(key: key);
+  const InputField({Key key, this.labelText, this.controller, this.onSubmit, this.keyboardType, this.multiline}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(5),
       child: TextField(
+        maxLines: multiline != null && multiline == true ? null : 1,
         keyboardType: keyboardType,
         inputFormatters: keyboardType == TextInputType.number ? <TextInputFormatter>[
           FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
