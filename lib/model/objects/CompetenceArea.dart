@@ -1,26 +1,26 @@
 class CompetenceArea {
   int id;
-  String title;
+  String name;
   bool selected = false;
 
 
-  CompetenceArea({this.id, this.title});
+  CompetenceArea({this.id, this.name});
 
   factory CompetenceArea.fromJson(Map<String, dynamic> json) {
     return CompetenceArea(
       id: json['id'],
-      title: json['title'],
+      name: json['name'],
     );
   }
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'title': title,
+    'name': name,
   };
 
   @override
   String toString() {
-    return title;
+    return name;
   }
 
 

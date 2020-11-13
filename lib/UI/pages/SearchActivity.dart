@@ -12,6 +12,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,23 +36,24 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   TypeActivity _type;
   Club _club;
   String _lionsParticipation;
-  String _satisfactionDegree;
+  SatisfactionDegree _satisfactionDegree;
   DateTime _startDate = DateTime(2000, 1, 1);
   DateTime _endDate = DateTime.now();
 
-  List<String> _satisfactionDegrees;
+  List<SatisfactionDegree> _satisfactionDegrees;
   List<String> _lionsParticipationsValues;
   List<District> _districts;
   List<TypeActivity> _types;
   List<Club> _clubs;
 
+  SatisfactionDegree _allDegrees;
   List<Activity> _searchResult;
   bool _isSearching = false;
   int _currentPage = 0;
 
   TextEditingController _startDateTextController = TextEditingController();
   TextEditingController _endDateTextController = TextEditingController();
-  TextEditingController _dropDownSatisfactionDegreeController = TextEditingController();
+  TextEditingController _autocompleteSatisfactionDegreeController = TextEditingController();
   TextEditingController _dropDownLionsParticipationController = TextEditingController();
   TextEditingController _autocompleteDistrictController = TextEditingController();
   TextEditingController _autocompleteCityController = TextEditingController();
@@ -80,7 +82,9 @@ class _SearchActivity extends GlobalState<SearchActivity> {
     _types = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_ACTIVITY);
     _clubs = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CLUBS);
     if ( _satisfactionDegrees != null ) {
-      _satisfactionDegree = _satisfactionDegrees[0];
+      _allDegrees = SatisfactionDegree(name: AppLocalizations.of(context).translate("all"));
+      _satisfactionDegrees.add(_allDegrees);
+      _satisfactionDegree = _allDegrees;
     }
     _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
     if ( _searchResult != null ) {
@@ -360,13 +364,15 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                       ),
                     ),
                     Flexible(
-                      child: InputDropdown(
+                      child: InputAutocomplete(
                         labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
-                        controller: _dropDownSatisfactionDegreeController,
-                        items: _satisfactionDegrees,
-                        onChanged: (String value) {
-                          _satisfactionDegree = value;
-                          _dropDownSatisfactionDegreeController.text = value;
+                        controller: _autocompleteSatisfactionDegreeController,
+                        onSuggestion: (String pattern) {
+                          return _satisfactionDegrees;
+                        },
+                        onSelect: (suggestion) {
+                          _autocompleteSatisfactionDegreeController.text = suggestion.toString();
+                          _satisfactionDegree = suggestion;
                         },
                       ),
                     ),
@@ -386,7 +392,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
       ),
     );
     if ( _satisfactionDegree != null ) {
-      _dropDownSatisfactionDegreeController.text = _satisfactionDegree;
+      _autocompleteSatisfactionDegreeController.text = _satisfactionDegree.name;
     }
     if ( _lionsParticipation != null ) {
       _dropDownLionsParticipationController.text = _lionsParticipation.toString();
@@ -398,7 +404,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
       _autocompleteCityController.text = _city.name;
     }
     if ( _type != null ) {
-      _autocompleteTypeActivityController.text = _type.title;
+      _autocompleteTypeActivityController.text = _type.name;
     }
     if ( _club != null ) {
       _autocompleteClubController.text = _club.name;

@@ -143,7 +143,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                       ) :
                       Column(
                         children: <Widget>[
-                          for( var item in service.competenceAreasService ) Text(item.title)
+                          for( var item in service.competenceAreasService ) Text(item.name)
                         ],
                       ),
                     ],
@@ -252,7 +252,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                                 TextSpan(text: ": "),
                                 for( var item in service.typesService )
                                   TextSpan(
-                                    text: item.title + " ",
+                                    text: item.name + " ",
                                     style: TextStyle(
                                       fontStyle: FontStyle.italic,
                                     ),

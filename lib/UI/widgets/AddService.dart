@@ -1,4 +1,3 @@
-import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/CircularCheckBoxTitle.dart';
@@ -8,12 +7,13 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputButton.d
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputDropdown.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
-import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/StringCapitalization.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -28,22 +28,10 @@ class AddService extends StatefulWidget {
 }
 
 class _Activities extends GlobalState<AddService> {
-  String _title;
-  String _otherAssociations;
-  String _description;
-  int _quantityParticipants;
-  int _duration;
-  int _minMoneyRaised;
-  int _maxMoneyRaised;
-  int _quantityServedPeople;
-  String _satisfactionDegree;
-  City _city;
-  List<TypeService> _types;
-  List<CompetenceArea> _areas;
-  DateTime _date = DateTime.now();
+  Service _newService = Service();
 
   TextEditingController _dateTextController = TextEditingController();
-  TextEditingController _dropDownSatisfactionDegreeController = TextEditingController();
+  TextEditingController _autocompleteSatisfactionDegreeController = TextEditingController();
   TextEditingController _autocompleteCityController = TextEditingController();
   TextEditingController _inputFieldTitleController = TextEditingController();
   TextEditingController _inputFieldParticipantsController = TextEditingController();
@@ -53,7 +41,7 @@ class _Activities extends GlobalState<AddService> {
   TextEditingController _inputFieldOtherAssociationsController = TextEditingController();
   TextEditingController _inputFieldDescriptionController = TextEditingController();
 
-  List<String> _allSatisfactionDegrees;
+  List<SatisfactionDegree> _allSatisfactionDegrees;
   List<TypeService> _allTypes;
   List<CompetenceArea> _allAreas;
 
@@ -63,14 +51,11 @@ class _Activities extends GlobalState<AddService> {
     _allSatisfactionDegrees = List.of(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES));
     _allTypes = List.of(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_SERVICE));
     _allAreas = List.of(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS));
-    if ( _allSatisfactionDegrees != null ) {
-      _allSatisfactionDegrees.removeAt(0);
-      _satisfactionDegree = _allSatisfactionDegrees[0];
-    }
   }
 
   @override
   Widget build(BuildContext context) {
+    _dateTextController.text = _newService.date.toStringSlashed();
     return Container(
       width: MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.2,
       child: Column(
@@ -82,7 +67,7 @@ class _Activities extends GlobalState<AddService> {
                   labelText: AppLocalizations.of(context).translate("title"),
                   controller: _inputFieldTitleController,
                   onSubmit: (String value) {
-                    _title = value;
+                    _newService.title = value;
                   },
                 ),
               ),
@@ -97,8 +82,8 @@ class _Activities extends GlobalState<AddService> {
                         minTime: DateTime(2000, 1, 1),
                         maxTime: DateTime.now(),
                         onConfirm: (date) {
-                          _date = date;
-                          _dateTextController.text = date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
+                          _newService.date = date;
+                          _dateTextController.text = date.toStringSlashed();
                         },
                         currentTime: DateTime.now(),
                         locale: LocaleType.it
@@ -116,12 +101,7 @@ class _Activities extends GlobalState<AddService> {
                   controller: _inputFieldDescriptionController,
                   multiline: true,
                   onSubmit: (String value) {
-                    if ( value == null || value == "" ) {
-                      _description = null;
-                    }
-                    else {
-                      _description = value;
-                    }
+                    _newService.description = value;
                   },
                 ),
               ),
@@ -138,7 +118,7 @@ class _Activities extends GlobalState<AddService> {
                   },
                   onSelect: (suggestion) {
                     _autocompleteCityController.text = suggestion.toString();
-                    _city = suggestion;
+                    _newService.city = suggestion;
                   },
                 ),
               ),
@@ -148,12 +128,7 @@ class _Activities extends GlobalState<AddService> {
                   controller: _inputFieldMoneyRaisedController,
                   keyboardType: TextInputType.number,
                   onSubmit: (String value) {
-                    if ( value == null || value == "" ) {
-                      _minMoneyRaised = null;
-                    }
-                    else {
-                      _minMoneyRaised = int.parse(value);
-                    }
+                    _newService.moneyRaised = double.parse(value);
                   },
                 ),
               ),
@@ -167,12 +142,7 @@ class _Activities extends GlobalState<AddService> {
                   controller: _inputFieldParticipantsController,
                   keyboardType: TextInputType.number,
                   onSubmit: (String value) {
-                    if ( value == null || value == "" ) {
-                      _quantityParticipants = null;
-                    }
-                    else {
-                      _quantityParticipants = int.parse(value);
-                    }
+                    _newService.quantityParticipants = int.parse(value);
                   },
                 ),
               ),
@@ -182,12 +152,7 @@ class _Activities extends GlobalState<AddService> {
                   controller: _inputFieldServedPeopleController,
                   keyboardType: TextInputType.number,
                   onSubmit: (String value) {
-                    if ( value == null || value == "" ) {
-                      _quantityServedPeople = null;
-                    }
-                    else {
-                      _quantityServedPeople = int.parse(value);
-                    }
+                    _newService.quantityServedPeople = int.parse(value);
                   },
                 ),
               ),
@@ -201,23 +166,20 @@ class _Activities extends GlobalState<AddService> {
                   controller: _inputFieldDurationController,
                   keyboardType: TextInputType.number,
                   onSubmit: (String value) {
-                    if ( value == null || value == "" ) {
-                      _duration = null;
-                    }
-                    else {
-                      _duration = int.parse(value);
-                    }
+                    _newService.duration = int.parse(value);
                   },
                 ),
               ),
               Flexible(
-                child: InputDropdown(
+                child: InputAutocomplete(
                   labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
-                  controller: _dropDownSatisfactionDegreeController,
-                  items: _allSatisfactionDegrees,
-                  onChanged: (String value) {
-                    _satisfactionDegree = value;
-                    _dropDownSatisfactionDegreeController.text = value;
+                  controller: _autocompleteSatisfactionDegreeController,
+                  onSuggestion: (String pattern) {
+                    return _allSatisfactionDegrees;
+                  },
+                  onSelect: (suggestion) {
+                    _autocompleteSatisfactionDegreeController.text = suggestion.toString();
+                    _newService.satisfactionDegree = suggestion;
                   },
                 ),
               ),
@@ -241,11 +203,19 @@ class _Activities extends GlobalState<AddService> {
                   children: [
                     for( var item in _allAreas )
                       CircularCheckBoxTitle(
-                        title: item.title,
+                        title: item.name,
                         value: item.selected,
                         onChanged: (bool x) {
                           setState(() {
                             item.selected = !item.selected;
+                            if ( item.selected ) {
+                              _newService.competenceAreasService.add(item);
+                            }
+                            else {
+                              if ( _newService.competenceAreasService.contains(item) ) {
+                                _newService.competenceAreasService.remove(item);
+                              }
+                            }
                           });
                         }
                       ),
@@ -272,11 +242,19 @@ class _Activities extends GlobalState<AddService> {
                   children: [
                     for( var item in _allTypes )
                       CircularCheckBoxTitle(
-                          title: item.title,
+                          title: item.name,
                           value: item.selected,
                           onChanged: (bool x) {
                             setState(() {
                               item.selected = !item.selected;
+                              if ( item.selected ) {
+                                _newService.typesService.add(item);
+                              }
+                              else {
+                                if ( _newService.typesService.contains(item) ) {
+                                  _newService.typesService.remove(item);
+                                }
+                              }
                             });
                           }
                       ),
@@ -292,7 +270,7 @@ class _Activities extends GlobalState<AddService> {
                   labelText: AppLocalizations.of(context).translate("other_associations"),
                   controller: _inputFieldOtherAssociationsController,
                   onSubmit: (String value) {
-                    _otherAssociations = value;
+                    _newService.otherAssociations = value;
                   },
                 ),
               ),

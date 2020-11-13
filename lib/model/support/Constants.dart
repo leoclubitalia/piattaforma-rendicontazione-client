@@ -13,6 +13,7 @@ class Constants {
   static final String REQUEST_SEARCH_ALL_TYPES_ACTIVITY = "/search/type/activity/all";
   static final String REQUEST_SEARCH_ALL_AREAS = "/search/competence_area/all";
   static final String REQUEST_SEARCH_ALL_CLUBS = "/search/club/all";
+  static final String REQUEST_SEARCH_ALL_SATISFACTION_DEGREES = "/search/satisfaction_degree/all";
 
   static final String REQUEST_DEFAULT_PAGE_SIZE = "30";
 

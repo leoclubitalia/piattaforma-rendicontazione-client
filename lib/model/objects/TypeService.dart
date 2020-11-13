@@ -1,26 +1,26 @@
 class TypeService {
   int id;
-  String title;
+  String name;
   bool selected = false;
 
 
-  TypeService({this.id, this.title});
+  TypeService({this.id, this.name});
 
   factory TypeService.fromJson(Map<String, dynamic> json) {
     return TypeService(
       id: json['id'],
-      title: json['title'],
+      name: json['name'],
     );
   }
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'title': title,
+    'name': name,
   };
 
   @override
   String toString() {
-    return title;
+    return name;
   }
 
 

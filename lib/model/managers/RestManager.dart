@@ -6,6 +6,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Quantity.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
@@ -68,6 +69,15 @@ class RestManager {
       HttpHeaders.contentTypeHeader: 'application/json',
     });
     return List<TypeService>.from(json.decode(response.body).map((i) => TypeService.fromJson(i)).toList());
+  }
+
+  Future<List<SatisfactionDegree>> makeListSatisfactionDegreesRequest(String url) async {
+    Uri uri = Uri.http(Constants.BASE_URL, url);
+    var response = await get(uri, headers: {
+      //HttpHeaders.authorizationHeader: 'Token $token',
+      HttpHeaders.contentTypeHeader: 'application/json',
+    });
+    return List<SatisfactionDegree>.from(json.decode(response.body).map((i) => SatisfactionDegree.fromJson(i)).toList());
   }
 
   Future<List<TypeActivity>> makeListTypeActivityRequest(String url) async {

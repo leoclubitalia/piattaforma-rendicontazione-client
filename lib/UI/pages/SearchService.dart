@@ -12,9 +12,11 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -37,7 +39,7 @@ class _SearchService extends GlobalState<SearchService> {
   int _maxMoneyRaised;
   int _quantityServedPeople;
   District _district;
-  String _satisfactionDegree;
+  SatisfactionDegree _satisfactionDegree;
   City _city;
   TypeService _type;
   CompetenceArea _area;
@@ -45,19 +47,20 @@ class _SearchService extends GlobalState<SearchService> {
   DateTime _startDate = DateTime(2000, 1, 1);
   DateTime _endDate = DateTime.now();
 
-  List<String> _satisfactionDegrees;
+  List<SatisfactionDegree> _satisfactionDegrees;
   List<District> _districts;
   List<TypeService> _types;
   List<CompetenceArea> _areas;
   List<Club> _clubs;
 
+  SatisfactionDegree _allDegrees;
   List<Service> _searchResult;
   bool _isSearching = false;
   int _currentPage = 0;
 
   TextEditingController _startDateTextController = TextEditingController();
   TextEditingController _endDateTextController = TextEditingController();
-  TextEditingController _dropDownSatisfactionDegreeController = TextEditingController();
+  TextEditingController _autocompleteSatisfactionDegreeController = TextEditingController();
   TextEditingController _autocompleteDistrictController = TextEditingController();
   TextEditingController _autocompleteCityController = TextEditingController();
   TextEditingController _autocompleteTypeServiceController = TextEditingController();
@@ -91,7 +94,9 @@ class _SearchService extends GlobalState<SearchService> {
     _areas = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS);
     _clubs = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CLUBS);
     if ( _satisfactionDegrees != null ) {
-      _satisfactionDegree = _satisfactionDegrees[0];
+      _allDegrees = SatisfactionDegree(name: AppLocalizations.of(context).translate("all"));
+      _satisfactionDegrees.add(_allDegrees);
+      _satisfactionDegree = _allDegrees;
     }
     _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_SERVICE_RESULT);
     if ( _searchResult != null ) {
@@ -105,8 +110,8 @@ class _SearchService extends GlobalState<SearchService> {
 
   @override
   Widget build(BuildContext context) {
-    _startDateTextController.text = _startDate.day.toString() + "/" + _startDate.month.toString() + "/" + _startDate.year.toString();
-    _endDateTextController.text = _endDate.day.toString() + "/" + _endDate.month.toString() + "/" + _endDate.year.toString();
+    _startDateTextController.text = _startDate.toStringSlashed();
+    _endDateTextController.text = _endDate.toStringSlashed();
     return Scaffold(
       body: Center(
         child: Stack(
@@ -295,7 +300,7 @@ class _SearchService extends GlobalState<SearchService> {
                             maxTime: DateTime.now(),
                             onConfirm: (date) {
                               _startDate = date;
-                              _startDateTextController.text = date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
+                              _startDateTextController.text = _startDate.toStringSlashed();
                             },
                             currentTime: DateTime.now(),
                             locale: LocaleType.it
@@ -315,7 +320,7 @@ class _SearchService extends GlobalState<SearchService> {
                             maxTime: DateTime.now(),
                             onConfirm: (date) {
                               _endDate = date;
-                              _endDateTextController.text = date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
+                              _endDateTextController.text = _startDate.toStringSlashed();
                             },
                             currentTime: DateTime.now(),
                             locale: LocaleType.it
@@ -396,13 +401,15 @@ class _SearchService extends GlobalState<SearchService> {
                 Row(
                   children: [
                     Flexible(
-                      child: InputDropdown(
+                      child: InputAutocomplete(
                         labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
-                        controller: _dropDownSatisfactionDegreeController,
-                        items: _satisfactionDegrees,
-                        onChanged: (String value) {
-                          _satisfactionDegree = value;
-                          _dropDownSatisfactionDegreeController.text = value;
+                        controller: _autocompleteSatisfactionDegreeController,
+                        onSuggestion: (String pattern) {
+                          return _satisfactionDegrees;
+                        },
+                        onSelect: (suggestion) {
+                          _autocompleteSatisfactionDegreeController.text = suggestion.toString();
+                          _satisfactionDegree = suggestion;
                         },
                       ),
                     ),
@@ -480,7 +487,7 @@ class _SearchService extends GlobalState<SearchService> {
       ),
     );
     if ( _satisfactionDegree != null ) {
-      _dropDownSatisfactionDegreeController.text = _satisfactionDegree;
+      _autocompleteSatisfactionDegreeController.text = _satisfactionDegree.name;
     }
     if ( _district != null ) {
       _autocompleteDistrictController.text = _district.name;
@@ -489,10 +496,10 @@ class _SearchService extends GlobalState<SearchService> {
       _autocompleteCityController.text = _city.name;
     }
     if ( _type != null ) {
-      _autocompleteTypeServiceController.text = _type.title;
+      _autocompleteTypeServiceController.text = _type.name;
     }
     if ( _area != null ) {
-      _autocompleteCompetenceAreaController.text = _area.title;
+      _autocompleteCompetenceAreaController.text = _area.name;
     }
     if ( _club != null ) {
       _autocompleteClubController.text = _club.name;

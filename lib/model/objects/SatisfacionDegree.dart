@@ -1,13 +1,13 @@
-class TypeActivity {
+class SatisfactionDegree {
   int id;
   String name;
   bool selected = false;
 
 
-  TypeActivity({this.id, this.name});
+  SatisfactionDegree({this.id, this.name});
 
-  factory TypeActivity.fromJson(Map<String, dynamic> json) {
-    return TypeActivity(
+  factory SatisfactionDegree.fromJson(Map<String, dynamic> json) {
+    return SatisfactionDegree(
       id: json['id'],
       name: json['name'],
     );

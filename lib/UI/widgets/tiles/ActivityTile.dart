@@ -143,7 +143,7 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
                       ) :
                       Column(
                         children: <Widget>[
-                          for( var item in activity.typesActivity ) Text(item.title)
+                          for( var item in activity.typesActivity ) Text(item.name)
                         ],
                       ),
                     ],

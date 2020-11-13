@@ -6,6 +6,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Quantity.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
@@ -48,8 +49,8 @@ class ModelFacade {
 
   void loadAllSatisfactionDegrees() async {
     if ( !appState.existsValue(Constants.STATE_ALL_SATISFACTION_DEGREES) ) {
-      List<String> impactValues = ["all", "limited", "moderated", "elevated"];
-      appState.addValue(Constants.STATE_ALL_SATISFACTION_DEGREES, impactValues);
+      List<SatisfactionDegree> satisfactionDegrees = await _restManager.makeListSatisfactionDegreesRequest(Constants.REQUEST_SEARCH_ALL_SATISFACTION_DEGREES);
+      appState.addValue(Constants.STATE_ALL_SATISFACTION_DEGREES, satisfactionDegrees);
     }
   }
 
@@ -128,7 +129,7 @@ class ModelFacade {
                       int maxMoneyRaised,
                       int quantityServedPeople,
                       District district,
-                      String satisfactionDegree,
+                      SatisfactionDegree satisfactionDegree,
                       City city,
                       TypeService type,
                       CompetenceArea area,
@@ -162,15 +163,7 @@ class ModelFacade {
       params["districtId"] = district.id.toString();
     }
     if ( satisfactionDegree != null ) {
-      if ( satisfactionDegree == appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[1] ) {
-        params["satisfactionDegree"] = 1.toString();
-      }
-      else if ( satisfactionDegree == appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[2] ) {
-        params["satisfactionDegree"] = 2.toString();
-      }
-      else if ( satisfactionDegree == appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[3] ) {
-        params["satisfactionDegree"] = 3.toString();
-      }
+      params["satisfactionDegree"] = satisfactionDegree.id.toString();
     }
     if ( city != null ) {
       params["cityId"] = city.id.toString();
@@ -218,7 +211,7 @@ class ModelFacade {
   void searchActivities(String title,
                         int quantityLeo,
                         District district,
-                        String satisfactionDegree,
+                        SatisfactionDegree satisfactionDegree,
                         City city,
                         TypeActivity type,
                         Club club,
@@ -237,15 +230,7 @@ class ModelFacade {
       params["districtId"] = district.id.toString();
     }
     if ( satisfactionDegree != null ) {
-      if ( satisfactionDegree == appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[1] ) {
-        params["satisfactionDegree"] = 1.toString();
-      }
-      else if ( satisfactionDegree == appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[2] ) {
-        params["satisfactionDegree"] = 2.toString();
-      }
-      else if ( satisfactionDegree == appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[3] ) {
-        params["satisfactionDegree"] = 3.toString();
-      }
+      params["satisfactionDegree"] = satisfactionDegree.id.toString();
     }
     if ( city != null ) {
       params["cityId"] = city.id.toString();

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 
 
@@ -11,7 +12,7 @@ class Activity {
   DateTime date;
   int quantityLeo;
   bool lionsParticipation;
-  int satisfactionDegree;
+  SatisfactionDegree satisfactionDegree;
   City city;
   Club club;
   List<TypeActivity> typesActivity;
@@ -31,7 +32,7 @@ class Activity {
       date: DateTime.fromMillisecondsSinceEpoch(json['date']),
       quantityLeo: json['quantityLeo'],
       lionsParticipation: json['lionsParticipation'],
-      satisfactionDegree: json['satisfactionDegree'],
+      satisfactionDegree: SatisfactionDegree.fromJson(json['satisfactionDegree']),
       city: City.fromJson(json['city']),
       club: Club.fromJson(json['club']),
       typesActivity: typesActivity,
@@ -45,7 +46,7 @@ class Activity {
     'date': date,
     'quantityLeo': quantityLeo,
     'lionsParticipation': lionsParticipation,
-    'satisfactionDegree': satisfactionDegree,
+    'satisfactionDegree': satisfactionDegree.toJson(),
     'city': city.toJson(),
     'club': club.toJson(),
     'typesActivity': jsonEncode(typesActivity),

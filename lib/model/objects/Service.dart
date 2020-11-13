@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 
 
@@ -9,9 +10,8 @@ class Service {
   int id;
   String title;
   String description;
-  DateTime date;
+  DateTime date = DateTime.now();
   int quantityParticipants;
-  int satisfactionDegree;
   int impact;
   int duration;
   String otherAssociations;
@@ -19,11 +19,12 @@ class Service {
   int quantityServedPeople;
   City city;
   Club club;
-  List<TypeService> typesService;
-  List<CompetenceArea> competenceAreasService;
+  SatisfactionDegree satisfactionDegree;
+  List<TypeService> typesService = List();
+  List<CompetenceArea> competenceAreasService = List();
 
 
-  Service({this.id, this.title, this.description, this.date, this.quantityParticipants, this.satisfactionDegree, this.impact, this.duration, this.otherAssociations, this.moneyRaised, this.quantityServedPeople, this.city, this.club, this.typesService, this.competenceAreasService});
+  Service({this.id, this.title, this.description, this.date, this.quantityParticipants, this.impact, this.duration, this.otherAssociations, this.moneyRaised, this.quantityServedPeople, this.city, this.club, this.satisfactionDegree, this.typesService, this.competenceAreasService});
 
   factory Service.fromJson(Map<String, dynamic> json) {
     List<TypeService> typesService = List();
@@ -40,7 +41,7 @@ class Service {
       description: json['description'],
       date: DateTime.fromMillisecondsSinceEpoch(json['date']),
       quantityParticipants: json['quantityParticipants'],
-      satisfactionDegree: json['satisfactionDegree'],
+      satisfactionDegree: SatisfactionDegree.fromJson(json['satisfactionDegree']),
       duration: json['duration'],
       otherAssociations: json['otherAssociations'],
       moneyRaised: json['moneyRaised'],
@@ -58,7 +59,7 @@ class Service {
     'description': description,
     'date': date,
     'quantityParticipants': quantityParticipants,
-    'satisfactionDegree': satisfactionDegree,
+    'satisfactionDegree': satisfactionDegree.toJson(),
     'impact': impact,
     'duration': duration,
     'otherAssociations': otherAssociations,
