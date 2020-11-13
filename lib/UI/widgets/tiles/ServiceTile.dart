@@ -222,7 +222,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                                 ),
                                 TextSpan(text: ": "),
                                 TextSpan(
-                                  text: ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[service.satisfactionDegree],
+                                  text: service.satisfactionDegree.name,
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                   ),

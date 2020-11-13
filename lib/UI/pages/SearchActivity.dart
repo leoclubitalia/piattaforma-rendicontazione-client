@@ -81,7 +81,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
     _districts = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_DISTRICTS);
     _types = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_ACTIVITY);
     _clubs = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CLUBS);
-    if ( _satisfactionDegrees != null ) {
+    if ( _satisfactionDegrees != null && !_satisfactionDegrees.contains(_allDegrees) ) {
       _allDegrees = SatisfactionDegree(name: AppLocalizations.of(context).translate("all"));
       _satisfactionDegrees.add(_allDegrees);
       _satisfactionDegree = _allDegrees;

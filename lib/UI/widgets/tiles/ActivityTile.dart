@@ -200,7 +200,7 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
                                 ),
                                 TextSpan(text: ": "),
                                 TextSpan(
-                                  text: ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES)[activity.satisfactionDegree],
+                                  text: activity.satisfactionDegree.name,
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                   ),

@@ -4,7 +4,6 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/CircularCheckBoxTitl
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputAutocomplete.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputButton.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputDropdown.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
@@ -278,6 +277,7 @@ class _Activities extends GlobalState<AddService> {
                 onPressed: () async {
                   Navigator.pop(context);
                   //TODO add
+                  //TODO controllare se riempiti tutti i campi e poi inserire
                 },
                 icon: Icons.add_rounded,
               ),

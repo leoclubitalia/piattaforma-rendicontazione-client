@@ -3,7 +3,6 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.d
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputAutocomplete.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputButton.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputDropdown.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ServiceTile.dart';
@@ -93,7 +92,7 @@ class _SearchService extends GlobalState<SearchService> {
     _types = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_SERVICE);
     _areas = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS);
     _clubs = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CLUBS);
-    if ( _satisfactionDegrees != null ) {
+    if ( _satisfactionDegrees != null && !_satisfactionDegrees.contains(_allDegrees) ) {
       _allDegrees = SatisfactionDegree(name: AppLocalizations.of(context).translate("all"));
       _satisfactionDegrees.add(_allDegrees);
       _satisfactionDegree = _allDegrees;
@@ -553,7 +552,7 @@ class _SearchService extends GlobalState<SearchService> {
     if ( _autocompleteCompetenceAreaController.text == null || _autocompleteCompetenceAreaController.text == "" ) {
       _area = null;
     }
-    ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _minMoneyRaised, _maxMoneyRaised, _quantityServedPeople, _district, _satisfactionDegree, _city, _type, _area, _club, _startDate, _endDate, _currentPage);
+    ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _minMoneyRaised, _maxMoneyRaised, _quantityServedPeople, _district, _satisfactionDegree == _allDegrees ? null : _satisfactionDegree, _city, _type, _area, _club, _startDate, _endDate, _currentPage);
     setState(() {
       _searchResult = null;
       _isSearching = true;
