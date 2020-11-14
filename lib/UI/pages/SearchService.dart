@@ -16,7 +16,6 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -87,13 +86,14 @@ class _SearchService extends GlobalState<SearchService> {
 
   @override
   void refreshState() {
-    _satisfactionDegrees = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES);
+    if ( ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES) != null ) {
+      _satisfactionDegrees = List.of(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES));
+    }
     _districts = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_DISTRICTS);
     _types = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_SERVICE);
     _areas = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS);
     _clubs = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CLUBS);
-    if ( _satisfactionDegrees != null && !_satisfactionDegrees.contains(_allDegrees) ) {
-      _allDegrees = SatisfactionDegree(name: AppLocalizations.of(context).translate("all"));
+    if ( _satisfactionDegrees != null && _allDegrees != null && !_satisfactionDegrees.contains(_allDegrees) ) {
       _satisfactionDegrees.add(_allDegrees);
       _satisfactionDegree = _allDegrees;
     }
@@ -109,6 +109,9 @@ class _SearchService extends GlobalState<SearchService> {
 
   @override
   Widget build(BuildContext context) {
+    if ( _allDegrees == null ) {
+      _allDegrees = SatisfactionDegree(name: AppLocalizations.of(context).translate("all"));
+    }
     _startDateTextController.text = _startDate.toStringSlashed();
     _endDateTextController.text = _endDate.toStringSlashed();
     return Scaffold(

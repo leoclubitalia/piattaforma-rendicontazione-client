@@ -15,6 +15,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -76,13 +77,14 @@ class _SearchActivity extends GlobalState<SearchActivity> {
 
   @override
   void refreshState() {
-    _satisfactionDegrees = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES);
+    if ( ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES) != null ) {
+      _satisfactionDegrees = List.of(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES));
+    }
     _lionsParticipationsValues = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_BOOLS);
     _districts = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_DISTRICTS);
     _types = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_ACTIVITY);
     _clubs = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_CLUBS);
-    if ( _satisfactionDegrees != null && !_satisfactionDegrees.contains(_allDegrees) ) {
-      _allDegrees = SatisfactionDegree(name: AppLocalizations.of(context).translate("all"));
+    if ( _satisfactionDegrees != null && _allDegrees != null && !_satisfactionDegrees.contains(_allDegrees) ) {
       _satisfactionDegrees.add(_allDegrees);
       _satisfactionDegree = _allDegrees;
     }
@@ -98,8 +100,11 @@ class _SearchActivity extends GlobalState<SearchActivity> {
 
   @override
   Widget build(BuildContext context) {
-    _startDateTextController.text = _startDate.day.toString() + "/" + _startDate.month.toString() + "/" + _startDate.year.toString();
-    _endDateTextController.text = _endDate.day.toString() + "/" + _endDate.month.toString() + "/" + _endDate.year.toString();
+    if ( _allDegrees == null ) {
+      _allDegrees = SatisfactionDegree(name: AppLocalizations.of(context).translate("all"));
+    }
+    _startDateTextController.text = _startDate.toStringSlashed();
+    _endDateTextController.text = _endDate.toStringSlashed();
     return Scaffold(
       body: Center(
         child: Stack(
@@ -288,7 +293,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                             maxTime: DateTime.now(),
                             onConfirm: (date) {
                               _startDate = date;
-                              _startDateTextController.text = date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
+                              _startDateTextController.text = date.toStringSlashed();
                             },
                             currentTime: DateTime.now(),
                             locale: LocaleType.it
@@ -308,7 +313,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                             maxTime: DateTime.now(),
                             onConfirm: (date) {
                               _endDate = date;
-                              _endDateTextController.text = date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
+                              _endDateTextController.text = date.toStringSlashed();
                             },
                             currentTime: DateTime.now(),
                             locale: LocaleType.it
