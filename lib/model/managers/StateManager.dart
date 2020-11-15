@@ -2,7 +2,7 @@ import 'package:RendicontationPlatformLeo_Client/model/GlobalStateManager.dart';
 
 
 class StateManager extends GlobalStateManager {
-  Map<String, dynamic> _statesContainer = new Map();
+  Map<String, dynamic> _statesContainer = Map();
 
 
   void addValue(String key, dynamic value) {
@@ -34,7 +34,7 @@ class StateManager extends GlobalStateManager {
   }
 
   void resetState() {
-    _statesContainer = new Map();
+    _statesContainer = Map();
     refreshStates();
   }
 

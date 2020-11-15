@@ -65,9 +65,7 @@ class _Activities extends GlobalState<AddService> {
       }
       else {
         Navigator.pop(context);
-        List<Service> services = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_SERVICE_RESULT);
-        services.insert(0, justAdded);
-        ModelFacade.sharedInstance.appState.updateValue(Constants.STATE_SEARCH_SERVICE_RESULT, services);
+        ModelFacade.sharedInstance.appState.addValue(Constants.STATE_JUST_ADDED, true);
       }
     }
   }
@@ -224,27 +222,32 @@ class _Activities extends GlobalState<AddService> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    for( var item in _allAreas )
-                      CircularCheckBoxTitle(
-                        title: item.name,
-                        value: item.selected,
+                Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _allAreas.length,
+                    itemBuilder: (context, index) {
+                      return CircularCheckBoxTitle(
+                        title: _allAreas[index].name,
+                        value: _allAreas[index].selected,
                         onChanged: (bool x) {
                           setState(() {
-                            item.selected = !item.selected;
-                            if ( item.selected ) {
-                              _newService.competenceAreasService.add(item);
+                            _allAreas[index].selected = !_allAreas[index].selected;
+                            if ( _allAreas[index].selected ) {
+                              _newService.competenceAreasService.add(_allAreas[index]);
                             }
                             else {
-                              if ( _newService.competenceAreasService.contains(item) ) {
-                                _newService.competenceAreasService.remove(item);
+                              if ( _newService.competenceAreasService.contains(_allAreas[index]) ) {
+                                _newService.competenceAreasService.remove(_allAreas[index]);
                               }
                             }
                           });
                         }
-                      ),
-                  ],
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -263,27 +266,32 @@ class _Activities extends GlobalState<AddService> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    for( var item in _allTypes )
-                      CircularCheckBoxTitle(
-                        title: item.name,
-                        value: item.selected,
+                Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _allTypes.length,
+                    itemBuilder: (context, index) {
+                      return CircularCheckBoxTitle(
+                        title: _allTypes[index].name,
+                        value: _allTypes[index].selected,
                         onChanged: (bool x) {
                           setState(() {
-                            item.selected = !item.selected;
-                            if ( item.selected ) {
-                              _newService.typesService.add(item);
+                            _allTypes[index].selected = !_allTypes[index].selected;
+                            if ( _allTypes[index].selected ) {
+                              _newService.typesService.add(_allTypes[index]);
                             }
                             else {
-                              if ( _newService.typesService.contains(item) ) {
-                                _newService.typesService.remove(item);
+                              if ( _newService.typesService.contains(_allTypes[index]) ) {
+                                _newService.typesService.remove(_allTypes[index]);
                               }
                             }
                           });
                         }
-                      ),
-                  ],
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

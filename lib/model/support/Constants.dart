@@ -32,6 +32,7 @@ class Constants {
   static final String STATE_MESSAGE = "message";
   static final String STATE_JUST_ADDED_SERVICE = "just_added_service";
   static final String STATE_JUST_ADDED_ACTIVITY = "just_added_activity";
+  static final String STATE_JUST_ADDED = "just_added";
 
 
 }

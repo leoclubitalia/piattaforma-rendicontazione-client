@@ -9,7 +9,6 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ServiceTile.da
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -27,6 +26,9 @@ class _Services extends GlobalState<Services> {
   bool _isSearching = false;
   int _currentPage = 0;
 
+  ScrollController _scrollController = ScrollController();
+  double _scrollOffset = 0;
+
 
   @override
   void initState() {
@@ -41,9 +43,14 @@ class _Services extends GlobalState<Services> {
 
   @override
   void refreshState() {
-    _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_SERVICE_RESULT);
-    if ( _searchResult != null ) {
-      _isSearching = false;
+    if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_ADDED) && ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED) ) {
+      loadSearch();
+    }
+    else {
+      _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_SERVICE_RESULT);
+      if ( _searchResult != null ) {
+        _isSearching = false;
+      }
     }
   }
 
@@ -56,6 +63,7 @@ class _Services extends GlobalState<Services> {
 
   @override
   Widget build(BuildContext context) {
+    _scrollController = ScrollController(initialScrollOffset: _scrollOffset);
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).translate("service").capitalize),
@@ -103,7 +111,6 @@ class _Services extends GlobalState<Services> {
             ) :
             Padding(padding: EdgeInsets.all(0)),
             Column(
-              //mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 _searchResult == null ?
                 Padding(
@@ -121,6 +128,7 @@ class _Services extends GlobalState<Services> {
                   child: Container(
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: ListView.builder(
+                      controller: _scrollController,
                       itemCount: _searchResult.length + 1,
                       itemBuilder: (context, index) {
                         if ( index < _searchResult.length ) {
@@ -162,11 +170,13 @@ class _Services extends GlobalState<Services> {
   }
 
   void loadSearch() {
+    _scrollOffset = 0;
     _currentPage = 0;
     _search();
   }
 
   void loadMore() {
+    _scrollOffset = _scrollController.offset;
     _currentPage ++;
     _search();
   }
