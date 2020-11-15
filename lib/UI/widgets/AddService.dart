@@ -2,6 +2,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.d
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/CircularCheckBoxTitle.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputAutocomplete.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
@@ -27,7 +28,7 @@ class AddService extends StatefulWidget {
 }
 
 class _Activities extends GlobalState<AddService> {
-  Service _newService = Service();
+  Service _newService = Service.newCreation();
 
   TextEditingController _dateTextController = TextEditingController();
   TextEditingController _autocompleteSatisfactionDegreeController = TextEditingController();
@@ -232,8 +233,8 @@ class _Activities extends GlobalState<AddService> {
                   child: Text(
                     AppLocalizations.of(context).translate("type_service").capitalize + ":",
                     style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -241,21 +242,21 @@ class _Activities extends GlobalState<AddService> {
                   children: [
                     for( var item in _allTypes )
                       CircularCheckBoxTitle(
-                          title: item.name,
-                          value: item.selected,
-                          onChanged: (bool x) {
-                            setState(() {
-                              item.selected = !item.selected;
-                              if ( item.selected ) {
-                                _newService.typesService.add(item);
+                        title: item.name,
+                        value: item.selected,
+                        onChanged: (bool x) {
+                          setState(() {
+                            item.selected = !item.selected;
+                            if ( item.selected ) {
+                              _newService.typesService.add(item);
+                            }
+                            else {
+                              if ( _newService.typesService.contains(item) ) {
+                                _newService.typesService.remove(item);
                               }
-                              else {
-                                if ( _newService.typesService.contains(item) ) {
-                                  _newService.typesService.remove(item);
-                                }
-                              }
-                            });
-                          }
+                            }
+                          });
+                        }
                       ),
                   ],
                 ),
@@ -275,9 +276,66 @@ class _Activities extends GlobalState<AddService> {
               ),
               CircularIconButton(
                 onPressed: () async {
-                  Navigator.pop(context);
+                  bool fieldNotSpecified = false;
+                  String message = AppLocalizations.of(context).translate("these_field_are_missed") + "\n";
+                  if ( _newService.title == null || _newService.title == "" ) {
+                    message += "\n" + AppLocalizations.of(context).translate("title");
+                    fieldNotSpecified = true;
+                  }
+                  if ( _newService.description == null || _newService.description == "" ) {
+                    message += "\n" + AppLocalizations.of(context).translate("description");
+                    fieldNotSpecified = true;
+                  }
+                  if ( _newService.date == null ) {
+                    message += "\n" + AppLocalizations.of(context).translate("date");
+                    fieldNotSpecified = true;
+                  }
+                  if ( _newService.quantityParticipants == null ) {
+                    message += "\n" + AppLocalizations.of(context).translate("quantity_participants");
+                    fieldNotSpecified = true;
+                  }
+                  if ( _newService.duration == null ) {
+                    message += "\n" + AppLocalizations.of(context).translate("duration");
+                    fieldNotSpecified = true;
+                  }
+                  if ( _newService.otherAssociations == null || _newService.otherAssociations == "" ) {
+                    message += "\n" + AppLocalizations.of(context).translate("other_associations");
+                    fieldNotSpecified = true;
+                  }
+                  if ( _newService.moneyRaised == null ) {
+                    message += "\n" + AppLocalizations.of(context).translate("money_raised");
+                    fieldNotSpecified = true;
+                  }
+                  if ( _newService.quantityServedPeople == null ) {
+                    message += "\n" + AppLocalizations.of(context).translate("quantity_served_people");
+                    fieldNotSpecified = true;
+                  }
+                  if ( _newService.city == null ) {
+                    message += "\n" + AppLocalizations.of(context).translate("city");
+                    fieldNotSpecified = true;
+                  }
+                  if ( _newService.satisfactionDegree == null ) {
+                    message += "\n" + AppLocalizations.of(context).translate("satisfaction_degree");
+                    fieldNotSpecified = true;
+                  }
+                  if ( _newService.typesService.isEmpty ) {
+                    message += "\n" + AppLocalizations.of(context).translate("types_service");
+                    fieldNotSpecified = true;
+                  }
+                  if ( _newService.competenceAreasService.isEmpty ) {
+                    message += "\n" + AppLocalizations.of(context).translate("compentece_area");
+                    fieldNotSpecified = true;
+                  }
+                  if ( fieldNotSpecified ) {
+                    showMessageDialog(context, message);
+                  }
+                  else {
+                    ModelFacade.sharedInstance.addService(_newService);
+                  }
+
+
+                  //Navigator.pop(context);
                   //TODO add
-                  //TODO controllare se riempiti tutti i campi e poi inserire
                 },
                 icon: Icons.add_rounded,
               ),
@@ -285,6 +343,16 @@ class _Activities extends GlobalState<AddService> {
           ),
         ],
       ),
+    );
+  }
+
+  void showMessageDialog(BuildContext context, String text) {
+    showDialog(
+        context: context,
+        builder: (context) => MessageDialog(
+          titleText: AppLocalizations.of(context).translate("oops"),
+          bodyText: text,
+        ),
     );
   }
 

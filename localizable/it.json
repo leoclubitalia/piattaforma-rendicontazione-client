@@ -57,5 +57,8 @@
   "since": "dal",
   "add": "aggiungi",
   "date": "data",
-  "description": "descrizione"
+  "description": "descrizione",
+  "oops": "Oops...",
+  "not_defined": "dovrebbe essere specificato!",
+  "these_field_are_missed": "Questi campi dovrebbero essere specificati:"
 }

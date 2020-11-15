@@ -4,15 +4,15 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
 
 
 class Service {
   int id;
   String title;
   String description;
-  DateTime date = DateTime.now();
+  DateTime date;
   int quantityParticipants;
-  int impact;
   int duration;
   String otherAssociations;
   double moneyRaised;
@@ -20,11 +20,17 @@ class Service {
   City city;
   Club club;
   SatisfactionDegree satisfactionDegree;
-  List<TypeService> typesService = List();
-  List<CompetenceArea> competenceAreasService = List();
+  List<TypeService> typesService;
+  List<CompetenceArea> competenceAreasService;
 
 
-  Service({this.id, this.title, this.description, this.date, this.quantityParticipants, this.impact, this.duration, this.otherAssociations, this.moneyRaised, this.quantityServedPeople, this.city, this.club, this.satisfactionDegree, this.typesService, this.competenceAreasService});
+  Service({this.id, this.title, this.description, this.date, this.quantityParticipants, this.duration, this.otherAssociations, this.moneyRaised, this.quantityServedPeople, this.city, this.club, this.satisfactionDegree, this.typesService, this.competenceAreasService});
+
+  Service.newCreation() {
+    date = DateTime.now();
+    typesService = List();
+    competenceAreasService = List();
+  }
 
   factory Service.fromJson(Map<String, dynamic> json) {
     List<TypeService> typesService = List();
@@ -54,21 +60,20 @@ class Service {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
+    'id': id.toString(),
     'title': title,
     'description': description,
-    'date': date,
-    'quantityParticipants': quantityParticipants,
+    'date': date.toStringUnslashed(),
+    'quantityParticipants': quantityParticipants.toString(),
     'satisfactionDegree': satisfactionDegree.toJson(),
-    'impact': impact,
-    'duration': duration,
+    'duration': duration.toString(),
     'otherAssociations': otherAssociations,
-    'moneyRaised': moneyRaised,
-    'quantityServedPeople': quantityServedPeople,
+    'moneyRaised': moneyRaised.toString(),
+    'quantityServedPeople': quantityServedPeople.toString(),
     'city': city.toJson(),
     'club': club.toJson(),
-    'typesService': jsonEncode(typesService),
-    'competenceAreasService': jsonEncode(competenceAreasService),
+    'typesService': jsonEncode(typesService.map((e) => e.toJson()).toList()),
+    'competenceAreasService': jsonEncode(competenceAreasService.map((e) => e.toJson()).toList()),
   };
 
 

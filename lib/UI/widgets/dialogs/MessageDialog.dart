@@ -1,19 +1,19 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:flutter/material.dart';
 
 
 class MessageDialog extends StatelessWidget {
-  final String text;
+  final String titleText;
+  final String bodyText;
 
 
-  const MessageDialog({Key key, this.text}) : super(key: key);
+  const MessageDialog({Key key, this.titleText, this.bodyText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: Text(
-        AppLocalizations.of(context).translate("welcome") + "!",
+        titleText,
         style: LeoTitleStyle(),
         textAlign: TextAlign.center,
       ),
@@ -24,7 +24,7 @@ class MessageDialog extends StatelessWidget {
         Padding(
           padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
           child: Text(
-            text,
+            bodyText,
             style: LeoParagraphStyle(),
             textAlign: TextAlign.center,
           ),

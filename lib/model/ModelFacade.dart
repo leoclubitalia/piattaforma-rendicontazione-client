@@ -280,5 +280,10 @@ class ModelFacade {
     }
   }
 
+  Future<Service> addService(Service service) async {
+    service.club = Club(id: currentClubId);
+    return await _restManager.addService(Constants.REQUEST_ADD_SERVICE, service);
+  }
+
 
 }

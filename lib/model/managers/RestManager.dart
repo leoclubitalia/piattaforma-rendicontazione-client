@@ -116,5 +116,20 @@ class RestManager {
     return List<City>.from(json.decode(response.body).map((i) => City.fromJson(i)).toList());
   }
 
+  Future<Service> addService(String url, Service service) async {
+    print(json.encode(service));
+    Uri uri = Uri.http(Constants.BASE_URL, url);
+    print(json.encode(service));
+    var response = await post(
+      uri,
+      headers: {
+        //HttpHeaders.authorizationHeader: 'Token $token',
+        HttpHeaders.contentTypeHeader: 'application/json;charset=utf-8',
+      },
+      body: json.encode(service),
+    );
+    return Service.fromJson(json.decode(response.body));
+  }
+
 
 }

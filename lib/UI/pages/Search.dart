@@ -8,7 +8,6 @@ import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/StringCapitalization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -73,7 +72,8 @@ class _Search extends GlobalState<Search> {
     showDialog(
       context: context,
       builder: (context) => MessageDialog(
-        text: AppLocalizations.of(context).translate("description_search_for_guest"),
+        titleText: AppLocalizations.of(context).translate("welcome") + "!",
+        bodyText: AppLocalizations.of(context).translate("description_search_for_guest"),
       )
     );
   }

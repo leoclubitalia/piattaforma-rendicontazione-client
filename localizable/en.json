@@ -58,5 +58,8 @@
   "since": "since",
   "add": "add",
   "date": "date",
-  "description": "description"
+  "description": "description",
+  "oops": "Oops...",
+  "not_defined": "should be specified!",
+  "these_field_are_missed": "These fields should be specified:"
 }
