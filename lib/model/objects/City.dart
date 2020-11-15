@@ -22,7 +22,7 @@ class City {
   Map<String, String> toJson() => {
     'id': id.toString(),
     //'name': name, unnecessary
-    //'caps': jsonEncode(caps), unnecessary
+    //'caps': caps.map((e) => e.toJson()).toList(), unnecessary
   };
 
   @override

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
@@ -45,7 +44,7 @@ class Service {
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      date: DateTime.fromMillisecondsSinceEpoch(json['date']),
+      date: DateFormatter.fromString(json['date']),
       quantityParticipants: json['quantityParticipants'],
       satisfactionDegree: SatisfactionDegree.fromJson(json['satisfactionDegree']),
       duration: json['duration'],
@@ -72,8 +71,8 @@ class Service {
     'quantityServedPeople': quantityServedPeople.toString(),
     'city': city.toJson(),
     'club': club.toJson(),
-    'typesService': jsonEncode(typesService.map((e) => e.toJson()).toList()),
-    'competenceAreasService': jsonEncode(competenceAreasService.map((e) => e.toJson()).toList()),
+    'typesService': typesService.map((e) => e.toJson()).toList(),
+    'competenceAreasService': competenceAreasService.map((e) => e.toJson()).toList(),
   };
 
 

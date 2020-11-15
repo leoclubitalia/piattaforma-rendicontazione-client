@@ -117,9 +117,7 @@ class RestManager {
   }
 
   Future<Service> addService(String url, Service service) async {
-    print(json.encode(service));
     Uri uri = Uri.http(Constants.BASE_URL, url);
-    print(json.encode(service));
     var response = await post(
       uri,
       headers: {
@@ -128,6 +126,8 @@ class RestManager {
       },
       body: json.encode(service),
     );
+    // TODO parse error
+    // TODO update UI after adding
     return Service.fromJson(json.decode(response.body));
   }
 

@@ -3,6 +3,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
 
 
 class Activity {
@@ -29,7 +30,7 @@ class Activity {
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      date: DateTime.fromMillisecondsSinceEpoch(json['date']),
+      date: DateFormatter.fromString(json['date']),
       quantityLeo: json['quantityLeo'],
       lionsParticipation: json['lionsParticipation'],
       satisfactionDegree: SatisfactionDegree.fromJson(json['satisfactionDegree']),
