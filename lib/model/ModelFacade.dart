@@ -11,8 +11,8 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
-import 'package:RendicontationPlatformLeo_Client/model/support/Searcher.dart';
-import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/Searcher.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
 
 
 class ModelFacade {
@@ -280,9 +280,15 @@ class ModelFacade {
     }
   }
 
-  Future<Service> addService(Service service) async {
+  void addService(Service service) async {
     service.club = Club(id: currentClubId);
-    return await _restManager.addService(Constants.REQUEST_ADD_SERVICE, service);
+    try {
+      service = await _restManager.addService(Constants.REQUEST_ADD_SERVICE, service);
+      appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, service);
+    }
+    catch (e) {
+      appState.addValue(Constants.STATE_MESSAGE, "message_error");
+    }
   }
 
 

@@ -10,6 +10,11 @@ class StateManager extends GlobalStateManager {
     refreshStates();
   }
 
+  void updateValue(String key, dynamic value) {
+    _statesContainer[key] = value;
+    refreshStates();
+  }
+
   dynamic getValue(String key) {
     return _statesContainer[key];
   }

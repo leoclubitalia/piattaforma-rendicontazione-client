@@ -3,7 +3,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
-import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
 
 
 class Service {

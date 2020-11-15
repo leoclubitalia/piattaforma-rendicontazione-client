@@ -3,6 +3,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/CircularCheckBoxTitle.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/RoundedDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputAutocomplete.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
@@ -12,16 +13,15 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree
 import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
-import 'package:RendicontationPlatformLeo_Client/model/support/StringCapitalization.dart';
-import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/ListDeepClone.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 
 class AddService extends StatefulWidget {
-  AddService({Key key, this.title}) : super(key: key);
-
-  final String title;
+  AddService({Key key}) : super(key: key);
 
   @override
   _Activities createState() => _Activities();
@@ -45,12 +45,31 @@ class _Activities extends GlobalState<AddService> {
   List<TypeService> _allTypes;
   List<CompetenceArea> _allAreas;
 
+  bool _isAdding = false;
+  bool _firstLoad = true;
+
 
   @override
   void refreshState() {
-    _allSatisfactionDegrees = List.of(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES));
-    _allTypes = List.of(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_SERVICE));
-    _allAreas = List.of(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS));
+    if ( _firstLoad ) {
+      _allSatisfactionDegrees = (ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES) as List<SatisfactionDegree>).deepClone();
+      _allTypes = (ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_SERVICE) as List<TypeService>).deepClone();
+      _allAreas = (ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS) as List<CompetenceArea>).deepClone();
+      _firstLoad = false;
+    }
+    Service justAdded = ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED_SERVICE);
+    if ( _isAdding ) {
+      _isAdding = false;
+      if ( justAdded == null ) {
+        showErrorDialog(context, AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_MESSAGE)));
+      }
+      else {
+        Navigator.pop(context);
+        List<Service> services = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_SERVICE_RESULT);
+        services.insert(0, justAdded);
+        ModelFacade.sharedInstance.appState.updateValue(Constants.STATE_SEARCH_SERVICE_RESULT, services);
+      }
+    }
   }
 
   @override
@@ -58,7 +77,13 @@ class _Activities extends GlobalState<AddService> {
     _dateTextController.text = _newService.date.toStringSlashed();
     return Container(
       width: MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.2,
-      child: Column(
+      child: _isAdding ?
+      Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).buttonColor),
+        ),
+      ) :
+      Column(
         children: [
           Row(
             children: [
@@ -77,16 +102,16 @@ class _Activities extends GlobalState<AddService> {
                   controller: _dateTextController,
                   onPressed: () {
                     DatePicker.showDatePicker(
-                        context,
-                        showTitleActions: true,
-                        minTime: DateTime(2000, 1, 1),
-                        maxTime: DateTime.now(),
-                        onConfirm: (date) {
-                          _newService.date = date;
-                          _dateTextController.text = date.toStringSlashed();
-                        },
-                        currentTime: DateTime.now(),
-                        locale: LocaleType.it
+                      context,
+                      showTitleActions: true,
+                      minTime: DateTime(2000, 1, 1),
+                      maxTime: DateTime.now(),
+                      onConfirm: (date) {
+                        _newService.date = date;
+                        _dateTextController.text = date.toStringSlashed();
+                      },
+                      currentTime: DateTime.now(),
+                      locale: LocaleType.it
                     );
                   },
                 ),
@@ -194,8 +219,8 @@ class _Activities extends GlobalState<AddService> {
                   child: Text(
                     AppLocalizations.of(context).translate("areas").capitalize + ":",
                     style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold
                     ),
                   ),
                 ),
@@ -327,15 +352,14 @@ class _Activities extends GlobalState<AddService> {
                     fieldNotSpecified = true;
                   }
                   if ( fieldNotSpecified ) {
-                    showMessageDialog(context, message);
+                    showErrorDialog(context, message);
                   }
                   else {
                     ModelFacade.sharedInstance.addService(_newService);
+                    setState(() {
+                      _isAdding = true;
+                    });
                   }
-
-
-                  //Navigator.pop(context);
-                  //TODO add
                 },
                 icon: Icons.add_rounded,
               ),
@@ -346,13 +370,24 @@ class _Activities extends GlobalState<AddService> {
     );
   }
 
-  void showMessageDialog(BuildContext context, String text) {
+  void showErrorDialog(BuildContext context, String text) {
     showDialog(
         context: context,
         builder: (context) => MessageDialog(
           titleText: AppLocalizations.of(context).translate("oops"),
           bodyText: text,
         ),
+    );
+  }
+
+  void showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => RoundedDialog(
+        body: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).buttonColor),
+        ),
+      ),
     );
   }
 

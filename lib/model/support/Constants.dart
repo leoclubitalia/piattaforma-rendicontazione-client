@@ -30,6 +30,8 @@ class Constants {
   static final String STATE_SEARCH_SERVICE_RESULT = "search_result_service";
   static final String STATE_SEARCH_ACTIVITY_RESULT = "search_result_activity";
   static final String STATE_MESSAGE = "message";
+  static final String STATE_JUST_ADDED_SERVICE = "just_added_service";
+  static final String STATE_JUST_ADDED_ACTIVITY = "just_added_activity";
 
 
 }

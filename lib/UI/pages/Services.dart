@@ -3,7 +3,8 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.d
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/AddService.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
-import 'package:RendicontationPlatformLeo_Client/model/support/StringCapitalization.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/RoundedDialog.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ServiceTile.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
@@ -67,27 +68,27 @@ class _Services extends GlobalState<Services> {
         ),
         actions: <Widget>[
           Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  loadSearch();
-                },
-                child: Icon(
-                  Icons.refresh_rounded,
-                  size: 26.0,
-                ),
-              )
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                loadSearch();
+              },
+              child: Icon(
+                Icons.refresh_rounded,
+                size: 26.0,
+              ),
+            ),
           ),
           Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  showAddService(context);
-                },
-                child: Icon(
-                    Icons.add_rounded
-                ),
-              )
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                showAddService(context);
+              },
+              child: Icon(
+                  Icons.add_rounded
+              ),
+            ),
           ),
         ],
       ),
@@ -153,14 +154,9 @@ class _Services extends GlobalState<Services> {
   void showAddService(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => SimpleDialog(
+      builder: (context) => RoundedDialog(
         title: Text(AppLocalizations.of(context).translate("add").capitalize),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        children: [
-          AddService(),
-        ],
+        body: AddService(),
       ),
     );
   }

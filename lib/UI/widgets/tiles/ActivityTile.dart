@@ -3,8 +3,8 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
-import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
-import 'package:RendicontationPlatformLeo_Client/model/support/StringCapitalization.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:flutter/material.dart';
 
 

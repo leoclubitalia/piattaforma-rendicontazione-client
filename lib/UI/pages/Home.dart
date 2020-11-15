@@ -9,7 +9,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButto
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
-import 'package:RendicontationPlatformLeo_Client/model/support/StringCapitalization.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:flutter/material.dart';
 

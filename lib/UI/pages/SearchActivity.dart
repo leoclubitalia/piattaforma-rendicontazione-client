@@ -1,6 +1,7 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/RoundedDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputAutocomplete.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputDropdown.dart';
@@ -15,7 +16,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
-import 'package:RendicontationPlatformLeo_Client/model/support/DateFormatter.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -213,187 +214,182 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   void showAdvancedSearch(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => SimpleDialog(
+      builder: (context) => RoundedDialog(
         title: Text(AppLocalizations.of(context).translate("advanced_search")),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.2,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Flexible(
-                      child: InputAutocomplete(
-                        labelText: AppLocalizations.of(context).translate("club"),
-                        controller: _autocompleteClubController,
-                        onSuggestion: (String pattern) async {
-                          return await ModelFacade.sharedInstance.suggestClubs(pattern);
-                        },
-                        onSelect: (suggestion) {
-                          _autocompleteClubController.text = suggestion.toString();
-                          _club = suggestion;
-                        },
-                      ),
-                    ),
-                    Flexible(
-                      child: InputAutocomplete(
-                        labelText: AppLocalizations.of(context).translate("district"),
-                        controller: _autocompleteDistrictController,
-                        onSuggestion: (String pattern) async {
-                          return await ModelFacade.sharedInstance.suggestDistricts(pattern);
-                        },
-                        onSelect: (suggestion) {
-                          _autocompleteDistrictController.text = suggestion.toString();
-                          _district = suggestion;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      child: InputField(
-                        labelText: AppLocalizations.of(context).translate("title"),
-                        controller: _inputFieldTitleController,
-                        onSubmit: (String value) {
-                          _title = value;
-                        },
-                      ),
-                    ),
-                    Flexible(
-                      child: InputAutocomplete(
-                        labelText: AppLocalizations.of(context).translate("type_activity"),
-                        controller: _autocompleteTypeActivityController,
-                        onSuggestion: (String pattern) async {
-                          return await ModelFacade.sharedInstance.suggestTypesActivity(pattern);
-                        },
-                        onSelect: (suggestion) {
-                          _autocompleteTypeActivityController.text = suggestion.toString();
-                          _type = suggestion;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      child: InputButton(
-                        text: AppLocalizations.of(context).translate("start_date"),
-                        controller: _startDateTextController,
-                        onPressed: () {
-                          DatePicker.showDatePicker(
-                            context,
-                            showTitleActions: true,
-                            minTime: DateTime(2000, 1, 1),
-                            maxTime: DateTime.now(),
-                            onConfirm: (date) {
-                              _startDate = date;
-                              _startDateTextController.text = date.toStringSlashed();
-                            },
-                            currentTime: DateTime.now(),
-                            locale: LocaleType.it
-                          );
-                        },
-                      ),
-                    ),
-                    Flexible(
-                      child: InputButton(
-                        text: AppLocalizations.of(context).translate("end_date"),
-                        controller: _endDateTextController,
-                        onPressed: () {
-                          DatePicker.showDatePicker(
-                            context,
-                            showTitleActions: true,
-                            minTime: DateTime(2000, 1, 1),
-                            maxTime: DateTime.now(),
-                            onConfirm: (date) {
-                              _endDate = date;
-                              _endDateTextController.text = date.toStringSlashed();
-                            },
-                            currentTime: DateTime.now(),
-                            locale: LocaleType.it
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      child: InputField(
-                        labelText: AppLocalizations.of(context).translate("quantity_participants"),
-                        controller: _inputFieldQuantityLeoController,
-                        keyboardType: TextInputType.number,
-                        onSubmit: (String value) {
-                          if ( value == null || value == "" ) {
-                            _quantityLeo = null;
-                          }
-                          else {
-                            _quantityLeo = int.parse(value);
-                          }
-                        },
-                      ),
-                    ),
-                    Flexible(
-                      child: InputDropdown(
-                        labelText: AppLocalizations.of(context).translate("lions_participation"),
-                        controller: _dropDownLionsParticipationController,
-                        items: _lionsParticipationsValues,
-                        onChanged: (String value) {
-                          _lionsParticipation = value;
-                          _dropDownLionsParticipationController.text = value;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      child: InputAutocomplete(
-                        labelText: AppLocalizations.of(context).translate("city"),
-                        controller: _autocompleteCityController,
-                        onSuggestion: (String pattern) async {
-                          return await ModelFacade.sharedInstance.suggestCities(pattern);
-                        },
-                        onSelect: (suggestion) {
-                          _autocompleteCityController.text = suggestion.toString();
-                          _city = suggestion;
-                        },
-                      ),
-                    ),
-                    Flexible(
-                      child: InputAutocomplete(
-                        labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
-                        controller: _autocompleteSatisfactionDegreeController,
-                        onSuggestion: (String pattern) {
-                          return _satisfactionDegrees;
-                        },
-                        onSelect: (suggestion) {
-                          _autocompleteSatisfactionDegreeController.text = suggestion.toString();
-                          _satisfactionDegree = suggestion;
-                        },
-                      ),
-                    ),
-                    CircularIconButton(
-                      onPressed: () async {
-                        Navigator.pop(context);
-                        loadSearch();
+        body: Container(
+          width: MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.2,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Flexible(
+                    child: InputAutocomplete(
+                      labelText: AppLocalizations.of(context).translate("club"),
+                      controller: _autocompleteClubController,
+                      onSuggestion: (String pattern) async {
+                        return await ModelFacade.sharedInstance.suggestClubs(pattern);
                       },
-                      icon: Icons.search_rounded,
+                      onSelect: (suggestion) {
+                        _autocompleteClubController.text = suggestion.toString();
+                        _club = suggestion;
+                      },
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  Flexible(
+                    child: InputAutocomplete(
+                      labelText: AppLocalizations.of(context).translate("district"),
+                      controller: _autocompleteDistrictController,
+                      onSuggestion: (String pattern) async {
+                        return await ModelFacade.sharedInstance.suggestDistricts(pattern);
+                      },
+                      onSelect: (suggestion) {
+                        _autocompleteDistrictController.text = suggestion.toString();
+                        _district = suggestion;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Flexible(
+                    child: InputField(
+                      labelText: AppLocalizations.of(context).translate("title"),
+                      controller: _inputFieldTitleController,
+                      onSubmit: (String value) {
+                        _title = value;
+                      },
+                    ),
+                  ),
+                  Flexible(
+                    child: InputAutocomplete(
+                      labelText: AppLocalizations.of(context).translate("type_activity"),
+                      controller: _autocompleteTypeActivityController,
+                      onSuggestion: (String pattern) async {
+                        return await ModelFacade.sharedInstance.suggestTypesActivity(pattern);
+                      },
+                      onSelect: (suggestion) {
+                        _autocompleteTypeActivityController.text = suggestion.toString();
+                        _type = suggestion;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Flexible(
+                    child: InputButton(
+                      text: AppLocalizations.of(context).translate("start_date"),
+                      controller: _startDateTextController,
+                      onPressed: () {
+                        DatePicker.showDatePicker(
+                          context,
+                          showTitleActions: true,
+                          minTime: DateTime(2000, 1, 1),
+                          maxTime: DateTime.now(),
+                          onConfirm: (date) {
+                            _startDate = date;
+                            _startDateTextController.text = date.toStringSlashed();
+                          },
+                          currentTime: DateTime.now(),
+                          locale: LocaleType.it
+                        );
+                      },
+                    ),
+                  ),
+                  Flexible(
+                    child: InputButton(
+                      text: AppLocalizations.of(context).translate("end_date"),
+                      controller: _endDateTextController,
+                      onPressed: () {
+                        DatePicker.showDatePicker(
+                          context,
+                          showTitleActions: true,
+                          minTime: DateTime(2000, 1, 1),
+                          maxTime: DateTime.now(),
+                          onConfirm: (date) {
+                            _endDate = date;
+                            _endDateTextController.text = date.toStringSlashed();
+                          },
+                          currentTime: DateTime.now(),
+                          locale: LocaleType.it
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Flexible(
+                    child: InputField(
+                      labelText: AppLocalizations.of(context).translate("quantity_participants"),
+                      controller: _inputFieldQuantityLeoController,
+                      keyboardType: TextInputType.number,
+                      onSubmit: (String value) {
+                        if ( value == null || value == "" ) {
+                          _quantityLeo = null;
+                        }
+                        else {
+                          _quantityLeo = int.parse(value);
+                        }
+                      },
+                    ),
+                  ),
+                  Flexible(
+                    child: InputDropdown(
+                      labelText: AppLocalizations.of(context).translate("lions_participation"),
+                      controller: _dropDownLionsParticipationController,
+                      items: _lionsParticipationsValues,
+                      onChanged: (String value) {
+                        _lionsParticipation = value;
+                        _dropDownLionsParticipationController.text = value;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Flexible(
+                    child: InputAutocomplete(
+                      labelText: AppLocalizations.of(context).translate("city"),
+                      controller: _autocompleteCityController,
+                      onSuggestion: (String pattern) async {
+                        return await ModelFacade.sharedInstance.suggestCities(pattern);
+                      },
+                      onSelect: (suggestion) {
+                        _autocompleteCityController.text = suggestion.toString();
+                        _city = suggestion;
+                      },
+                    ),
+                  ),
+                  Flexible(
+                    child: InputAutocomplete(
+                      labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
+                      controller: _autocompleteSatisfactionDegreeController,
+                      onSuggestion: (String pattern) {
+                        return _satisfactionDegrees;
+                      },
+                      onSelect: (suggestion) {
+                        _autocompleteSatisfactionDegreeController.text = suggestion.toString();
+                        _satisfactionDegree = suggestion;
+                      },
+                    ),
+                  ),
+                  CircularIconButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      loadSearch();
+                    },
+                    icon: Icons.search_rounded,
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
     if ( _satisfactionDegree != null ) {

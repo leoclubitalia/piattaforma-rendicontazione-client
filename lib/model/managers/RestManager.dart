@@ -126,8 +126,6 @@ class RestManager {
       },
       body: json.encode(service),
     );
-    // TODO parse error
-    // TODO update UI after adding
     return Service.fromJson(json.decode(response.body));
   }
 
