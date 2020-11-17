@@ -162,7 +162,7 @@ class ModelFacade {
     if ( district != null ) {
       params["districtId"] = district.id.toString();
     }
-    if ( satisfactionDegree != null ) {
+    if ( satisfactionDegree != null && satisfactionDegree.id != null ) {
       params["satisfactionDegree"] = satisfactionDegree.id.toString();
     }
     if ( city != null ) {
@@ -229,7 +229,7 @@ class ModelFacade {
     if ( district != null ) {
       params["districtId"] = district.id.toString();
     }
-    if ( satisfactionDegree != null ) {
+    if ( satisfactionDegree != null && satisfactionDegree.id != null ) {
       params["satisfactionDegree"] = satisfactionDegree.id.toString();
     }
     if ( city != null ) {
