@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mailto/mailto.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -7,10 +8,12 @@ import 'package:url_launcher/url_launcher.dart';
 class DeveloperTile extends StatelessWidget {
   final String name;
   final String imageName;
-  final String mailToAddress;
+  final String instagramLink;
+  final String facebookLink;
+  final String email;
 
 
-  const DeveloperTile({Key key, this.name, this.imageName, this.mailToAddress}) : super(key: key);
+  const DeveloperTile({Key key, this.name, this.imageName, this.instagramLink, this.facebookLink, this.email}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,28 +23,63 @@ class DeveloperTile extends StatelessWidget {
       children: [
         new Padding(
           padding: EdgeInsets.all(15),
-          child: InkWell(
-            onTap: () async {
-              final mailtoLink = Mailto(
-                to: [mailToAddress],
-                subject: "Message sent from MyLeo MD 108",
-              );
-              await launch("$mailtoLink");
-            },
-            child: Container(
-                width: 130.0,
-                height: 130.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage(imageName)
-                    )
-                )
-            ),
+          child: Container(
+            width: 130.0,
+            height: 130.0,
+            decoration: new BoxDecoration(
+              shape: BoxShape.circle,
+              image: new DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage(imageName)
+              )
+            )
           ),
         ),
-        Text(name)
+        Text(name),
+        Container(
+          alignment: Alignment.center,
+          width: 130.0,
+          height: 50.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              instagramLink == null ? Padding(padding: EdgeInsets.all(0)) :
+              IconButton(
+                icon: FaIcon(
+                  FontAwesomeIcons.instagram,
+                  color:Colors.grey,
+                ),
+                onPressed: () async {
+                    await launch(instagramLink);
+                  }
+              ),
+              facebookLink == null ? Padding(padding: EdgeInsets.all(0)) :
+              IconButton(
+                icon: FaIcon(
+                  FontAwesomeIcons.facebookF,
+                  color:Colors.grey,
+                ),
+                onPressed: () async {
+                  await launch(facebookLink);
+                }
+              ),
+              email == null ? Padding(padding: EdgeInsets.all(0)) :
+              IconButton(
+                icon: FaIcon(
+                  FontAwesomeIcons.envelope,
+                  color:Colors.grey,
+                ),
+                onPressed: () async {
+                  final mailtoLink = Mailto(
+                    to: [email],
+                    subject: "Message sent from MyLeo MD 108",
+                  );
+                  await launch("$mailtoLink");
+                },
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

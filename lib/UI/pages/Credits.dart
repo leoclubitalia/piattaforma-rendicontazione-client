@@ -56,7 +56,9 @@ class _Credits extends GlobalState<Credits> {
                         child: DeveloperTile (
                           name: "Francesco Scala",
                           imageName: "images/developers/scala.png",
-                          mailToAddress: "francesco8ball@gmail.com",
+                          email: "francesco8ball@gmail.com",
+                          instagramLink: "https://www.instagram.com/frank__ladder/",
+                          facebookLink: "https://www.facebook.com/francesco.scala.35",
                         ),
                       ),
                       new TextSpan(text: "\n\n\n\n"),
@@ -66,21 +68,25 @@ class _Credits extends GlobalState<Credits> {
                         child: DeveloperTile (
                           name: "Francesco Scala",
                           imageName: "images/developers/scala.png",
-                          mailToAddress: "francesco8ball@gmail.com",
+                          email: "francesco8ball@gmail.com",
+                          instagramLink: "https://www.instagram.com/frank__ladder/",
+                          facebookLink: "https://www.facebook.com/francesco.scala.35",
                         ),
                       ),
                       WidgetSpan(
                         child: DeveloperTile (
                           name: "Mattia Ricco",
                           imageName: "images/developers/ricco.jpg",
-                          mailToAddress: "mattia.ricco.mr@gmail.com",
+                          email: "mattia.ricco.mr@gmail.com",
                         ),
                       ),
                       WidgetSpan(
                         child: DeveloperTile (
                           name: "Andrea Germanà",
                           imageName: "images/developers/germana.jpg",
-                          mailToAddress: "andrea@germana.me",
+                          email: "andrea@germana.me",
+                          //instagramLink: "",
+                          facebookLink: "https://www.facebook.com/andgermana",
                         ),
                       ),
                     ],
