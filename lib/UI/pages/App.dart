@@ -33,8 +33,8 @@ class App extends StatelessWidget {
         indicatorColor: Colors.deepOrangeAccent,
         canvasColor: Colors.grey[100], // app background
         cardColor: Colors.white,
-        unselectedWidgetColor: Colors.grey[500],
-        hoverColor: Colors.deepOrange,
+        unselectedWidgetColor: Colors.grey[200],
+        hoverColor: Colors.grey[200],
         accentColor: Colors.white,
         splashColor: Colors.black,
       ),

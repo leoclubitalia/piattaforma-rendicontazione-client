@@ -8,12 +8,12 @@ import 'package:url_launcher/url_launcher.dart';
 class DeveloperTile extends StatelessWidget {
   final String name;
   final String imageName;
-  final String instagramLink;
-  final String facebookLink;
+  final String instagram;
+  final String facebook;
   final String email;
 
 
-  const DeveloperTile({Key key, this.name, this.imageName, this.instagramLink, this.facebookLink, this.email}) : super(key: key);
+  const DeveloperTile({Key key, this.name, this.imageName, this.instagram, this.facebook, this.email}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,24 +43,24 @@ class DeveloperTile extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              instagramLink == null ? Padding(padding: EdgeInsets.all(0)) :
+              instagram == null ? Padding(padding: EdgeInsets.all(0)) :
               IconButton(
                 icon: FaIcon(
                   FontAwesomeIcons.instagram,
                   color:Colors.grey,
                 ),
                 onPressed: () async {
-                    await launch(instagramLink);
+                    await launch(instagram);
                   }
               ),
-              facebookLink == null ? Padding(padding: EdgeInsets.all(0)) :
+              facebook == null ? Padding(padding: EdgeInsets.all(0)) :
               IconButton(
                 icon: FaIcon(
                   FontAwesomeIcons.facebookF,
                   color:Colors.grey,
                 ),
                 onPressed: () async {
-                  await launch(facebookLink);
+                  await launch(facebook);
                 }
               ),
               email == null ? Padding(padding: EdgeInsets.all(0)) :
