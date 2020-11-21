@@ -1,3 +1,4 @@
+import 'package:RendicontationPlatformLeo_Client/model/managers/ParsingManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/RestManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/StateManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
@@ -21,6 +22,7 @@ class ModelFacade {
   StateManager appState = StateManager();
 
   RestManager _restManager = RestManager();
+  ParsingManager _parsingManager = ParsingManager();
 
   int currentClubId = 1; //TODO temp
 
@@ -31,10 +33,10 @@ class ModelFacade {
 
   void _loadInfoClub(int id) async {
     if ( !appState.existsValue(Constants.STATE_CLUB) ) {
-      Club club = await _restManager.makeClubRequest(Constants.REQUEST_INFO_CLUB, id);
-      Quantity quantityServices = await _restManager.makeQuantityRequest(Constants.REQUEST_CLUB_QUANTITY_SERVICES, club.id);
+      Club club = _parsingManager.parseClub(await _restManager.makeGetRequest(Constants.REQUEST_INFO_CLUB, {"id": id.toString()}));
+      Quantity quantityServices = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.REQUEST_CLUB_QUANTITY_SERVICES, {"id": id.toString()}));
       club.quantityServices = quantityServices;
-      Quantity quantityActivities = await _restManager.makeQuantityRequest(Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, club.id);
+      Quantity quantityActivities = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, {"id": id.toString()}));
       club.quantityActivities = quantityActivities;
       appState.addValue(Constants.STATE_CLUB, club);
     }
@@ -49,43 +51,43 @@ class ModelFacade {
 
   void loadAllSatisfactionDegrees() async {
     if ( !appState.existsValue(Constants.STATE_ALL_SATISFACTION_DEGREES) ) {
-      List<SatisfactionDegree> satisfactionDegrees = await _restManager.makeListSatisfactionDegreesRequest(Constants.REQUEST_SEARCH_ALL_SATISFACTION_DEGREES);
+      List<SatisfactionDegree> satisfactionDegrees = _parsingManager.parseSatisfactionDegrees(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_SATISFACTION_DEGREES));
       appState.addValue(Constants.STATE_ALL_SATISFACTION_DEGREES, satisfactionDegrees);
     }
   }
 
   void loadAllDistricts() async {
     if ( !appState.existsValue(Constants.STATE_ALL_DISTRICTS) ) {
-      List<District> districts = await _restManager.makeListDistrictsRequest(Constants.REQUEST_SEARCH_ALL_DISTRICTS);
+      List<District> districts = _parsingManager.parseDistricts(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_DISTRICTS));
       appState.addValue(Constants.STATE_ALL_DISTRICTS, districts);
     }
   }
 
   void loadAllTypesService() async {
     if ( !appState.existsValue(Constants.STATE_ALL_TYPE_SERVICE) ) {
-      List<TypeService> types = await _restManager.makeListTypeServiceRequest(Constants.REQUEST_SEARCH_ALL_TYPES_SERVICE);
+      List<TypeService> types = _parsingManager.parseTypeServices(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_TYPES_SERVICE));
       appState.addValue(Constants.STATE_ALL_TYPE_SERVICE, types);
     }
   }
 
   void loadAllTypesActivity() async {
     if ( !appState.existsValue(Constants.STATE_ALL_TYPE_ACTIVITY) ) {
-      List<TypeActivity> types = await _restManager.makeListTypeActivityRequest(Constants.REQUEST_SEARCH_ALL_TYPES_ACTIVITY);
+      List<TypeActivity> types = _parsingManager.parseTypeActivities(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_TYPES_ACTIVITY));
       appState.addValue(Constants.STATE_ALL_TYPE_ACTIVITY, types);
     }
   }
 
   void loadAllAreas() async {
     if ( !appState.existsValue(Constants.STATE_ALL_AREAS) ) {
-      List<CompetenceArea> types = await _restManager.makeListAreasRequest(Constants.REQUEST_SEARCH_ALL_AREAS);
-      appState.addValue(Constants.STATE_ALL_AREAS, types);
+      List<CompetenceArea> areas = _parsingManager.parseCompetenceAreas(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_AREAS));
+      appState.addValue(Constants.STATE_ALL_AREAS, areas);
     }
   }
 
   void loadAllClubs() async {
     if ( !appState.existsValue(Constants.STATE_ALL_CLUBS) ) {
-      List<Club> types = await _restManager.makeListClubsRequest(Constants.REQUEST_SEARCH_ALL_CLUBS);
-      appState.addValue(Constants.STATE_ALL_CLUBS, types);
+      List<Club> clubs = _parsingManager.parseClubs(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_CLUBS));
+      appState.addValue(Constants.STATE_ALL_CLUBS, clubs);
     }
   }
 
@@ -96,7 +98,7 @@ class ModelFacade {
 
   Future<List<City>> suggestCities(String value) async {
     if ( value != null && value.replaceAll(" ", "") != "" ) {
-      return await _restManager.makeListCityRequest(Constants.REQUEST_SEARCH_CITIES, value);
+      return _parsingManager.parseCities(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_CITIES, {"name": value}));
     }
     return List<City>();
   }
@@ -191,7 +193,7 @@ class ModelFacade {
     }
     params["pageSize"] = Constants.REQUEST_DEFAULT_PAGE_SIZE;
     try {
-      List<Service> services = await _restManager.makeListServiceRequest(Constants.REQUEST_SEARCH_SERVICES_ADVANCED, params);
+      List<Service> services = _parsingManager.parseServices(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_SERVICES_ADVANCED, params));
       if ( page == 0 ) {
         appState.addValue(Constants.STATE_SEARCH_SERVICE_RESULT, services);
         if ( services.isEmpty ) {
@@ -263,7 +265,7 @@ class ModelFacade {
     }
     params["pageSize"] = Constants.REQUEST_DEFAULT_PAGE_SIZE;
     try {
-      List<Activity> activities = await _restManager.makeListActivityRequest(Constants.REQUEST_SEARCH_ACTIVITIES_ADVANCED, params);
+      List<Activity> activities = _parsingManager.parseActivities(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ACTIVITIES_ADVANCED, params));
       if ( page == 0 ) {
         appState.addValue(Constants.STATE_SEARCH_ACTIVITY_RESULT, activities);
         if ( activities.isEmpty ) {
@@ -283,7 +285,7 @@ class ModelFacade {
   void addService(Service service) async {
     service.club = Club(id: currentClubId);
     try {
-      service = await _restManager.addService(Constants.REQUEST_ADD_SERVICE, service);
+      service = _parsingManager.parseService(await _restManager.makePostRequest(Constants.REQUEST_ADD_SERVICE, service));
       appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, service);
     }
     catch (e) {

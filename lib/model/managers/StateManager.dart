@@ -1,4 +1,4 @@
-import 'package:RendicontationPlatformLeo_Client/model/GlobalStateManager.dart';
+import 'package:RendicontationPlatformLeo_Client/model/managers/GlobalStateManager.dart';
 
 
 class StateManager extends GlobalStateManager {
