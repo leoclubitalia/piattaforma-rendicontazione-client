@@ -286,6 +286,10 @@ class ModelFacade {
     service.club = Club(id: currentClubId);
     try {
       service = _parsingManager.parseService(await _restManager.makePostRequest(Constants.REQUEST_ADD_SERVICE, service));
+      Club club = appState.getValue(Constants.STATE_CLUB);
+      club.quantityServices.currentYear ++;
+      club.quantityServices.all ++;
+      appState.updateValue(Constants.STATE_CLUB, club);
       appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, service);
     }
     catch (e) {
@@ -297,6 +301,11 @@ class ModelFacade {
     activity.club = Club(id: currentClubId);
     try {
       activity = _parsingManager.parseActivity(await _restManager.makePostRequest(Constants.REQUEST_ADD_ACTIVITY, activity));
+      appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
+      Club club = appState.getValue(Constants.STATE_CLUB);
+      club.quantityActivities.currentYear ++;
+      club.quantityActivities.all ++;
+      appState.updateValue(Constants.STATE_CLUB, club);
       appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
     }
     catch (e) {

@@ -35,7 +35,6 @@ class ParsingManager {
   }
 
   Activity parseActivity(String value) {
-    print(value);
     return Activity.fromJson(json.decode(value));
   }
 
