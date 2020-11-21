@@ -9,9 +9,8 @@ import 'package:flutter/material.dart';
 
 
 class LogIn extends StatefulWidget {
-  LogIn({Key key, this.title}) : super(key: key);
+  LogIn({Key key}) : super(key: key);
 
-  final String title;
 
   @override
   _LogIn createState() => _LogIn();

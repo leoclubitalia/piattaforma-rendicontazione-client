@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 
 
 class Credits extends StatefulWidget {
-  Credits({Key key, this.title}) : super(key: key);
+  Credits({Key key}) : super(key: key);
 
-  final String title;
 
   @override
   _Credits createState() => _Credits();

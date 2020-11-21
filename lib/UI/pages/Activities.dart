@@ -11,9 +11,8 @@ import 'package:flutter/material.dart';
 
 
 class Activities extends StatefulWidget {
-  Activities({Key key, this.title}) : super(key: key);
+  Activities({Key key}) : super(key: key);
 
-  final String title;
 
   @override
   _Activities createState() => _Activities();

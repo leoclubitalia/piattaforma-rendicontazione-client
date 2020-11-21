@@ -14,9 +14,7 @@ import 'package:flutter/material.dart';
 
 
 class Services extends StatefulWidget {
-  Services({Key key, this.title}) : super(key: key);
-
-  final String title;
+  Services({Key key}) : super(key: key);
 
   @override
   _Services createState() => _Services();

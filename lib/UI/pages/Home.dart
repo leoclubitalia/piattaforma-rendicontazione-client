@@ -16,9 +16,8 @@ import 'package:flutter/material.dart';
 
 
 class Home extends StatefulWidget {
-  Home({Key key, this.title}) : super(key: key);
+  Home({Key key}) : super(key: key);
 
-  final String title;
 
   @override
   _Home createState() => _Home();
