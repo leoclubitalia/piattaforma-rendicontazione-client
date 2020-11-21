@@ -73,6 +73,9 @@ class _SearchService extends GlobalState<SearchService> {
   TextEditingController _inputFieldServedPeopleController = TextEditingController();
   TextEditingController _inputFieldOtherAssociationsController = TextEditingController();
 
+  ScrollController _scrollController = ScrollController();
+  double _scrollOffset = 0;
+
 
   @override
   void initState() {
@@ -110,6 +113,7 @@ class _SearchService extends GlobalState<SearchService> {
 
   @override
   Widget build(BuildContext context) {
+    _scrollController = ScrollController(initialScrollOffset: _scrollOffset);
     if ( _allDegrees == null ) {
       _allDegrees = SatisfactionDegree(name: AppLocalizations.of(context).translate("all"));
     }
@@ -191,6 +195,7 @@ class _SearchService extends GlobalState<SearchService> {
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: ListView.builder(
                       itemCount: _searchResult.length + 1,
+                      controller: _scrollController,
                       itemBuilder: (context, index) {
                         if ( index < _searchResult.length ) {
                           return ServiceTile(
@@ -526,11 +531,13 @@ class _SearchService extends GlobalState<SearchService> {
   }
 
   void loadSearch() {
+    _scrollOffset = 0;
     _currentPage = 0;
     _search();
   }
 
   void loadMore() {
+    _scrollOffset = _scrollController.offset;
     _currentPage ++;
     _search();
   }

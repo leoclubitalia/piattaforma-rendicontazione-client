@@ -63,6 +63,9 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   TextEditingController _inputFieldTitleController = TextEditingController();
   TextEditingController _inputFieldQuantityLeoController = TextEditingController();
 
+  ScrollController _scrollController = ScrollController();
+  double _scrollOffset = 0;
+
 
   @override
   void initState() {
@@ -100,6 +103,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
 
   @override
   Widget build(BuildContext context) {
+    _scrollController = ScrollController(initialScrollOffset: _scrollOffset);
     if ( _allDegrees == null ) {
       _allDegrees = SatisfactionDegree(name: AppLocalizations.of(context).translate("all"));
     }
@@ -181,6 +185,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: ListView.builder(
                       itemCount: _searchResult.length + 1,
+                      controller: _scrollController,
                       itemBuilder: (context, index) {
                         if ( index < _searchResult.length ) {
                           return ActivityTile(
@@ -418,11 +423,13 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   }
 
   void loadSearch() {
+    _scrollOffset = 0;
     _currentPage = 0;
     _search();
   }
 
   void loadMore() {
+    _scrollOffset = _scrollController.offset;
     _currentPage ++;
     _search();
   }
