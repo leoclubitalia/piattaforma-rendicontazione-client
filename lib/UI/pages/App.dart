@@ -35,7 +35,6 @@ class App extends StatelessWidget {
         buttonColor: Colors.deepOrangeAccent,
         indicatorColor: Colors.deepOrangeAccent,
         cardColor: Colors.white,
-        unselectedWidgetColor: Colors.grey[200],
         hoverColor: Colors.grey[200],
         accentColor: Colors.white,
         splashColor: Colors.black,

@@ -65,7 +65,7 @@ class _Services extends GlobalState<Services> {
     _scrollController = ScrollController(initialScrollOffset: _scrollOffset);
     return Scaffold(
       appBar: RoundedAppBar (
-        title: AppLocalizations.of(context).translate("home").capitalize,
+        title: AppLocalizations.of(context).translate("service").capitalize,
         backable: true,
         actions: <Widget>[
           Padding(

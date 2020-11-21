@@ -8,42 +8,36 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputAutocomp
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
-import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
-import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
-import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/ListDeepClone.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter/material.dart';
 
 
-class AddService extends StatefulWidget {
-  AddService({Key key}) : super(key: key);
+class AddActivity extends StatefulWidget {
+  AddActivity({Key key}) : super(key: key);
 
   @override
-  _AddService createState() => _AddService();
+  _AddActivity createState() => _AddActivity();
 }
 
-class _AddService extends GlobalState<AddService> {
-  Service _newService = Service.newCreation();
+class _AddActivity extends GlobalState<AddActivity> {
+  Activity _newActivity = Activity.newCreation();
 
   TextEditingController _dateTextController = TextEditingController();
   TextEditingController _autocompleteSatisfactionDegreeController = TextEditingController();
   TextEditingController _autocompleteCityController = TextEditingController();
   TextEditingController _inputFieldTitleController = TextEditingController();
   TextEditingController _inputFieldParticipantsController = TextEditingController();
-  TextEditingController _inputFieldDurationController = TextEditingController();
-  TextEditingController _inputFieldMoneyRaisedController = TextEditingController();
-  TextEditingController _inputFieldServedPeopleController = TextEditingController();
-  TextEditingController _inputFieldOtherAssociationsController = TextEditingController();
   TextEditingController _inputFieldDescriptionController = TextEditingController();
 
   List<SatisfactionDegree> _allSatisfactionDegrees;
-  List<TypeService> _allTypes;
-  List<CompetenceArea> _allAreas;
+  List<TypeActivity> _allTypes;
 
   bool _isAdding = false;
   bool _firstLoad = true;
@@ -53,11 +47,10 @@ class _AddService extends GlobalState<AddService> {
   void refreshState() {
     if ( _firstLoad ) {
       _allSatisfactionDegrees = (ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES) as List<SatisfactionDegree>).deepClone();
-      _allTypes = (ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_SERVICE) as List<TypeService>).deepClone();
-      _allAreas = (ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS) as List<CompetenceArea>).deepClone();
+      _allTypes = (ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_ACTIVITY) as List<TypeActivity>).deepClone();
       _firstLoad = false;
     }
-    Service justAdded = ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED_SERVICE);
+    Activity justAdded = ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED_ACTIVITY);
     if ( _isAdding ) {
       _isAdding = false;
       if ( justAdded == null ) {
@@ -72,7 +65,7 @@ class _AddService extends GlobalState<AddService> {
 
   @override
   Widget build(BuildContext context) {
-    _dateTextController.text = _newService.date.toStringSlashed();
+    _dateTextController.text = _newActivity.date.toStringSlashed();
     return Container(
       width: MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.2,
       child: _isAdding ?
@@ -90,7 +83,7 @@ class _AddService extends GlobalState<AddService> {
                   labelText: AppLocalizations.of(context).translate("title"),
                   controller: _inputFieldTitleController,
                   onSubmit: (String value) {
-                    _newService.title = value;
+                    _newActivity.title = value;
                   },
                 ),
               ),
@@ -105,7 +98,7 @@ class _AddService extends GlobalState<AddService> {
                       minTime: DateTime(2000, 1, 1),
                       maxTime: DateTime.now(),
                       onConfirm: (date) {
-                        _newService.date = date;
+                        _newActivity.date = date;
                         _dateTextController.text = date.toStringSlashed();
                       },
                       currentTime: DateTime.now(),
@@ -124,34 +117,7 @@ class _AddService extends GlobalState<AddService> {
                   controller: _inputFieldDescriptionController,
                   multiline: true,
                   onSubmit: (String value) {
-                    _newService.description = value;
-                  },
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Flexible(
-                child: InputAutocomplete(
-                  labelText: AppLocalizations.of(context).translate("city"),
-                  controller: _autocompleteCityController,
-                  onSuggestion: (String pattern) async {
-                    return await ModelFacade.sharedInstance.suggestCities(pattern);
-                  },
-                  onSelect: (suggestion) {
-                    _autocompleteCityController.text = suggestion.toString();
-                    _newService.city = suggestion;
-                  },
-                ),
-              ),
-              Flexible(
-                child: InputField(
-                  labelText: AppLocalizations.of(context).translate("money_raised"),
-                  controller: _inputFieldMoneyRaisedController,
-                  keyboardType: TextInputType.number,
-                  onSubmit: (String value) {
-                    _newService.moneyRaised = double.parse(value);
+                    _newActivity.description = value;
                   },
                 ),
               ),
@@ -165,31 +131,7 @@ class _AddService extends GlobalState<AddService> {
                   controller: _inputFieldParticipantsController,
                   keyboardType: TextInputType.number,
                   onSubmit: (String value) {
-                    _newService.quantityParticipants = int.parse(value);
-                  },
-                ),
-              ),
-              Flexible(
-                child: InputField(
-                  labelText: AppLocalizations.of(context).translate("quantity_served_people"),
-                  controller: _inputFieldServedPeopleController,
-                  keyboardType: TextInputType.number,
-                  onSubmit: (String value) {
-                    _newService.quantityServedPeople = int.parse(value);
-                  },
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Flexible(
-                child: InputField(
-                  labelText: AppLocalizations.of(context).translate("duration"),
-                  controller: _inputFieldDurationController,
-                  keyboardType: TextInputType.number,
-                  onSubmit: (String value) {
-                    _newService.duration = int.parse(value);
+                    _newActivity.quantityLeo = int.parse(value);
                   },
                 ),
               ),
@@ -202,7 +144,7 @@ class _AddService extends GlobalState<AddService> {
                   },
                   onSelect: (suggestion) {
                     _autocompleteSatisfactionDegreeController.text = suggestion.toString();
-                    _newService.satisfactionDegree = suggestion;
+                    _newActivity.satisfactionDegree = suggestion;
                   },
                 ),
               ),
@@ -215,51 +157,7 @@ class _AddService extends GlobalState<AddService> {
                 Container(
                   width: 55,
                   child: Text(
-                    AppLocalizations.of(context).translate("areas").capitalize + ":",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _allAreas.length,
-                    itemBuilder: (context, index) {
-                      return CircularCheckBoxTitle(
-                        title: _allAreas[index].name,
-                        value: _allAreas[index].selected,
-                        onChanged: (bool x) {
-                          setState(() {
-                            _allAreas[index].selected = !_allAreas[index].selected;
-                            if ( _allAreas[index].selected ) {
-                              _newService.competenceAreasService.add(_allAreas[index]);
-                            }
-                            else {
-                              if ( _newService.competenceAreasService.contains(_allAreas[index]) ) {
-                                _newService.competenceAreasService.remove(_allAreas[index]);
-                              }
-                            }
-                          });
-                        }
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-            child: Row(
-              children: [
-                Container(
-                  width: 55,
-                  child: Text(
-                    AppLocalizations.of(context).translate("type_service").capitalize + ":",
+                    AppLocalizations.of(context).translate("type_activity").capitalize + ":",
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -280,11 +178,11 @@ class _AddService extends GlobalState<AddService> {
                           setState(() {
                             _allTypes[index].selected = !_allTypes[index].selected;
                             if ( _allTypes[index].selected ) {
-                              _newService.typesService.add(_allTypes[index]);
+                              _newActivity.typesActivity.add(_allTypes[index]);
                             }
                             else {
-                              if ( _newService.typesService.contains(_allTypes[index]) ) {
-                                _newService.typesService.remove(_allTypes[index]);
+                              if ( _newActivity.typesActivity.contains(_allTypes[index]) ) {
+                                _newActivity.typesActivity.remove(_allTypes[index]);
                               }
                             }
                           });
@@ -298,12 +196,54 @@ class _AddService extends GlobalState<AddService> {
           ),
           Row(
             children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 166,
+                      child: Text(
+                        AppLocalizations.of(context).translate("lions_participation").capitalize + ":",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 50,
+                      width: 300,
+                      child: Row(
+                        children: [
+                          CircularCheckBoxTitle(
+                              title: AppLocalizations.of(context).translate("yes"),
+                              value: _newActivity.lionsParticipation,
+                              onChanged: (bool x) {
+                                setState(() {
+                                  _newActivity.lionsParticipation = !_newActivity.lionsParticipation;
+                                });
+                              }
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
               Flexible(
-                child: InputField(
-                  labelText: AppLocalizations.of(context).translate("other_associations"),
-                  controller: _inputFieldOtherAssociationsController,
-                  onSubmit: (String value) {
-                    _newService.otherAssociations = value;
+                child: InputAutocomplete(
+                  labelText: AppLocalizations.of(context).translate("city"),
+                  controller: _autocompleteCityController,
+                  onSuggestion: (String pattern) async {
+                    return await ModelFacade.sharedInstance.suggestCities(pattern);
+                  },
+                  onSelect: (suggestion) {
+                    _autocompleteCityController.text = suggestion.toString();
+                    _newActivity.city = suggestion;
                   },
                 ),
               ),
@@ -311,59 +251,43 @@ class _AddService extends GlobalState<AddService> {
                 onPressed: () async {
                   bool fieldNotSpecified = false;
                   String message = AppLocalizations.of(context).translate("these_field_are_missed") + "\n";
-                  if ( _newService.title == null || _newService.title == "" ) {
+                  if ( _newActivity.title == null || _newActivity.title == "" ) {
                     message += "\n" + AppLocalizations.of(context).translate("title");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.description == null || _newService.description == "" ) {
+                  if ( _newActivity.description == null || _newActivity.description == "" ) {
                     message += "\n" + AppLocalizations.of(context).translate("description");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.date == null ) {
+                  if ( _newActivity.date == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("date");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.quantityParticipants == null ) {
+                  if ( _newActivity.quantityLeo == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("quantity_participants");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.duration == null ) {
-                    message += "\n" + AppLocalizations.of(context).translate("duration");
+                  if ( _newActivity.lionsParticipation == null ) {
+                    message += "\n" + AppLocalizations.of(context).translate("lions_participation");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.otherAssociations == null || _newService.otherAssociations == "" ) {
-                    message += "\n" + AppLocalizations.of(context).translate("other_associations");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _newService.moneyRaised == null ) {
-                    message += "\n" + AppLocalizations.of(context).translate("money_raised");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _newService.quantityServedPeople == null ) {
-                    message += "\n" + AppLocalizations.of(context).translate("quantity_served_people");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _newService.city == null ) {
+                  if ( _newActivity.city == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("city");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.satisfactionDegree == null ) {
+                  if ( _newActivity.satisfactionDegree == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("satisfaction_degree");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.typesService.isEmpty ) {
-                    message += "\n" + AppLocalizations.of(context).translate("types_service");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _newService.competenceAreasService.isEmpty ) {
-                    message += "\n" + AppLocalizations.of(context).translate("compentece_area");
+                  if ( _newActivity.typesActivity.isEmpty ) {
+                    message += "\n" + AppLocalizations.of(context).translate("types_activity");
                     fieldNotSpecified = true;
                   }
                   if ( fieldNotSpecified ) {
                     showErrorDialog(context, message);
                   }
                   else {
-                    ModelFacade.sharedInstance.addService(_newService);
+                    ModelFacade.sharedInstance.addActivity(_newActivity);
                     setState(() {
                       _isAdding = true;
                     });

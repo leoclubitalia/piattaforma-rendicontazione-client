@@ -19,7 +19,7 @@ class RestManager {
     return response.body;
   }
 
-  Future<String> makePostRequest(String url, dynamic service) async {
+  Future<String> makePostRequest(String url, dynamic value) async {
     Uri uri = Uri.http(Constants.BASE_URL, url);
     var response = await post(
       uri,
@@ -27,7 +27,7 @@ class RestManager {
         //HttpHeaders.authorizationHeader: 'Token $token',
         HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
       },
-      body: json.encode(service),
+      body: json.encode(value),
     );
     return response.body;
   }

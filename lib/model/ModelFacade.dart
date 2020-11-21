@@ -34,9 +34,9 @@ class ModelFacade {
   void _loadInfoClub(int id) async {
     if ( !appState.existsValue(Constants.STATE_CLUB) ) {
       Club club = _parsingManager.parseClub(await _restManager.makeGetRequest(Constants.REQUEST_INFO_CLUB, {"id": id.toString()}));
-      Quantity quantityServices = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.REQUEST_CLUB_QUANTITY_SERVICES, {"id": id.toString()}));
+      Quantity quantityServices = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.REQUEST_CLUB_QUANTITY_SERVICES, {"clubId": id.toString()}));
       club.quantityServices = quantityServices;
-      Quantity quantityActivities = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, {"id": id.toString()}));
+      Quantity quantityActivities = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, {"clubId": id.toString()}));
       club.quantityActivities = quantityActivities;
       appState.addValue(Constants.STATE_CLUB, club);
     }
@@ -287,6 +287,17 @@ class ModelFacade {
     try {
       service = _parsingManager.parseService(await _restManager.makePostRequest(Constants.REQUEST_ADD_SERVICE, service));
       appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, service);
+    }
+    catch (e) {
+      appState.addValue(Constants.STATE_MESSAGE, "message_error");
+    }
+  }
+
+  void addActivity(Activity activity) async {
+    activity.club = Club(id: currentClubId);
+    try {
+      activity = _parsingManager.parseActivity(await _restManager.makePostRequest(Constants.REQUEST_ADD_ACTIVITY, activity));
+      appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
     }
     catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");

@@ -1,51 +1,185 @@
+import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/AddActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/Home.dart';
-import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/RoundedDialog.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ActivityTile.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
+import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:flutter/material.dart';
 
 
 class Activities extends StatefulWidget {
   Activities({Key key}) : super(key: key);
 
-
   @override
   _Activities createState() => _Activities();
 }
 
 class _Activities extends GlobalState<Activities> {
-  final inputController = TextEditingController();
+  List<Activity> _searchResult;
+  bool _isSearching = false;
+  int _currentPage = 0;
+
+  ScrollController _scrollController = ScrollController();
+  double _scrollOffset = 0;
+
+
+  @override
+  void initState() {
+    ModelFacade.sharedInstance.appState.removeValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
+    ModelFacade.sharedInstance.loadAllSatisfactionDegrees();
+    ModelFacade.sharedInstance.loadAllDistricts();
+    ModelFacade.sharedInstance.loadAllTypesActivity();
+    ModelFacade.sharedInstance.loadAllAreas();
+    loadSearch();
+    super.initState();
+  }
 
   @override
   void refreshState() {
+    if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_ADDED) && ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED) ) {
+      loadSearch();
+    }
+    else {
+      _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
+      if ( _searchResult != null ) {
+        _isSearching = false;
+      }
+    }
+  }
+
+  bool isCircularMoment() {
+    return !( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_ALL_SATISFACTION_DEGREES) &&
+        ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_ALL_DISTRICTS) &&
+        ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_ALL_TYPE_ACTIVITY) &&
+        ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_ALL_AREAS) ) || _isSearching;
   }
 
   @override
   Widget build(BuildContext context) {
+    _scrollController = ScrollController(initialScrollOffset: _scrollOffset);
     return Scaffold(
       appBar: RoundedAppBar (
-        title: AppLocalizations.of(context).translate("activities").capitalize,
+        title: AppLocalizations.of(context).translate("activity").capitalize,
         backable: true,
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                loadSearch();
+              },
+              child: Icon(
+                Icons.refresh_rounded,
+                size: 26.0,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                showAddActivity(context);
+              },
+              child: Icon(
+                  Icons.add_rounded
+              ),
+            ),
+          ),
+        ],
       ),
       body: Center(
-        child: Column(
+        child: Stack(
           children: [
-            InputField(
-              labelText: AppLocalizations.of(context).translate("email"),
-              controller: inputController,
-            ),
-            InputField(
-              labelText: AppLocalizations.of(context).translate("password"),
-              controller: inputController,
+            isCircularMoment() ?
+            Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).buttonColor),
+              ),
+            ) :
+            Padding(padding: EdgeInsets.all(0)),
+            Column(
+              children: <Widget>[
+                _searchResult == null ?
+                Padding(
+                  padding: EdgeInsets.all(0),
+                ) :
+                _searchResult.length == 0 ?
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: Text(
+                    AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_MESSAGE)),
+                    style: LeoTitleStyle(),
+                  ),
+                ) :
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      itemCount: _searchResult.length + 1,
+                      itemBuilder: (context, index) {
+                        if ( index < _searchResult.length ) {
+                          return ActivityTile(
+                            activity: _searchResult[index],
+                          );
+                        }
+                        else {
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: CircularIconButton(
+                              icon: Icons.arrow_downward_rounded,
+                              onPressed: () {
+                                loadMore();
+                              },
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                )
+              ],
             ),
           ],
         ),
       ),
     );
+  }
+
+  void showAddActivity(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => RoundedDialog(
+        title: Text(AppLocalizations.of(context).translate("add").capitalize),
+        body: AddActivity(),
+      ),
+    );
+  }
+
+  void loadSearch() {
+    _scrollOffset = 0;
+    _currentPage = 0;
+    _search();
+  }
+
+  void loadMore() {
+    _scrollOffset = _scrollController.offset;
+    _currentPage ++;
+    _search();
+  }
+
+  void _search() {
+    ModelFacade.sharedInstance.searchActivities(null, null, null, null, null, null, ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB), null, null, null, _currentPage);
+    setState(() {
+      _searchResult = null;
+      _isSearching = true;
+    });
   }
 
 

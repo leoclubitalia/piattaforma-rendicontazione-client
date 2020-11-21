@@ -21,6 +21,12 @@ class Activity {
 
   Activity({this.id, this.title, this.description, this.date, this.quantityLeo, this.lionsParticipation, this.satisfactionDegree, this.city, this.club, this.typesActivity});
 
+  Activity.newCreation() {
+    date = DateTime.now();
+    typesActivity = List();
+    lionsParticipation = false;
+  }
+
   factory Activity.fromJson(Map<String, dynamic> json) {
     List<TypeActivity> typesActivity = List();
     for ( Map<String, dynamic> rawTypeActivity in json['typesActivity'] ) {
@@ -41,16 +47,16 @@ class Activity {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
+    'id': id.toString(),
     'title': title,
     'description': description,
-    'date': date,
-    'quantityLeo': quantityLeo,
-    'lionsParticipation': lionsParticipation,
+    'date': date.toStringUnslashed(),
+    'quantityLeo': quantityLeo.toString(),
+    'lionsParticipation': lionsParticipation.toString(),
     'satisfactionDegree': satisfactionDegree.toJson(),
     'city': city.toJson(),
     'club': club.toJson(),
-    'typesActivity': jsonEncode(typesActivity),
+    'typesActivity': typesActivity.map((e) => e.toJson()).toList(),
   };
 
 
