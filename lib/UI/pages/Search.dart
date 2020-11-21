@@ -45,9 +45,13 @@ class _Search extends GlobalState<Search> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: RoundedAppBar (
-          title: AppLocalizations.of(context).translate("search").capitalize,
-          backable: true,
+        appBar: AppBar(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(30),
+            ),
+          ),
+          title: Text(AppLocalizations.of(context).translate("search").capitalize),
           bottom: TabBar(
             tabs: [
               Tab(text: AppLocalizations.of(context).translate("service"), icon: Icon(UIConstants.ICON_SERVICE)),
