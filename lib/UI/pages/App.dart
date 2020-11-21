@@ -27,11 +27,13 @@ class App extends StatelessWidget {
       title: "",
       theme: ThemeData(
         brightness: Brightness.light,
+        dividerColor: Colors.white, //used for navBar background
+        toggleableActiveColor: Colors.black, //used for navBar text
+        canvasColor: Colors.grey[100], // app background
         primaryColor: Colors.white,
         backgroundColor: Colors.amber,
         buttonColor: Colors.deepOrangeAccent,
         indicatorColor: Colors.deepOrangeAccent,
-        canvasColor: Colors.grey[100], // app background
         cardColor: Colors.white,
         unselectedWidgetColor: Colors.grey[200],
         hoverColor: Colors.grey[200],
@@ -40,9 +42,11 @@ class App extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
+        dividerColor: Colors.grey[10],  //used for navBar
+        toggleableActiveColor: Colors.white, //used for navBar text
+        canvasColor: Colors.black, // app background
         primaryColor: Colors.grey[10],
         backgroundColor: Colors.black,
-        canvasColor: Colors.black,
         buttonColor: Colors.amber,
         accentColor: Colors.red,
         splashColor: Colors.white,

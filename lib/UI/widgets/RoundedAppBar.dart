@@ -18,17 +18,17 @@ class RoundedAppBar extends StatelessWidget with PreferredSizeWidget {
       title: Text(
         title,
         style: TextStyle(
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).toggleableActiveColor,
         ),
       ),
       iconTheme: IconThemeData(
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).toggleableActiveColor,
       ),
       automaticallyImplyLeading: backable == null ? true : backable,
       centerTitle: true,
       bottom: bottom,
       actions: actions,
-      backgroundColor: Theme.of(context).buttonColor,
+      backgroundColor: Theme.of(context).dividerColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(30),
