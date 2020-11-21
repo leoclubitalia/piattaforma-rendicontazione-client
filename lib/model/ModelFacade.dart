@@ -12,7 +12,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
-import 'package:RendicontationPlatformLeo_Client/model/support/extensions/Searcher.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/Suggester.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
 
 

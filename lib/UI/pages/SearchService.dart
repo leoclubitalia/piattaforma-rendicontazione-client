@@ -17,8 +17,8 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter/material.dart';
 
 
 class SearchService extends StatefulWidget {

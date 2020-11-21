@@ -17,7 +17,6 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 

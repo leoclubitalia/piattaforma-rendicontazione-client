@@ -6,7 +6,6 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButto
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Home.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 

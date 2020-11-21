@@ -1,4 +1,4 @@
-extension Searcher<T> on List<T> {
+extension Suggester<T> on List<T> {
 
 
   List<T> getSuggestions(String value) {
