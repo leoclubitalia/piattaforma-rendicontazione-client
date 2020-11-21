@@ -5,6 +5,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/pages/Activities.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Credits.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Search.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Services.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
@@ -38,15 +39,9 @@ class _Home extends GlobalState<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate("home").capitalize),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),
-          ),
-        ),
+      appBar: RoundedAppBar (
+        title: AppLocalizations.of(context).translate("home").capitalize,
+        backable: false,
       ),
       body: Center(
         child: isCircularMoment() ?

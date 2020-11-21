@@ -1,7 +1,8 @@
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/DeveloperTile.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:flutter/material.dart';
 
 
@@ -23,15 +24,9 @@ class _Credits extends GlobalState<Credits> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate("developers_title")),
-        centerTitle: true,
-        automaticallyImplyLeading: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),
-          ),
-        ),
+      appBar: RoundedAppBar (
+        title: AppLocalizations.of(context).translate("home").capitalize,
+        backable: true,
       ),
       body: SingleChildScrollView(
         child: Center(

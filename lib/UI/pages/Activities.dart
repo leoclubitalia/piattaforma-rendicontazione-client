@@ -1,9 +1,11 @@
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Home.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -27,15 +29,9 @@ class _Activities extends GlobalState<Activities> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        //title: Text(AppLocalizations.of(context).translate("home").capitalize),
-        centerTitle: true,
-        automaticallyImplyLeading: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),
-          ),
-        ),
+      appBar: RoundedAppBar (
+        title: AppLocalizations.of(context).translate("activities").capitalize,
+        backable: true,
       ),
       body: Center(
         child: Column(

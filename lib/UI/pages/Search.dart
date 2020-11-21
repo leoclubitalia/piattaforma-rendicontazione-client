@@ -3,6 +3,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.d
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/SearchActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/SearchService.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
@@ -44,13 +45,9 @@ class _Search extends GlobalState<Search> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-          ),
-          title: Text(AppLocalizations.of(context).translate("search").capitalize),
+        appBar: RoundedAppBar (
+          title: AppLocalizations.of(context).translate("search").capitalize,
+          backable: true,
           bottom: TabBar(
             tabs: [
               Tab(text: AppLocalizations.of(context).translate("service"), icon: Icon(UIConstants.ICON_SERVICE)),

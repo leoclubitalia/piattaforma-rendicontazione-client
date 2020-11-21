@@ -2,6 +2,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/AddService.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/RoundedDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
@@ -65,15 +66,9 @@ class _Services extends GlobalState<Services> {
   Widget build(BuildContext context) {
     _scrollController = ScrollController(initialScrollOffset: _scrollOffset);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate("service").capitalize),
-        centerTitle: true,
-        automaticallyImplyLeading: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),
-          ),
-        ),
+      appBar: RoundedAppBar (
+        title: AppLocalizations.of(context).translate("home").capitalize,
+        backable: true,
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 20.0),
