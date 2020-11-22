@@ -13,7 +13,7 @@ class RestManager {
       uri,
       headers: {
         //HttpHeaders.authorizationHeader: 'Token $token',
-        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
       }
     );
     return response.body;

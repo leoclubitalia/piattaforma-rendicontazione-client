@@ -16,8 +16,8 @@ import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/ListDeepClone.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter/material.dart';
 
 
 class AddService extends StatefulWidget {
