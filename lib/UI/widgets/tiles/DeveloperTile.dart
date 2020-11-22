@@ -4,7 +4,6 @@ import 'package:mailto/mailto.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
-
 class DeveloperTile extends StatelessWidget {
   final String name;
   final String imageName;
@@ -22,7 +21,7 @@ class DeveloperTile extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         new Padding(
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
           child: Container(
             width: 130.0,
             height: 130.0,
@@ -38,7 +37,7 @@ class DeveloperTile extends StatelessWidget {
         Text(name),
         Container(
           alignment: Alignment.center,
-          width: 130.0,
+          width: 150.0,
           height: 50.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

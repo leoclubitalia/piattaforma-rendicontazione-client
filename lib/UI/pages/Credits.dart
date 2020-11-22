@@ -24,7 +24,7 @@ class _Credits extends GlobalState<Credits> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RoundedAppBar (
-        title: AppLocalizations.of(context).translate("home").capitalize,
+        title: AppLocalizations.of(context).translate("developers_title").capitalize,
         backable: true,
       ),
       body: SingleChildScrollView(
@@ -72,6 +72,8 @@ class _Credits extends GlobalState<Credits> {
                           name: "Mattia Ricco",
                           imageName: "images/developers/ricco.jpg",
                           email: "mattia.ricco.mr@gmail.com",
+                          instagram: "https://www.instagram.com/grissinodeludente/?hl=it",
+                          facebook: "https://www.facebook.com/mattia.ricco.3",
                         ),
                       ),
                       WidgetSpan(

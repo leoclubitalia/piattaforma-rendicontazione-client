@@ -67,8 +67,8 @@ class _Home extends GlobalState<Home> {
                   width: 200,
                 ),
                 colorFilter: ColorFilter.mode(
-                    Theme.of(context).splashColor,
-                    BlendMode.modulate
+                  Theme.of(context).splashColor,
+                  BlendMode.modulate
                 ),
               ),
               Text(
@@ -103,9 +103,9 @@ class _Home extends GlobalState<Home> {
                       onPressed: () {
                         Navigator.of(context).push(
                           PageRouteBuilder(
-                              opaque: false,
-                              transitionDuration: Duration(milliseconds: 700),
-                              pageBuilder: (BuildContext context, _, __) => Services()
+                            opaque: false,
+                            transitionDuration: Duration(milliseconds: 700),
+                            pageBuilder: (BuildContext context, _, __) => Services()
                           ),
                         );
                       },
@@ -116,9 +116,9 @@ class _Home extends GlobalState<Home> {
                       onPressed: () {
                         Navigator.of(context).push(
                           PageRouteBuilder(
-                              opaque: false,
-                              transitionDuration: Duration(milliseconds: 700),
-                              pageBuilder: (BuildContext context, _, __) => Activities()
+                            opaque: false,
+                            transitionDuration: Duration(milliseconds: 700),
+                            pageBuilder: (BuildContext context, _, __) => Activities()
                           ),
                         );
                       },
@@ -200,17 +200,17 @@ class _Home extends GlobalState<Home> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: StadiumButton(
-                    icon: Icons.search_rounded,
-                    title: AppLocalizations.of(context).translate("search"),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        PageRouteBuilder(
-                            opaque: false,
-                            transitionDuration: Duration(milliseconds: 700),
-                            pageBuilder: (BuildContext context, _, __) => Search(false)
-                        ),
-                      );
-                    }
+                  icon: Icons.search_rounded,
+                  title: AppLocalizations.of(context).translate("search").capitalize,
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        opaque: false,
+                        transitionDuration: Duration(milliseconds: 700),
+                        pageBuilder: (BuildContext context, _, __) => Search(false)
+                      ),
+                    );
+                  }
                 ),
               ),
               Padding (
@@ -222,9 +222,9 @@ class _Home extends GlobalState<Home> {
                   onPressed: () {
                     Navigator.of(context).push(
                       PageRouteBuilder(
-                          opaque: false,
-                          transitionDuration: Duration(milliseconds: 700),
-                          pageBuilder: (BuildContext context, _, __) => Credits()
+                        opaque: false,
+                        transitionDuration: Duration(milliseconds: 700),
+                        pageBuilder: (BuildContext context, _, __) => Credits()
                       ),
                     );
                   },
