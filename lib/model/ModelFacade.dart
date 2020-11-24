@@ -26,6 +26,8 @@ class ModelFacade {
 
   int currentClubId = 1; //TODO temp
 
+  //TODO snackbar per notifica di non rete e poi riprovare
+
 
   void loadInfoCurrentClub() {
     _loadInfoClub(currentClubId);
