@@ -6,17 +6,19 @@ class InputField extends StatelessWidget {
   final String labelText;
   final bool multiline;
   final Function onSubmit;
+  final TextAlign textAlign;
   final TextEditingController controller;
   final TextInputType keyboardType;
 
 
-  const InputField({Key key, this.labelText, this.controller, this.onSubmit, this.keyboardType, this.multiline}) : super(key: key);
+  const InputField({Key key, this.labelText, this.controller, this.onSubmit, this.keyboardType, this.multiline, this.textAlign}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(5),
       child: TextField(
+        textAlign: this.textAlign == null ? TextAlign.left : this.textAlign,
         maxLines: multiline != null && multiline == true ? null : 1,
         keyboardType: keyboardType,
         inputFormatters: keyboardType == TextInputType.number ? <TextInputFormatter>[

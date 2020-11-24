@@ -7,6 +7,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/pages/Search.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Services.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
@@ -24,11 +25,18 @@ class Home extends StatefulWidget {
 }
 
 class _Home extends GlobalState<Home> {
-  Club club;
+  Club _club;
+
+  TextEditingController _inputFileldMembersController = TextEditingController();
+  TextEditingController _inputFileldAspirantsController = TextEditingController();
 
   @override
   void refreshState() {
-    club = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB);
+    _club = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB);
+    if ( _club != null ) {
+      _inputFileldMembersController.text = _club.currentPartners.toString();
+      _inputFileldAspirantsController.text = _club.aspirantPartners.toString();
+    }
   }
 
   bool isCircularMoment() {
@@ -72,13 +80,13 @@ class _Home extends GlobalState<Home> {
                 ),
               ),
               Text(
-                club.name,
+                _club.name,
                 style: TextStyle(
                   fontSize: 25,
                 ),
               ),
               Text(
-                AppLocalizations.of(context).translate("district").capitalize + " " + club.district.name,
+                AppLocalizations.of(context).translate("district").capitalize + " " + _club.district.name,
                 style: TextStyle(
                   fontSize: 17,
                 ),
@@ -86,7 +94,7 @@ class _Home extends GlobalState<Home> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 3, 0, 25),
                 child: Text(
-                  AppLocalizations.of(context).translate("since").capitalize + " " + club.foundationDate.year.toString(),
+                  AppLocalizations.of(context).translate("since").capitalize + " " + _club.foundationDate.year.toString(),
                   style: TextStyle(
                     fontSize: 12,
                   ),
@@ -145,7 +153,7 @@ class _Home extends GlobalState<Home> {
                           width: 100,
                           height: 100,
                           child: LiquidCircularProgressIndicator(
-                            value: (club.quantityServices.currentYear / 15),
+                            value: (_club.quantityServices.currentYear / 15),
                             valueColor: AlwaysStoppedAnimation(Colors.greenAccent),
                             backgroundColor: Theme.of(context).primaryColor,
                             borderColor: Theme.of(context).buttonColor,
@@ -154,10 +162,10 @@ class _Home extends GlobalState<Home> {
                           ),
                         ),
                         Text(
-                            AppLocalizations.of(context).translate("this_year") + " " + club.quantityServices.currentYear.toString()
+                            AppLocalizations.of(context).translate("this_year") + " " + _club.quantityServices.currentYear.toString()
                         ),
                         Text(
-                            AppLocalizations.of(context).translate("since_the_foundation") + " " + (club.quantityServices.currentYear + ( DateTime.now().year - club.foundationDate.year) * 15).toString()
+                            AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityServices.currentYear + ( DateTime.now().year - _club.foundationDate.year) * 15).toString()
                         ),
                       ],
                     ),
@@ -178,7 +186,7 @@ class _Home extends GlobalState<Home> {
                           width: 100,
                           height: 100,
                           child: LiquidCircularProgressIndicator(
-                              value: (club.quantityActivities.currentYear / 17),
+                              value: (_club.quantityActivities.currentYear / 17),
                             valueColor: AlwaysStoppedAnimation(Colors.blue),
                             backgroundColor: Theme.of(context).primaryColor,
                             borderColor: Theme.of(context).buttonColor,
@@ -187,15 +195,52 @@ class _Home extends GlobalState<Home> {
                           ),
                         ),
                         Text(
-                            AppLocalizations.of(context).translate("this_year") + " " + club.quantityActivities.currentYear.toString()
+                            AppLocalizations.of(context).translate("this_year") + " " + _club.quantityActivities.currentYear.toString()
                         ),
                         Text(
-                            AppLocalizations.of(context).translate("since_the_foundation") + " " + (club.quantityActivities.currentYear + ( DateTime.now().year - club.foundationDate.year) * 17).toString()
+                            AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityActivities.currentYear + ( DateTime.now().year - _club.foundationDate.year) * 17).toString()
                         ),
                       ],
                     ),
                   ),
                 ],
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 100,
+                      child: InputField(
+                        labelText: AppLocalizations.of(context).translate("members").capitalize,
+                        textAlign: TextAlign.center,
+                        controller: _inputFileldMembersController,
+                        keyboardType: TextInputType.number,
+                        multiline: false,
+                        onSubmit: (String a) {
+                          //TODO
+                        }
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(40),
+                    ),
+                    Container(
+                      width: 100,
+                      child: InputField(
+                        labelText: AppLocalizations.of(context).translate("aspirants").capitalize,
+                        textAlign: TextAlign.center,
+                        controller: _inputFileldAspirantsController,
+                        keyboardType: TextInputType.number,
+                        multiline: false,
+                        onSubmit: (String a) {
+                          //TODO
+                        }
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),

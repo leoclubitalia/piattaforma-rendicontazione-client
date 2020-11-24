@@ -60,5 +60,7 @@
   "description": "descrizione",
   "oops": "Oops...",
   "not_defined": "dovrebbe essere specificato!",
-  "these_field_are_missed": "Questi campi dovrebbero essere specificati:"
+  "these_field_are_missed": "Questi campi dovrebbero essere specificati:",
+  "members": "soci",
+  "aspirants": "aspiranti"
 }

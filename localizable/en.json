@@ -61,5 +61,7 @@
   "description": "description",
   "oops": "Oops...",
   "not_defined": "should be specified!",
-  "these_field_are_missed": "These fields should be specified:"
+  "these_field_are_missed": "These fields should be specified:",
+  "members": "members",
+  "aspirants": "aspirants"
 }
