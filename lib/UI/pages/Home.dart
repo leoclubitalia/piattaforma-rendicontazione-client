@@ -34,8 +34,8 @@ class _Home extends GlobalState<Home> {
   void refreshState() {
     _club = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB);
     if ( _club != null ) {
-      _inputFileldMembersController.text = _club.currentPartners.toString();
-      _inputFileldAspirantsController.text = _club.aspirantPartners.toString();
+      _inputFileldMembersController.text = _club.currentMembers.toString();
+      _inputFileldAspirantsController.text = _club.aspirantMembers.toString();
     }
   }
 
