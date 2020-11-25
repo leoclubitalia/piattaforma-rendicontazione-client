@@ -34,5 +34,7 @@ class Constants {
   static final String STATE_JUST_ADDED_ACTIVITY = "just_added_activity";
   static final String STATE_JUST_ADDED = "just_added";
 
+  static final String MESSAGE_CONNECTION_ERROR = "connection_error";
+
 
 }

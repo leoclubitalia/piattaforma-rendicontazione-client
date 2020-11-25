@@ -63,5 +63,6 @@
   "not_defined": "should be specified!",
   "these_field_are_missed": "These fields should be specified:",
   "members": "members",
-  "aspirants": "aspirants"
+  "aspirants": "aspirants",
+  "connection_error": "Oops... There is a network error, now I fix it!"
 }

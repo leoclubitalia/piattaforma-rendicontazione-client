@@ -62,5 +62,6 @@
   "not_defined": "dovrebbe essere specificato!",
   "these_field_are_missed": "Questi campi dovrebbero essere specificati:",
   "members": "soci",
-  "aspirants": "aspiranti"
+  "aspirants": "aspiranti",
+  "connection_error": "Oops... C'è un errore di rete, adesso sistemo!"
 }

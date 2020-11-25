@@ -12,13 +12,15 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/ErrorListener.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/Suggester.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
 
 
-class ModelFacade {
+class ModelFacade implements ErrorListener {
   static ModelFacade sharedInstance = ModelFacade();
 
+  ErrorListener delegate;
   StateManager appState = StateManager();
 
   RestManager _restManager = RestManager();
@@ -26,8 +28,24 @@ class ModelFacade {
 
   int currentClubId = 1; //TODO temp
 
-  //TODO snackbar per notifica di non rete e poi riprovare
 
+  ModelFacade() {
+    _restManager.delegate = this;
+  }
+
+  @override
+  void errorGone() {
+    if ( delegate != null ) {
+      delegate.errorGone();
+    }
+  }
+
+  @override
+  void errorOccurred(String message) {
+    if ( delegate != null ) {
+      delegate.errorOccurred(message);
+    }
+  }
 
   void loadInfoCurrentClub() {
     _loadInfoClub(currentClubId);

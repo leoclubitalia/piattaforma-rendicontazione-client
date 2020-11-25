@@ -65,7 +65,7 @@ class _WelcomeState extends GlobalState<Welcome> {
               StadiumButton(
                 icon: Icons.people,
                 title: AppLocalizations.of(context).translate("club"),
-                onPressed: () {
+                onPressed: () async {
                   Navigator.of(context).push(
                     PageRouteBuilder(
                       opaque: false,
