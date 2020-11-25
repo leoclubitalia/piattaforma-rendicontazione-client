@@ -1,3 +1,4 @@
+import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/UIConstants.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
@@ -210,34 +211,48 @@ class _Home extends GlobalState<Home> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 100,
-                      child: InputField(
-                        labelText: AppLocalizations.of(context).translate("members").capitalize,
-                        textAlign: TextAlign.center,
-                        controller: _inputFileldMembersController,
-                        keyboardType: TextInputType.number,
-                        multiline: false,
-                        onSubmit: (String a) {
-                          //TODO
-                        }
-                      ),
+                    Column(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context).translate("members").capitalize,
+                          style: LeoTitleStyle()
+                        ),
+                        Container(
+                          width: 100,
+                          child: InputField(
+                            textAlign: TextAlign.center,
+                            controller: _inputFileldMembersController,
+                            keyboardType: TextInputType.number,
+                            multiline: false,
+                            onSubmit: (String a) {
+                              //TODO
+                            }
+                          ),
+                        ),
+                      ],
                     ),
                     Padding(
-                      padding: EdgeInsets.all(40),
+                      padding: EdgeInsets.all(25),
                     ),
-                    Container(
-                      width: 100,
-                      child: InputField(
-                        labelText: AppLocalizations.of(context).translate("aspirants").capitalize,
-                        textAlign: TextAlign.center,
-                        controller: _inputFileldAspirantsController,
-                        keyboardType: TextInputType.number,
-                        multiline: false,
-                        onSubmit: (String a) {
-                          //TODO
-                        }
-                      ),
+                    Column(
+                      children: [
+                        Text(
+                            AppLocalizations.of(context).translate("aspirants").capitalize,
+                            style: LeoTitleStyle()
+                        ),
+                        Container(
+                          width: 100,
+                          child: InputField(
+                              textAlign: TextAlign.center,
+                              controller: _inputFileldAspirantsController,
+                              keyboardType: TextInputType.number,
+                              multiline: false,
+                              onSubmit: (String a) {
+                                //TODO
+                              }
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
