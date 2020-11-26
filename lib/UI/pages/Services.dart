@@ -156,7 +156,10 @@ class _Services extends GlobalState<Services> {
     showDialog(
       context: context,
       builder: (context) => RoundedDialog(
-        title: Text(AppLocalizations.of(context).translate("add").capitalize),
+        title: Text(
+          AppLocalizations.of(context).translate("add").capitalize,
+          textAlign: TextAlign.center,
+        ),
         body: AddService(),
       ),
     );

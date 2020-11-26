@@ -8,6 +8,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/pages/Search.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Services.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
@@ -50,6 +51,26 @@ class _Home extends GlobalState<Home> {
       appBar: RoundedAppBar (
         title: AppLocalizations.of(context).translate("home").capitalize,
         backable: false,
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => MessageDialog(
+                    titleText: AppLocalizations.of(context).translate("info").capitalize,
+                    bodyText: AppLocalizations.of(context).translate("info_home"),
+                  ),
+                );
+              },
+              child: Icon(
+                Icons.info_outline,
+                size: 26.0,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: isCircularMoment() ?

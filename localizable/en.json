@@ -64,5 +64,8 @@
   "these_field_are_missed": "These fields should be specified:",
   "members": "members",
   "aspirants": "aspirants",
-  "connection_error": "Oops... There is a network error, now I fix it!"
+  "connection_error": "Oops... There is a network error, now I fix it!",
+  "info": "info",
+  "info_home": "On this page you will find the summary of your club with the counts of the services and activities carried out and by clicking on the appropriate buttons you will reach a page where there will be all the services and activities carried out with the possibility of adding new ones!\n\nClicking on the counts you will find below you can vary the number of members and aspirants present!\n\nInstead by going to search you will reach the search page to see what other clubs are doing or look for something specific made by yours!\n\n\uD83D\uDC4B\uD83C\uDFFD\n"
+
 }

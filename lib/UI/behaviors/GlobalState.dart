@@ -35,16 +35,22 @@ abstract class GlobalState<T extends StatefulWidget> extends State<T> implements
   }
 
   @override
-  void errorGone() {}
+  void errorNetworkGone() {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    errorSnackBar = null;
+  }
 
   @override
-  void errorOccurred(String message) {
+  void errorNetworkOccurred(String message) {
+    if ( errorSnackBar != null ) {
+      return;
+    }
     errorSnackBar = SnackBar(
       backgroundColor: Theme.of(context).primaryColor,
       content: Row(
         children: [
           Icon(
-            Icons.error_rounded,
+            Icons.error_outline,
             color: Theme.of(context).splashColor,
           ),
           Padding(
@@ -58,7 +64,7 @@ abstract class GlobalState<T extends StatefulWidget> extends State<T> implements
           ),
         ],
       ),
-      duration: Duration(seconds: 3),
+      duration: Duration(days: 365),
     );
     ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
   }

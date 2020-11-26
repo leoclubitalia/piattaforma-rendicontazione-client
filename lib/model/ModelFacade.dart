@@ -34,16 +34,16 @@ class ModelFacade implements ErrorListener {
   }
 
   @override
-  void errorGone() {
+  void errorNetworkGone() {
     if ( delegate != null ) {
-      delegate.errorGone();
+      delegate.errorNetworkGone();
     }
   }
 
   @override
-  void errorOccurred(String message) {
+  void errorNetworkOccurred(String message) {
     if ( delegate != null ) {
-      delegate.errorOccurred(message);
+      delegate.errorNetworkOccurred(message);
     }
   }
 

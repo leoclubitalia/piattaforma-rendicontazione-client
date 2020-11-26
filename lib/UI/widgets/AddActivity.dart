@@ -53,7 +53,7 @@ class _AddActivity extends GlobalState<AddActivity> {
     Activity justAdded = ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED_ACTIVITY);
     if ( _isAdding ) {
       _isAdding = false;
-      if ( justAdded == null ) {
+      if ( justAdded == null && ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_MESSAGE) ) {
         showErrorDialog(context, AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_MESSAGE)));
       }
       else {

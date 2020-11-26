@@ -12,8 +12,8 @@ class RestManager {
 
   Future<String> _makeRequest(String url, String type, {Map<String, String> body, dynamic value}) async {
     Uri uri = Uri.http(Constants.BASE_URL, url, body);
+    bool errorOccurred = false;
     while ( true ) {
-      retry:
       try {
         var response;
         switch (type) {
@@ -47,16 +47,17 @@ class RestManager {
             );
             break;
         }
-        if ( delegate != null ) {
-          delegate.errorGone();
+        if ( delegate != null && errorOccurred ) {
+          delegate.errorNetworkGone();
+          errorOccurred = false;
         }
         return response.body;
       } catch(e) {
-        if ( delegate != null ) {
-          delegate.errorOccurred(Constants.MESSAGE_CONNECTION_ERROR);
+        if ( delegate != null && !errorOccurred ) {
+          delegate.errorNetworkOccurred(Constants.MESSAGE_CONNECTION_ERROR);
+          errorOccurred = true;
         }
         await Future.delayed(const Duration(seconds: 3), () => null);
-        break retry;
       }
     }
   }

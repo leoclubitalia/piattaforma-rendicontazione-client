@@ -1,8 +1,8 @@
 abstract class ErrorListener {
 
 
-  void errorOccurred(String message);
-  void errorGone();
+  void errorNetworkOccurred(String message);
+  void errorNetworkGone();
 
 
 }
