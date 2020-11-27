@@ -192,7 +192,6 @@ class _SearchService extends GlobalState<SearchService> {
                 ) :
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: ListView.builder(
                       itemCount: _searchResult.length + 1,
                       controller: _scrollController,

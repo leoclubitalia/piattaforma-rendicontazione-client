@@ -182,7 +182,6 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                 ) :
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: ListView.builder(
                       itemCount: _searchResult.length + 1,
                       controller: _scrollController,

@@ -119,7 +119,6 @@ class _Activities extends GlobalState<Activities> {
                 ) :
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: ListView.builder(
                       controller: _scrollController,
                       itemCount: _searchResult.length + 1,

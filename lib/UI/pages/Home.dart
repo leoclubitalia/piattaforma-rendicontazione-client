@@ -29,15 +29,15 @@ class Home extends StatefulWidget {
 class _Home extends GlobalState<Home> {
   Club _club;
 
-  TextEditingController _inputFileldMembersController = TextEditingController();
-  TextEditingController _inputFileldAspirantsController = TextEditingController();
+  TextEditingController _inputFieldMembersController = TextEditingController();
+  TextEditingController _inputFieldAspirantsController = TextEditingController();
 
   @override
   void refreshState() {
     _club = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB);
     if ( _club != null ) {
-      _inputFileldMembersController.text = _club.currentMembers.toString();
-      _inputFileldAspirantsController.text = _club.aspirantMembers.toString();
+      _inputFieldMembersController.text = _club.currentMembers.toString();
+      _inputFieldAspirantsController.text = _club.aspirantMembers.toString();
     }
   }
 
@@ -156,77 +156,79 @@ class _Home extends GlobalState<Home> {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Column(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context).translate("service").capitalize,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Column(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context).translate("service").capitalize,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          width: 100,
-                          height: 100,
-                          child: LiquidCircularProgressIndicator(
-                            value: (_club.quantityServices.currentYear / 15),
-                            valueColor: AlwaysStoppedAnimation(Colors.greenAccent),
-                            backgroundColor: Theme.of(context).primaryColor,
-                            borderColor: Theme.of(context).buttonColor,
-                            borderWidth: 3.0,
-                            direction: Axis.vertical,
+                          Container(
+                            width: 100,
+                            height: 100,
+                            child: LiquidCircularProgressIndicator(
+                              value: (_club.quantityServices.currentYear / 15),
+                              valueColor: AlwaysStoppedAnimation(Colors.greenAccent),
+                              backgroundColor: Theme.of(context).primaryColor,
+                              borderColor: Theme.of(context).buttonColor,
+                              borderWidth: 3.0,
+                              direction: Axis.vertical,
+                            ),
                           ),
-                        ),
-                        Text(
-                            AppLocalizations.of(context).translate("this_year") + " " + _club.quantityServices.currentYear.toString()
-                        ),
-                        Text(
-                            AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityServices.currentYear + ( DateTime.now().year - _club.foundationDate.year) * 15).toString()
-                        ),
-                      ],
+                          Text(
+                              AppLocalizations.of(context).translate("this_year") + " " + _club.quantityServices.currentYear.toString()
+                          ),
+                          Text(
+                              AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityServices.currentYear + ( DateTime.now().year - _club.foundationDate.year) * 15).toString()
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Column(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context).translate("activity").capitalize,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                    Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Column(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context).translate("activity").capitalize,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          width: 100,
-                          height: 100,
-                          child: LiquidCircularProgressIndicator(
+                          Container(
+                            width: 100,
+                            height: 100,
+                            child: LiquidCircularProgressIndicator(
                               value: (_club.quantityActivities.currentYear / 17),
-                            valueColor: AlwaysStoppedAnimation(Colors.blue),
-                            backgroundColor: Theme.of(context).primaryColor,
-                            borderColor: Theme.of(context).buttonColor,
-                            borderWidth: 3.0,
-                            direction: Axis.vertical,
+                              valueColor: AlwaysStoppedAnimation(Colors.blue),
+                              backgroundColor: Theme.of(context).primaryColor,
+                              borderColor: Theme.of(context).buttonColor,
+                              borderWidth: 3.0,
+                              direction: Axis.vertical,
+                            ),
                           ),
-                        ),
-                        Text(
-                            AppLocalizations.of(context).translate("this_year") + " " + _club.quantityActivities.currentYear.toString()
-                        ),
-                        Text(
-                            AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityActivities.currentYear + ( DateTime.now().year - _club.foundationDate.year) * 17).toString()
-                        ),
-                      ],
+                          Text(
+                              AppLocalizations.of(context).translate("this_year") + " " + _club.quantityActivities.currentYear.toString()
+                          ),
+                          Text(
+                              AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityActivities.currentYear + ( DateTime.now().year - _club.foundationDate.year) * 17).toString()
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              Divider(),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Row(
@@ -242,7 +244,7 @@ class _Home extends GlobalState<Home> {
                           width: 100,
                           child: InputField(
                             textAlign: TextAlign.center,
-                            controller: _inputFileldMembersController,
+                            controller: _inputFieldMembersController,
                             keyboardType: TextInputType.number,
                             multiline: false,
                             onSubmit: (String a) {
@@ -265,7 +267,7 @@ class _Home extends GlobalState<Home> {
                           width: 100,
                           child: InputField(
                               textAlign: TextAlign.center,
-                              controller: _inputFileldAspirantsController,
+                              controller: _inputFieldAspirantsController,
                               keyboardType: TextInputType.number,
                               multiline: false,
                               onSubmit: (String a) {
