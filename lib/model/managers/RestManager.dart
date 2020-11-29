@@ -50,8 +50,6 @@ class RestManager {
           delegate.errorNetworkGone();
           errorOccurred = false;
         }
-        print(json.encode(value));
-        print(response.body);
         return response.body;
       } catch(e) {
         if ( delegate != null && !errorOccurred ) {

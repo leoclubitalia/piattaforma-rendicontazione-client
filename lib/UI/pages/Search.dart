@@ -51,6 +51,26 @@ class _Search extends GlobalState<Search> {
             ),
           ),
           title: Text(AppLocalizations.of(context).translate("search").capitalize),
+          actions: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => MessageDialog(
+                      titleText: AppLocalizations.of(context).translate("info").capitalize,
+                      bodyText: AppLocalizations.of(context).translate("info_search"),
+                    ),
+                  );
+                },
+                child: Icon(
+                  Icons.info_outline,
+                  size: 26.0,
+                ),
+              ),
+            ),
+          ],
           bottom: TabBar(
             tabs: [
               Tab(text: AppLocalizations.of(context).translate("service"), icon: Icon(UIConstants.ICON_SERVICE)),
