@@ -209,43 +209,57 @@ class _AddService extends GlobalState<AddService> {
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-            child: Row(
+            child: Column(
               children: [
-                Container(
-                  width: 60,
-                  child: Text(
-                    AppLocalizations.of(context).translate("areas").capitalize + "*:",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold
+                Row(
+                  children: [
+                    Container(
+                      width: 60,
+                      child: Text(
+                        AppLocalizations.of(context).translate("areas").capitalize + "*:",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
                     ),
-                  ),
+                    Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _allAreas.length,
+                        itemBuilder: (context, index) {
+                          return CircularCheckBoxTitle(
+                              title: _allAreas[index].name,
+                              value: _allAreas[index].selected,
+                              onChanged: (bool x) {
+                                setState(() {
+                                  _allAreas[index].selected = !_allAreas[index].selected;
+                                  if ( _allAreas[index].selected ) {
+                                    _newService.competenceAreasService.add(_allAreas[index]);
+                                  }
+                                  else {
+                                    if ( _newService.competenceAreasService.contains(_allAreas[index]) ) {
+                                      _newService.competenceAreasService.remove(_allAreas[index]);
+                                    }
+                                  }
+                                });
+                              }
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _allAreas.length,
-                    itemBuilder: (context, index) {
-                      return CircularCheckBoxTitle(
-                        title: _allAreas[index].name,
-                        value: _allAreas[index].selected,
-                        onChanged: (bool x) {
-                          setState(() {
-                            _allAreas[index].selected = !_allAreas[index].selected;
-                            if ( _allAreas[index].selected ) {
-                              _newService.competenceAreasService.add(_allAreas[index]);
-                            }
-                            else {
-                              if ( _newService.competenceAreasService.contains(_allAreas[index]) ) {
-                                _newService.competenceAreasService.remove(_allAreas[index]);
-                              }
-                            }
-                          });
-                        }
-                      );
-                    },
+                  width: double.infinity,
+                  child: Text(
+                    AppLocalizations.of(context).translate("if_other_in_description"),
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
                   ),
                 ),
               ],

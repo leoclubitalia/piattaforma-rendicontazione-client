@@ -67,5 +67,6 @@
   "info_add_service": "Qui potrai inserire i service effettuati dal tuo club, inserisci tutte le info richieste, se non sono quantificabili puoi lasciarle in bianco.\nI campi obbligatori sono:\n\ntitolo\ndata\ndescrizione\ncittà\ngrado di soddisfazione\narea\ntipo\n\nBuon inserimento! \uD83D\uDE01",
   "info_add_activity": "Qui potrai inserire le attività effettuate dal tuo club, tutti i campi sono obbligatori!\n\nBuon inserimento! \uD83D\uDE01",
   "fields_mandatory": "I campi contrassegnati con * sono obbligatori",
-  "info_search": "In questa pagina è possibile fare la ricerca di service e attività svolte da qualsiasi club. Premendo sul tasto con la lente di ingrandimento avvierai la ricerca, invece cliccando sul tasto '+' accederai al pannello per la ricerca avanzato ove potrai filtrare i service e/o attività come desideri!\n\nBuona ricerca!✌\uD83C\uDFFD"
+  "info_search": "In questa pagina è possibile fare la ricerca di service e attività svolte da qualsiasi club. Premendo sul tasto con la lente di ingrandimento avvierai la ricerca, invece cliccando sul tasto '+' accederai al pannello per la ricerca avanzato ove potrai filtrare i service e/o attività come desideri!\n\nBuona ricerca!✌\uD83C\uDFFD",
+  "if_other_in_description": "Se 'Altro' specificarlo nella descrizione"
 }

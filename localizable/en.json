@@ -68,7 +68,7 @@
   "info_add_service": "Here you can enter the services performed by your club, enter all the requested information, if they are not quantifiable you can leave them blank.\nThe required fields are:\n\ntitle\ndate\ndescription\ncity\nsatisfaction degree\narea\ntype\n\nHappy insertion! \uD83D\uDE01",
   "info_add_activity": "Here you can enter the activities carried out by your club, all fields are required!\n\nHappy insertion! \uD83D\uDE01",
   "fields_mandatory": "Fields marked with * are mandatory",
-  "info_search": "On this page, you can search for services and activities carried out by any club. By pressing the button with the magnifying glass you will start the search, instead by clicking on the '+' button you will access the advanced search panel where you can filter the services and/or activities as you wish!\n\nHappy searching!✌\uD83C\uDFFD"
-
+  "info_search": "On this page, you can search for services and activities carried out by any club. By pressing the button with the magnifying glass you will start the search, instead by clicking on the '+' button you will access the advanced search panel where you can filter the services and/or activities as you wish!\n\nHappy searching!✌\uD83C\uDFFD",
+  "if_other_in_description": "If 'Other' specify it in the description"
 
 }
