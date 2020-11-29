@@ -1,8 +1,6 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ActivityTile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

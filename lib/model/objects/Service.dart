@@ -14,7 +14,7 @@ class Service {
   int quantityParticipants;
   int duration;
   String otherAssociations;
-  double moneyRaised;
+  String moneyOrMaterialCollected;
   int quantityServedPeople;
   City city;
   Club club;
@@ -23,7 +23,7 @@ class Service {
   List<CompetenceArea> competenceAreasService;
 
 
-  Service({this.id, this.title, this.description, this.date, this.quantityParticipants, this.duration, this.otherAssociations, this.moneyRaised, this.quantityServedPeople, this.city, this.club, this.satisfactionDegree, this.typesService, this.competenceAreasService});
+  Service({this.id, this.title, this.description, this.date, this.quantityParticipants, this.duration, this.otherAssociations, this.moneyOrMaterialCollected, this.quantityServedPeople, this.city, this.club, this.satisfactionDegree, this.typesService, this.competenceAreasService});
 
   Service.newCreation() {
     date = DateTime.now();
@@ -49,7 +49,7 @@ class Service {
       satisfactionDegree: SatisfactionDegree.fromJson(json['satisfactionDegree']),
       duration: json['duration'],
       otherAssociations: json['otherAssociations'],
-      moneyRaised: json['moneyRaised'],
+      moneyOrMaterialCollected: json['moneyOrMaterialCollected'],
       quantityServedPeople: json['quantityServedPeople'],
       city: City.fromJson(json['city']),
       club: Club.fromJson(json['club']),
@@ -67,7 +67,7 @@ class Service {
     'satisfactionDegree': satisfactionDegree.toJson(),
     'duration': duration.toString(),
     'otherAssociations': otherAssociations,
-    'moneyRaised': moneyRaised.toString(),
+    'moneyOrMaterialCollected': moneyOrMaterialCollected,
     'quantityServedPeople': quantityServedPeople.toString(),
     'city': city.toJson(),
     'club': club.toJson(),

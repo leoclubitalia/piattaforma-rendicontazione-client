@@ -28,7 +28,8 @@ class UIConstants {
   static final Color COLOR_DARK_BUTTON = Colors.indigo;
   static final Color COLOR_DARK_ACCENT = Colors.white;
 
-
+  // strings
+  static final String NOT_DEFINED_TEXT = "n/a";
 
 
 

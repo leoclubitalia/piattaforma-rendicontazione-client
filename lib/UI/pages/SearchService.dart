@@ -32,10 +32,9 @@ class SearchService extends StatefulWidget {
 class _SearchService extends GlobalState<SearchService> {
   String _title;
   String _otherAssociations;
+  String _moneyOrMaterialCollected;
   int _quantityParticipants;
   int _duration;
-  int _minMoneyRaised;
-  int _maxMoneyRaised;
   int _quantityServedPeople;
   District _district;
   SatisfactionDegree _satisfactionDegree;
@@ -68,8 +67,7 @@ class _SearchService extends GlobalState<SearchService> {
   TextEditingController _inputFieldTitleController = TextEditingController();
   TextEditingController _inputFieldParticipantsController = TextEditingController();
   TextEditingController _inputFieldDurationController = TextEditingController();
-  TextEditingController _inputFieldMinMoneyRaisedController = TextEditingController();
-  TextEditingController _inputFieldMaxMoneyRaisedController = TextEditingController();
+  TextEditingController _inputFieldMoneyOrMaterialCollectedController = TextEditingController();
   TextEditingController _inputFieldServedPeopleController = TextEditingController();
   TextEditingController _inputFieldOtherAssociationsController = TextEditingController();
 
@@ -373,32 +371,15 @@ class _SearchService extends GlobalState<SearchService> {
               Row(
                 children: [
                   Flexible(
-                    child: InputField(
-                      labelText: AppLocalizations.of(context).translate("min_money_raised"),
-                      controller: _inputFieldMinMoneyRaisedController,
-                      keyboardType: TextInputType.number,
-                      onChanged: (String value) {
-                        if ( value == null || value == "" ) {
-                          _minMoneyRaised = null;
-                        }
-                        else {
-                          _minMoneyRaised = int.parse(value);
-                        }
+                    child: InputAutocomplete(
+                      labelText: AppLocalizations.of(context).translate("city"),
+                      controller: _autocompleteCityController,
+                      onSuggestion: (String pattern) async {
+                        return await ModelFacade.sharedInstance.suggestCities(pattern);
                       },
-                    ),
-                  ),
-                  Flexible(
-                    child: InputField(
-                      labelText: AppLocalizations.of(context).translate("max_money_raised"),
-                      controller: _inputFieldMaxMoneyRaisedController,
-                      keyboardType: TextInputType.number,
-                      onChanged: (String value) {
-                        if ( value == null || value == "" ) {
-                          _maxMoneyRaised = null;
-                        }
-                        else {
-                          _maxMoneyRaised = int.parse(value);
-                        }
+                      onSelect: (suggestion) {
+                        _autocompleteCityController.text = suggestion.toString();
+                        _city = suggestion;
                       },
                     ),
                   ),
@@ -439,15 +420,16 @@ class _SearchService extends GlobalState<SearchService> {
               Row(
                 children: [
                   Flexible(
-                    child: InputAutocomplete(
-                      labelText: AppLocalizations.of(context).translate("city"),
-                      controller: _autocompleteCityController,
-                      onSuggestion: (String pattern) async {
-                        return await ModelFacade.sharedInstance.suggestCities(pattern);
-                      },
-                      onSelect: (suggestion) {
-                        _autocompleteCityController.text = suggestion.toString();
-                        _city = suggestion;
+                    child: InputField(
+                      labelText: AppLocalizations.of(context).translate("money_or_material_collected"),
+                      controller: _inputFieldMoneyOrMaterialCollectedController,
+                      onChanged: (String value) {
+                        if ( value == null || value == "" ) {
+                          _moneyOrMaterialCollected = null;
+                        }
+                        else {
+                          _moneyOrMaterialCollected = value;
+                        }
                       },
                     ),
                   ),
@@ -518,11 +500,8 @@ class _SearchService extends GlobalState<SearchService> {
     if ( _duration != null ) {
       _inputFieldDurationController.text = _duration.toString();
     }
-    if ( _minMoneyRaised != null ) {
-      _inputFieldMinMoneyRaisedController.text = _minMoneyRaised.toString();
-    }
-    if ( _maxMoneyRaised != null ) {
-      _inputFieldMaxMoneyRaisedController.text = _maxMoneyRaised.toString();
+    if ( _moneyOrMaterialCollected != null ) {
+      _inputFieldMoneyOrMaterialCollectedController.text = _moneyOrMaterialCollected;
     }
     if ( _quantityServedPeople != null ) {
       _inputFieldServedPeopleController.text = _quantityServedPeople.toString();
@@ -560,7 +539,7 @@ class _SearchService extends GlobalState<SearchService> {
     if ( _autocompleteCompetenceAreaController.text == null || _autocompleteCompetenceAreaController.text == "" ) {
       _area = null;
     }
-    ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _minMoneyRaised, _maxMoneyRaised, _quantityServedPeople, _district, _satisfactionDegree == _allDegrees ? null : _satisfactionDegree, _city, _type, _area, _club, _startDate, _endDate, _currentPage);
+    ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _moneyOrMaterialCollected, _quantityServedPeople, _district, _satisfactionDegree == _allDegrees ? null : _satisfactionDegree, _city, _type, _area, _club, _startDate, _endDate, _currentPage);
     setState(() {
       _searchResult = null;
       _isSearching = true;

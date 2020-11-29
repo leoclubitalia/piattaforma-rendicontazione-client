@@ -161,8 +161,7 @@ class ModelFacade implements ErrorListener {
                       String otherAssociations,
                       int quantityParticipants,
                       int duration,
-                      int minMoneyRaised,
-                      int maxMoneyRaised,
+                      String moneyOrMaterialCollected,
                       int quantityServedPeople,
                       District district,
                       SatisfactionDegree satisfactionDegree,
@@ -186,11 +185,8 @@ class ModelFacade implements ErrorListener {
     if ( duration != null ) {
       params["duration"] = duration.toString();
     }
-    if ( minMoneyRaised != null ) {
-      params["minMoneyRaised"] = minMoneyRaised.toString();
-    }
-    if ( maxMoneyRaised != null ) {
-      params["maxMoneyRaised"] = maxMoneyRaised.toString();
+    if ( moneyOrMaterialCollected != null ) {
+      params["moneyOrMaterialCollected"] = moneyOrMaterialCollected;
     }
     if ( quantityServedPeople != null ) {
       params["quantityServedPeople"] = quantityServedPeople.toString();

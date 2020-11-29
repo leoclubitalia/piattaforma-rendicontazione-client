@@ -1,3 +1,4 @@
+import 'package:RendicontationPlatformLeo_Client/UI/aspects/UIConstants.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
@@ -165,7 +166,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                             ),
                             TextSpan(text: ": "),
                             TextSpan(
-                              text: service.quantityServedPeople.toString(),
+                              text: service.quantityServedPeople == null ? UIConstants.NOT_DEFINED_TEXT : service.quantityServedPeople.toString(),
                               style: TextStyle(
                                 fontStyle: FontStyle.italic,
                               ),
@@ -176,7 +177,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                             ),
                             TextSpan(text: ": "),
                             TextSpan(
-                              text: service.quantityParticipants.toString(),
+                              text: service.quantityParticipants == null ? UIConstants.NOT_DEFINED_TEXT : service.quantityParticipants.toString(),
                               style: TextStyle(
                                 fontStyle: FontStyle.italic,
                               ),
@@ -187,7 +188,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                             ),
                             TextSpan(text: ": "),
                             TextSpan(
-                              text: service.duration.toString() + " h",
+                              text: service.duration == null ? UIConstants.NOT_DEFINED_TEXT : service.duration.toString() + " h",
                               style: TextStyle(
                                 fontStyle: FontStyle.italic,
                               ),
@@ -277,11 +278,11 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                               ),
                               children: [
                                 TextSpan(
-                                    text: AppLocalizations.of(context).translate("money_raised").capitalize
+                                    text: AppLocalizations.of(context).translate("money_or_material_collected").capitalize
                                 ),
                                 TextSpan(text: ": "),
                                 TextSpan(
-                                  text: service.moneyRaised.toStringAsFixed(2) + " €",
+                                  text: service.moneyOrMaterialCollected == null ? UIConstants.NOT_DEFINED_TEXT : service.moneyOrMaterialCollected,
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                   ),
@@ -310,7 +311,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                                 ),
                                 TextSpan(text: ": "),
                                 TextSpan(
-                                  text: service.otherAssociations,
+                                  text: service.otherAssociations == null ? UIConstants.NOT_DEFINED_TEXT : service.otherAssociations,
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                   ),

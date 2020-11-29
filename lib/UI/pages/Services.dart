@@ -203,7 +203,7 @@ class _Services extends GlobalState<Services> {
   }
 
   void _search() {
-    ModelFacade.sharedInstance.searchServices(null, null, null, null, null, null, null, null, null, null, null, null, ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB), null, null, _currentPage);
+    ModelFacade.sharedInstance.searchServices(null, null, null, null, null, null, null, null, null, null, null, ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB), null, null, _currentPage);
     setState(() {
       _searchResult = null;
       _isSearching = true;

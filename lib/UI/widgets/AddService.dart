@@ -198,11 +198,10 @@ class _AddService extends GlobalState<AddService> {
               ),
               Flexible(
                 child: InputField(
-                  labelText: AppLocalizations.of(context).translate("money_raised"),
+                  labelText: AppLocalizations.of(context).translate("money_or_material_collected"),
                   controller: _inputFieldMoneyRaisedController,
-                  keyboardType: TextInputType.number,
                   onChanged: (String value) {
-                    _newService.moneyRaised = double.parse(value);
+                    _newService.moneyOrMaterialCollected = value;
                   },
                 ),
               ),
