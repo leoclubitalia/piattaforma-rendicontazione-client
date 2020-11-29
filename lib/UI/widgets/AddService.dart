@@ -349,7 +349,7 @@ class _AddService extends GlobalState<AddService> {
                     fieldNotSpecified = true;
                   }
                   if ( _newService.competenceAreasService.isEmpty ) {
-                    message += "\n" + AppLocalizations.of(context).translate("compentece_area");
+                    message += "\n" + AppLocalizations.of(context).translate("areas");
                     fieldNotSpecified = true;
                   }
                   if ( fieldNotSpecified ) {

@@ -98,7 +98,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
   }
 
   bool isCircularMoment() {
-    return !(_satisfactionDegrees != null && _districts != null && _types != null && _clubs != null) || _isSearching;
+    return !(_satisfactionDegrees != null && _districts != null && _types != null && _clubs != null && _lionsParticipationsValues != null) || _isSearching;
   }
 
   @override
