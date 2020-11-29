@@ -9,7 +9,6 @@ import 'package:RendicontationPlatformLeo_Client/UI/pages/Services.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/SubmittableInputField.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
@@ -239,12 +238,14 @@ class _Home extends GlobalState<Home> {
                       children: [
                         Container(
                           width: 100,
+                          height: 125,
                           child: SubmittableInputField(
                             onSubmit: (String value) {
                               ModelFacade.sharedInstance.updateQuantityMembers(value);
                             },
                             keyboardType: TextInputType.number,
                             label: AppLocalizations.of(context).translate("members").capitalize,
+                            value: _club.currentMembers.toString(),
                           ),
                         ),
                       ],
@@ -254,20 +255,16 @@ class _Home extends GlobalState<Home> {
                     ),
                     Column(
                       children: [
-                        Text(
-                            AppLocalizations.of(context).translate("aspirants").capitalize,
-                            style: LeoTitleStyle()
-                        ),
                         Container(
                           width: 100,
-                          child: InputField(
-                            textAlign: TextAlign.center,
-                            controller: _inputFieldAspirantsController,
-                            keyboardType: TextInputType.number,
-                            multiline: false,
+                          height: 125,
+                          child: SubmittableInputField(
                             onSubmit: (String value) {
                               ModelFacade.sharedInstance.updateQuantityAspirants(value);
-                            }
+                            },
+                            keyboardType: TextInputType.number,
+                            label: AppLocalizations.of(context).translate("aspirants").capitalize,
+                            value: _club.aspirantMembers.toString(),
                           ),
                         ),
                       ],
@@ -276,7 +273,7 @@ class _Home extends GlobalState<Home> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                 child: StadiumButton(
                   icon: Icons.search_rounded,
                   title: AppLocalizations.of(context).translate("search").capitalize,

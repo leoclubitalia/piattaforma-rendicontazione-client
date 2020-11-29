@@ -43,12 +43,15 @@ class _Services extends GlobalState<Services> {
 
   @override
   void refreshState() {
-    if ( !(ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_ADDED) && ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED)) ) {
+    _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_SERVICE_RESULT);
+    if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_ADDED) ) {
+      ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED);
+    }
+    else {
       if ( _searchResult != null ) {
         _isSearching = false;
       }
     }
-    _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_SERVICE_RESULT);
   }
 
   bool isCircularMoment() {
@@ -100,7 +103,6 @@ class _Services extends GlobalState<Services> {
                 valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).buttonColor),
               ),
             ) :
-            Padding(padding: EdgeInsets.all(0)),
             Column(
               children: <Widget>[
                 _searchResult == null ?
