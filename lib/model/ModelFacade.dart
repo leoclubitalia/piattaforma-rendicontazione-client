@@ -53,10 +53,10 @@ class ModelFacade implements ErrorListener {
 
   void _loadInfoClub(int id) async {
     if ( !appState.existsValue(Constants.STATE_CLUB) ) {
-      Club club = _parsingManager.parseClub(await _restManager.makeGetRequest(Constants.REQUEST_INFO_CLUB, {"id": id.toString()}));
-      Quantity quantityServices = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.REQUEST_CLUB_QUANTITY_SERVICES, {"clubId": id.toString()}));
+      Club club = _parsingManager.parseClub(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_INFO_CLUB, {"id": id.toString()}));
+      Quantity quantityServices = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_CLUB_QUANTITY_SERVICES, {"clubId": id.toString()}));
       club.quantityServices = quantityServices;
-      Quantity quantityActivities = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, {"clubId": id.toString()}));
+      Quantity quantityActivities = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, {"clubId": id.toString()}));
       club.quantityActivities = quantityActivities;
       appState.addValue(Constants.STATE_CLUB, club);
     }
@@ -71,42 +71,42 @@ class ModelFacade implements ErrorListener {
 
   void loadAllSatisfactionDegrees() async {
     if ( !appState.existsValue(Constants.STATE_ALL_SATISFACTION_DEGREES) ) {
-      List<SatisfactionDegree> satisfactionDegrees = _parsingManager.parseSatisfactionDegrees(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_SATISFACTION_DEGREES));
+      List<SatisfactionDegree> satisfactionDegrees = _parsingManager.parseSatisfactionDegrees(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_SEARCH_ALL_SATISFACTION_DEGREES));
       appState.addValue(Constants.STATE_ALL_SATISFACTION_DEGREES, satisfactionDegrees);
     }
   }
 
   void loadAllDistricts() async {
     if ( !appState.existsValue(Constants.STATE_ALL_DISTRICTS) ) {
-      List<District> districts = _parsingManager.parseDistricts(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_DISTRICTS));
+      List<District> districts = _parsingManager.parseDistricts(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_SEARCH_ALL_DISTRICTS));
       appState.addValue(Constants.STATE_ALL_DISTRICTS, districts);
     }
   }
 
   void loadAllTypesService() async {
     if ( !appState.existsValue(Constants.STATE_ALL_TYPE_SERVICE) ) {
-      List<TypeService> types = _parsingManager.parseTypeServices(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_TYPES_SERVICE));
+      List<TypeService> types = _parsingManager.parseTypeServices(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_SEARCH_ALL_TYPES_SERVICE));
       appState.addValue(Constants.STATE_ALL_TYPE_SERVICE, types);
     }
   }
 
   void loadAllTypesActivity() async {
     if ( !appState.existsValue(Constants.STATE_ALL_TYPE_ACTIVITY) ) {
-      List<TypeActivity> types = _parsingManager.parseTypeActivities(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_TYPES_ACTIVITY));
+      List<TypeActivity> types = _parsingManager.parseTypeActivities(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_SEARCH_ALL_TYPES_ACTIVITY));
       appState.addValue(Constants.STATE_ALL_TYPE_ACTIVITY, types);
     }
   }
 
   void loadAllAreas() async {
     if ( !appState.existsValue(Constants.STATE_ALL_AREAS) ) {
-      List<CompetenceArea> areas = _parsingManager.parseCompetenceAreas(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_AREAS));
+      List<CompetenceArea> areas = _parsingManager.parseCompetenceAreas(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_SEARCH_ALL_AREAS));
       appState.addValue(Constants.STATE_ALL_AREAS, areas);
     }
   }
 
   void loadAllClubs() async {
     if ( !appState.existsValue(Constants.STATE_ALL_CLUBS) ) {
-      List<Club> clubs = _parsingManager.parseClubs(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ALL_CLUBS));
+      List<Club> clubs = _parsingManager.parseClubs(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_SEARCH_ALL_CLUBS));
       appState.addValue(Constants.STATE_ALL_CLUBS, clubs);
     }
   }
@@ -118,7 +118,7 @@ class ModelFacade implements ErrorListener {
 
   Future<List<City>> suggestCities(String value) async {
     if ( value != null && value.replaceAll(" ", "") != "" ) {
-      return _parsingManager.parseCities(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_CITIES, {"name": value}));
+      return _parsingManager.parseCities(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_SEARCH_CITIES, {"name": value}));
     }
     return List<City>();
   }
@@ -147,14 +147,14 @@ class ModelFacade implements ErrorListener {
     Map<String, String> params = Map();
     params["clubId"] = currentClubId.toString();
     params["newQuantity"] = value;
-    _restManager.makePutRequest(Constants.REQUEST_UPDATE_QUANTITY_MEMBERS, params);
+    _restManager.makePutRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_UPDATE_QUANTITY_MEMBERS, params);
   }
 
   void updateQuantityAspirants(String value) async {
     Map<String, String> params = Map();
     params["clubId"] = currentClubId.toString();
     params["newQuantity"] = value;
-    _restManager.makePutRequest(Constants.REQUEST_UPDATE_QUANTITY_ASPIRANTS, params);
+    _restManager.makePutRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_UPDATE_QUANTITY_ASPIRANTS, params);
   }
 
   void searchServices(String title,
@@ -223,7 +223,7 @@ class ModelFacade implements ErrorListener {
     }
     params["pageSize"] = Constants.REQUEST_DEFAULT_PAGE_SIZE;
     try {
-      List<Service> services = _parsingManager.parseServices(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_SERVICES_ADVANCED, params));
+      List<Service> services = _parsingManager.parseServices(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_SEARCH_SERVICES_ADVANCED, params));
       if ( page == 0 ) {
         appState.addValue(Constants.STATE_SEARCH_SERVICE_RESULT, services);
         if ( services.isEmpty ) {
@@ -295,7 +295,7 @@ class ModelFacade implements ErrorListener {
     }
     params["pageSize"] = Constants.REQUEST_DEFAULT_PAGE_SIZE;
     try {
-      List<Activity> activities = _parsingManager.parseActivities(await _restManager.makeGetRequest(Constants.REQUEST_SEARCH_ACTIVITIES_ADVANCED, params));
+      List<Activity> activities = _parsingManager.parseActivities(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_SEARCH_ACTIVITIES_ADVANCED, params));
       if ( page == 0 ) {
         appState.addValue(Constants.STATE_SEARCH_ACTIVITY_RESULT, activities);
         if ( activities.isEmpty ) {
@@ -315,7 +315,7 @@ class ModelFacade implements ErrorListener {
   void addService(Service service) async {
     service.club = Club(id: currentClubId);
     try {
-      service = _parsingManager.parseService(await _restManager.makePostRequest(Constants.REQUEST_ADD_SERVICE, service));
+      service = _parsingManager.parseService(await _restManager.makePostRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_ADD_SERVICE, service));
       Club club = appState.getValue(Constants.STATE_CLUB);
       club.quantityServices.currentYear ++;
       club.quantityServices.all ++;
@@ -330,7 +330,7 @@ class ModelFacade implements ErrorListener {
   void addActivity(Activity activity) async {
     activity.club = Club(id: currentClubId);
     try {
-      activity = _parsingManager.parseActivity(await _restManager.makePostRequest(Constants.REQUEST_ADD_ACTIVITY, activity));
+      activity = _parsingManager.parseActivity(await _restManager.makePostRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_ADD_ACTIVITY, activity));
       appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
       Club club = appState.getValue(Constants.STATE_CLUB);
       club.quantityActivities.currentYear ++;

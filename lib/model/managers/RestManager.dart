@@ -10,8 +10,8 @@ class RestManager {
   ErrorListener delegate;
 
 
-  Future<String> _makeRequest(String url, String type, {Map<String, String> body, dynamic value}) async {
-    Uri uri = Uri.http(Constants.BASE_URL, url, body);
+  Future<String> _makeRequest(String serverAddress, String servicePath, String type, {Map<String, String> body, dynamic value}) async {
+    Uri uri = Uri.http(serverAddress, servicePath, body);
     bool errorOccurred = false;
     while ( true ) {
       try {
@@ -61,16 +61,16 @@ class RestManager {
     }
   }
 
-  Future<String> makeGetRequest(String url, [Map<String, String> body]) async {
-    return _makeRequest(url, "get", body: body);
+  Future<String> makeGetRequest(String serverAddress, String servicePath, [Map<String, String> body]) async {
+    return _makeRequest(serverAddress, servicePath, "get", body: body);
   }
 
-  Future<String> makePostRequest(String url, dynamic value) async {
-    return _makeRequest(url, "post", value: value);
+  Future<String> makePostRequest(String serverAddress, String servicePath, dynamic value) async {
+    return _makeRequest(serverAddress, servicePath, "post", value: value);
   }
 
-  Future<String> makePutRequest(String url, Map<String, String> body) async {
-    return _makeRequest(url, "put", body: body);
+  Future<String> makePutRequest(String serverAddress, String servicePath, Map<String, String> body) async {
+    return _makeRequest(serverAddress, servicePath, "put", body: body);
   }
 
 
