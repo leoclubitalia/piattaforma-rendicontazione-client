@@ -321,6 +321,9 @@ class ModelFacade implements ErrorListener {
       club.quantityServices.all ++;
       appState.updateValue(Constants.STATE_CLUB, club);
       appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, service);
+      List<Service> services = appState.getAndDestroyValue(Constants.STATE_SEARCH_SERVICE_RESULT);
+      services.insert(0, service);
+      appState.addValue(Constants.STATE_SEARCH_SERVICE_RESULT, services);
     }
     catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");

@@ -43,15 +43,12 @@ class _Activities extends GlobalState<Activities> {
 
   @override
   void refreshState() {
-    if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_ADDED) && ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED) ) {
-      loadSearch();
-    }
-    else {
-      _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
+    if ( !(ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_ADDED) && ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED)) ) {
       if ( _searchResult != null ) {
         _isSearching = false;
       }
     }
+    _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
   }
 
   bool isCircularMoment() {
