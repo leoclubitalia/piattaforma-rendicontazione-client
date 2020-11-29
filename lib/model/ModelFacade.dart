@@ -143,6 +143,20 @@ class ModelFacade implements ErrorListener {
     return all.getSuggestions(value);
   }
 
+  void updateQuantityMembers(String value) async {
+    Map<String, String> params = Map();
+    params["clubId"] = currentClubId.toString();
+    params["newQuantity"] = value;
+    _restManager.makePutRequest(Constants.REQUEST_UPDATE_QUANTITY_MEMBERS, params);
+  }
+
+  void updateQuantityAspirants(String value) async {
+    Map<String, String> params = Map();
+    params["clubId"] = currentClubId.toString();
+    params["newQuantity"] = value;
+    _restManager.makePutRequest(Constants.REQUEST_UPDATE_QUANTITY_ASPIRANTS, params);
+  }
+
   void searchServices(String title,
                       String otherAssociations,
                       int quantityParticipants,

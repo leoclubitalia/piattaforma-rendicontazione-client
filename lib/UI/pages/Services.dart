@@ -4,6 +4,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/AddService.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/RoundedDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/tiles/ServiceTile.dart';
@@ -155,9 +156,34 @@ class _Services extends GlobalState<Services> {
     showDialog(
       context: context,
       builder: (context) => RoundedDialog(
-        title: Text(
-          AppLocalizations.of(context).translate("add").capitalize,
-          textAlign: TextAlign.center,
+        title: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              child: Text(
+                AppLocalizations.of(context).translate("add").capitalize,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Positioned(
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => MessageDialog(
+                      titleText: AppLocalizations.of(context).translate("info").capitalize,
+                      bodyText: AppLocalizations.of(context).translate("info_add_service"),
+                    ),
+                  );
+                },
+                child: Icon(
+                  Icons.info_outline,
+                  size: 26.0,
+                ),
+              ),
+            ),
+          ],
         ),
         body: AddService(),
       ),

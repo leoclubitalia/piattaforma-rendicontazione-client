@@ -228,7 +228,10 @@ class _SearchService extends GlobalState<SearchService> {
     showDialog(
       context: context,
       builder: (context) => RoundedDialog(
-        title: Text(AppLocalizations.of(context).translate("advanced_search")),
+        title: Text(
+          AppLocalizations.of(context).translate("advanced_search"),
+          textAlign: TextAlign.center,
+        ),
         body: Container(
           width: MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.2,
           child: Column(
@@ -269,7 +272,7 @@ class _SearchService extends GlobalState<SearchService> {
                     child: InputField(
                       labelText: AppLocalizations.of(context).translate("title"),
                       controller: _inputFieldTitleController,
-                      onSubmit: (String value) {
+                      onChanged: (String value) {
                         _title = value;
                       },
                     ),
@@ -340,7 +343,7 @@ class _SearchService extends GlobalState<SearchService> {
                       labelText: AppLocalizations.of(context).translate("quantity_participants"),
                       controller: _inputFieldParticipantsController,
                       keyboardType: TextInputType.number,
-                      onSubmit: (String value) {
+                      onChanged: (String value) {
                         if ( value == null || value == "" ) {
                           _quantityParticipants = null;
                         }
@@ -355,7 +358,7 @@ class _SearchService extends GlobalState<SearchService> {
                       labelText: AppLocalizations.of(context).translate("duration"),
                       controller: _inputFieldDurationController,
                       keyboardType: TextInputType.number,
-                      onSubmit: (String value) {
+                      onChanged: (String value) {
                         if ( value == null || value == "" ) {
                           _duration = null;
                         }
@@ -374,7 +377,7 @@ class _SearchService extends GlobalState<SearchService> {
                       labelText: AppLocalizations.of(context).translate("min_money_raised"),
                       controller: _inputFieldMinMoneyRaisedController,
                       keyboardType: TextInputType.number,
-                      onSubmit: (String value) {
+                      onChanged: (String value) {
                         if ( value == null || value == "" ) {
                           _minMoneyRaised = null;
                         }
@@ -389,7 +392,7 @@ class _SearchService extends GlobalState<SearchService> {
                       labelText: AppLocalizations.of(context).translate("max_money_raised"),
                       controller: _inputFieldMaxMoneyRaisedController,
                       keyboardType: TextInputType.number,
-                      onSubmit: (String value) {
+                      onChanged: (String value) {
                         if ( value == null || value == "" ) {
                           _maxMoneyRaised = null;
                         }
@@ -421,7 +424,7 @@ class _SearchService extends GlobalState<SearchService> {
                       labelText: AppLocalizations.of(context).translate("quantity_served_people"),
                       controller: _inputFieldServedPeopleController,
                       keyboardType: TextInputType.number,
-                      onSubmit: (String value) {
+                      onChanged: (String value) {
                         if ( value == null || value == "" ) {
                           _quantityServedPeople = null;
                         }
@@ -469,7 +472,7 @@ class _SearchService extends GlobalState<SearchService> {
                     child: InputField(
                       labelText: AppLocalizations.of(context).translate("other_associations"),
                       controller: _inputFieldOtherAssociationsController,
-                      onSubmit: (String value) {
+                      onChanged: (String value) {
                         _otherAssociations = value;
                       },
                     ),

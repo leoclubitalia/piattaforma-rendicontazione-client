@@ -66,6 +66,9 @@
   "aspirants": "aspirants",
   "connection_error": "Oops... There is a network error, now I fix it!",
   "info": "info",
-  "info_home": "On this page you will find the summary of your club with the counts of the services and activities carried out and by clicking on the appropriate buttons you will reach a page where there will be all the services and activities carried out with the possibility of adding new ones!\n\nClicking on the counts you will find below you can vary the number of members and aspirants present!\n\nInstead by going to search you will reach the search page to see what other clubs are doing or look for something specific made by yours!\n\n\uD83D\uDC4B\uD83C\uDFFD\n"
+  "info_home": "On this page you will find the summary of your club with the counts of the services and activities carried out and by clicking on the appropriate buttons you will reach a page where there will be all the services and activities carried out with the possibility of adding new ones!\n\nClicking on the counts you will find below you can vary the number of members and aspirants present!\n\nInstead by going to search you will reach the search page to see what other clubs are doing or look for something specific made by yours!\n\n\uD83D\uDC4B\uD83C\uDFFD\n",
+  "info_add_service": "Here you can enter the services performed by your club, enter all the requested information, if they are not quantifiable you can leave them blank.\nThe required fields are:\n\ntitle\ndate\ndescription\ncity\nsatisfaction degree\narea\ntype\n\nHappy insertion! \uD83D\uDE01",
+  "info_add_activity": "Here you can enter the activities carried out by your club, all fields are required!\n\nHappy insertion! \uD83D\uDE01",
+  "fields_mandatory": "Fields marked with * are mandatory"
 
 }

@@ -218,7 +218,10 @@ class _SearchActivity extends GlobalState<SearchActivity> {
     showDialog(
       context: context,
       builder: (context) => RoundedDialog(
-        title: Text(AppLocalizations.of(context).translate("advanced_search")),
+        title: Text(
+          AppLocalizations.of(context).translate("advanced_search"),
+          textAlign: TextAlign.center,
+        ),
         body: Container(
           width: MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.2,
           child: Column(
@@ -259,7 +262,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                     child: InputField(
                       labelText: AppLocalizations.of(context).translate("title"),
                       controller: _inputFieldTitleController,
-                      onSubmit: (String value) {
+                      onChanged: (String value) {
                         _title = value;
                       },
                     ),
@@ -326,17 +329,15 @@ class _SearchActivity extends GlobalState<SearchActivity> {
               Row(
                 children: [
                   Flexible(
-                    child: InputField(
-                      labelText: AppLocalizations.of(context).translate("quantity_participants"),
-                      controller: _inputFieldQuantityLeoController,
-                      keyboardType: TextInputType.number,
-                      onSubmit: (String value) {
-                        if ( value == null || value == "" ) {
-                          _quantityLeo = null;
-                        }
-                        else {
-                          _quantityLeo = int.parse(value);
-                        }
+                    child: InputAutocomplete(
+                      labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
+                      controller: _autocompleteSatisfactionDegreeController,
+                      onSuggestion: (String pattern) {
+                        return _satisfactionDegrees;
+                      },
+                      onSelect: (suggestion) {
+                        _autocompleteSatisfactionDegreeController.text = suggestion.toString();
+                        _satisfactionDegree = suggestion;
                       },
                     ),
                   ),
@@ -369,15 +370,17 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                     ),
                   ),
                   Flexible(
-                    child: InputAutocomplete(
-                      labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
-                      controller: _autocompleteSatisfactionDegreeController,
-                      onSuggestion: (String pattern) {
-                        return _satisfactionDegrees;
-                      },
-                      onSelect: (suggestion) {
-                        _autocompleteSatisfactionDegreeController.text = suggestion.toString();
-                        _satisfactionDegree = suggestion;
+                    child: InputField(
+                      labelText: AppLocalizations.of(context).translate("quantity_participants"),
+                      controller: _inputFieldQuantityLeoController,
+                      keyboardType: TextInputType.number,
+                      onChanged: (String value) {
+                        if ( value == null || value == "" ) {
+                          _quantityLeo = null;
+                        }
+                        else {
+                          _quantityLeo = int.parse(value);
+                        }
                       },
                     ),
                   ),

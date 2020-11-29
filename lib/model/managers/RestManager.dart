@@ -43,7 +43,6 @@ class RestManager {
                 //HttpHeaders.authorizationHeader: 'Token $token',
                 HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
               },
-              body: json.encode(value),
             );
             break;
         }
@@ -51,6 +50,8 @@ class RestManager {
           delegate.errorNetworkGone();
           errorOccurred = false;
         }
+        print(json.encode(value));
+        print(response.body);
         return response.body;
       } catch(e) {
         if ( delegate != null && !errorOccurred ) {
@@ -70,8 +71,8 @@ class RestManager {
     return _makeRequest(url, "post", value: value);
   }
 
-  Future<String> makePutRequest(String url, dynamic value) async {
-    return _makeRequest(url, "put", value: value);
+  Future<String> makePutRequest(String url, Map<String, String> body) async {
+    return _makeRequest(url, "put", body: body);
   }
 
 

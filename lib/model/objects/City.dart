@@ -1,21 +1,23 @@
-import 'dart:convert';
-
 import 'package:RendicontationPlatformLeo_Client/model/objects/Cap.dart';
 
 
 class City {
   int id;
   String name;
-  Set<Cap> caps;
+  List<Cap> caps;
 
 
   City({this.id, this.name, this.caps});
 
   factory City.fromJson(Map<String, dynamic> json) {
+    List<Cap> caps = List();
+    for ( Map<String, dynamic> rawCap in json['caps'] ) {
+      caps.add(Cap.fromJson(rawCap));
+    }
     return City(
       id: json['id'],
       name: json['name'],
-      //caps: json['cap'],
+      caps: caps,
     );
   }
 
@@ -27,7 +29,7 @@ class City {
 
   @override
   String toString() {
-    return name;
+    return name + " " + caps.toString();
   }
 
 

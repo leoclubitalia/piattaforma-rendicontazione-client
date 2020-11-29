@@ -87,16 +87,16 @@ class _AddService extends GlobalState<AddService> {
             children: [
               Flexible(
                 child: InputField(
-                  labelText: AppLocalizations.of(context).translate("title"),
+                  labelText: AppLocalizations.of(context).translate("title") + "*",
                   controller: _inputFieldTitleController,
-                  onSubmit: (String value) {
+                  onChanged: (String value) {
                     _newService.title = value;
                   },
                 ),
               ),
               Flexible(
                 child: InputButton(
-                  text: AppLocalizations.of(context).translate("date"),
+                  text: AppLocalizations.of(context).translate("date") + "*",
                   controller: _dateTextController,
                   onPressed: () {
                     DatePicker.showDatePicker(
@@ -120,10 +120,10 @@ class _AddService extends GlobalState<AddService> {
             children: [
               Flexible(
                 child: InputField(
-                  labelText: AppLocalizations.of(context).translate("description"),
+                  labelText: AppLocalizations.of(context).translate("description") + "*",
                   controller: _inputFieldDescriptionController,
                   multiline: true,
-                  onSubmit: (String value) {
+                  onChanged: (String value) {
                     _newService.description = value;
                   },
                 ),
@@ -134,7 +134,7 @@ class _AddService extends GlobalState<AddService> {
             children: [
               Flexible(
                 child: InputAutocomplete(
-                  labelText: AppLocalizations.of(context).translate("city"),
+                  labelText: AppLocalizations.of(context).translate("city") + "*",
                   controller: _autocompleteCityController,
                   onSuggestion: (String pattern) async {
                     return await ModelFacade.sharedInstance.suggestCities(pattern);
@@ -146,12 +146,15 @@ class _AddService extends GlobalState<AddService> {
                 ),
               ),
               Flexible(
-                child: InputField(
-                  labelText: AppLocalizations.of(context).translate("money_raised"),
-                  controller: _inputFieldMoneyRaisedController,
-                  keyboardType: TextInputType.number,
-                  onSubmit: (String value) {
-                    _newService.moneyRaised = double.parse(value);
+                child: InputAutocomplete(
+                  labelText: AppLocalizations.of(context).translate("satisfaction_degree") + "*",
+                  controller: _autocompleteSatisfactionDegreeController,
+                  onSuggestion: (String pattern) {
+                    return _allSatisfactionDegrees;
+                  },
+                  onSelect: (suggestion) {
+                    _autocompleteSatisfactionDegreeController.text = suggestion.toString();
+                    _newService.satisfactionDegree = suggestion;
                   },
                 ),
               ),
@@ -164,7 +167,7 @@ class _AddService extends GlobalState<AddService> {
                   labelText: AppLocalizations.of(context).translate("quantity_participants"),
                   controller: _inputFieldParticipantsController,
                   keyboardType: TextInputType.number,
-                  onSubmit: (String value) {
+                  onChanged: (String value) {
                     _newService.quantityParticipants = int.parse(value);
                   },
                 ),
@@ -174,7 +177,7 @@ class _AddService extends GlobalState<AddService> {
                   labelText: AppLocalizations.of(context).translate("quantity_served_people"),
                   controller: _inputFieldServedPeopleController,
                   keyboardType: TextInputType.number,
-                  onSubmit: (String value) {
+                  onChanged: (String value) {
                     _newService.quantityServedPeople = int.parse(value);
                   },
                 ),
@@ -188,21 +191,18 @@ class _AddService extends GlobalState<AddService> {
                   labelText: AppLocalizations.of(context).translate("duration"),
                   controller: _inputFieldDurationController,
                   keyboardType: TextInputType.number,
-                  onSubmit: (String value) {
+                  onChanged: (String value) {
                     _newService.duration = int.parse(value);
                   },
                 ),
               ),
               Flexible(
-                child: InputAutocomplete(
-                  labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
-                  controller: _autocompleteSatisfactionDegreeController,
-                  onSuggestion: (String pattern) {
-                    return _allSatisfactionDegrees;
-                  },
-                  onSelect: (suggestion) {
-                    _autocompleteSatisfactionDegreeController.text = suggestion.toString();
-                    _newService.satisfactionDegree = suggestion;
+                child: InputField(
+                  labelText: AppLocalizations.of(context).translate("money_raised"),
+                  controller: _inputFieldMoneyRaisedController,
+                  keyboardType: TextInputType.number,
+                  onChanged: (String value) {
+                    _newService.moneyRaised = double.parse(value);
                   },
                 ),
               ),
@@ -213,9 +213,9 @@ class _AddService extends GlobalState<AddService> {
             child: Row(
               children: [
                 Container(
-                  width: 55,
+                  width: 60,
                   child: Text(
-                    AppLocalizations.of(context).translate("areas").capitalize + ":",
+                    AppLocalizations.of(context).translate("areas").capitalize + "*:",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold
@@ -257,9 +257,9 @@ class _AddService extends GlobalState<AddService> {
             child: Row(
               children: [
                 Container(
-                  width: 55,
+                  width: 60,
                   child: Text(
-                    AppLocalizations.of(context).translate("type_service").capitalize + ":",
+                    AppLocalizations.of(context).translate("type_service").capitalize + "*:",
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -302,7 +302,7 @@ class _AddService extends GlobalState<AddService> {
                 child: InputField(
                   labelText: AppLocalizations.of(context).translate("other_associations"),
                   controller: _inputFieldOtherAssociationsController,
-                  onSubmit: (String value) {
+                  onChanged: (String value) {
                     _newService.otherAssociations = value;
                   },
                 ),
@@ -321,26 +321,6 @@ class _AddService extends GlobalState<AddService> {
                   }
                   if ( _newService.date == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("date");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _newService.quantityParticipants == null ) {
-                    message += "\n" + AppLocalizations.of(context).translate("quantity_participants");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _newService.duration == null ) {
-                    message += "\n" + AppLocalizations.of(context).translate("duration");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _newService.otherAssociations == null || _newService.otherAssociations == "" ) {
-                    message += "\n" + AppLocalizations.of(context).translate("other_associations");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _newService.moneyRaised == null ) {
-                    message += "\n" + AppLocalizations.of(context).translate("money_raised");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _newService.quantityServedPeople == null ) {
-                    message += "\n" + AppLocalizations.of(context).translate("quantity_served_people");
                     fieldNotSpecified = true;
                   }
                   if ( _newService.city == null ) {
@@ -372,6 +352,19 @@ class _AddService extends GlobalState<AddService> {
                 icon: Icons.add_rounded,
               ),
             ],
+          ),
+          Container(
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+              child: Text(
+                AppLocalizations.of(context).translate("fields_mandatory"),
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+            ),
           ),
         ],
       ),

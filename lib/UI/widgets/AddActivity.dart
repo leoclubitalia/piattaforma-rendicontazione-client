@@ -80,16 +80,16 @@ class _AddActivity extends GlobalState<AddActivity> {
             children: [
               Flexible(
                 child: InputField(
-                  labelText: AppLocalizations.of(context).translate("title"),
+                  labelText: AppLocalizations.of(context).translate("title") + "*",
                   controller: _inputFieldTitleController,
-                  onSubmit: (String value) {
+                  onChanged: (String value) {
                     _newActivity.title = value;
                   },
                 ),
               ),
               Flexible(
                 child: InputButton(
-                  text: AppLocalizations.of(context).translate("date"),
+                  text: AppLocalizations.of(context).translate("date") + "*",
                   controller: _dateTextController,
                   onPressed: () {
                     DatePicker.showDatePicker(
@@ -113,10 +113,10 @@ class _AddActivity extends GlobalState<AddActivity> {
             children: [
               Flexible(
                 child: InputField(
-                  labelText: AppLocalizations.of(context).translate("description"),
+                  labelText: AppLocalizations.of(context).translate("description") + "*",
                   controller: _inputFieldDescriptionController,
                   multiline: true,
-                  onSubmit: (String value) {
+                  onChanged: (String value) {
                     _newActivity.description = value;
                   },
                 ),
@@ -127,17 +127,17 @@ class _AddActivity extends GlobalState<AddActivity> {
             children: [
               Flexible(
                 child: InputField(
-                  labelText: AppLocalizations.of(context).translate("quantity_participants"),
+                  labelText: AppLocalizations.of(context).translate("quantity_participants") + "*",
                   controller: _inputFieldParticipantsController,
                   keyboardType: TextInputType.number,
-                  onSubmit: (String value) {
+                  onChanged: (String value) {
                     _newActivity.quantityLeo = int.parse(value);
                   },
                 ),
               ),
               Flexible(
                 child: InputAutocomplete(
-                  labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
+                  labelText: AppLocalizations.of(context).translate("satisfaction_degree") + "*",
                   controller: _autocompleteSatisfactionDegreeController,
                   onSuggestion: (String pattern) {
                     return _allSatisfactionDegrees;
@@ -157,7 +157,7 @@ class _AddActivity extends GlobalState<AddActivity> {
                 Container(
                   width: 55,
                   child: Text(
-                    AppLocalizations.of(context).translate("type_activity").capitalize + ":",
+                    AppLocalizations.of(context).translate("type_activity").capitalize + "*:",
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -203,7 +203,7 @@ class _AddActivity extends GlobalState<AddActivity> {
                     Container(
                       width: 166,
                       child: Text(
-                        AppLocalizations.of(context).translate("lions_participation").capitalize + ":",
+                        AppLocalizations.of(context).translate("lions_participation").capitalize + "*:",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -212,13 +212,13 @@ class _AddActivity extends GlobalState<AddActivity> {
                     ),
                     Container(
                       height: 50,
-                      width: 300,
+                      width: 200,
                       child: Row(
                         children: [
                           CircularCheckBoxTitle(
                               title: AppLocalizations.of(context).translate("yes"),
                               value: _newActivity.lionsParticipation,
-                              onChanged: (bool x) {
+                              onChanged: ( bool x ) {
                                 setState(() {
                                   _newActivity.lionsParticipation = !_newActivity.lionsParticipation;
                                 });
@@ -236,7 +236,7 @@ class _AddActivity extends GlobalState<AddActivity> {
             children: [
               Flexible(
                 child: InputAutocomplete(
-                  labelText: AppLocalizations.of(context).translate("city"),
+                  labelText: AppLocalizations.of(context).translate("city") + "*",
                   controller: _autocompleteCityController,
                   onSuggestion: (String pattern) async {
                     return await ModelFacade.sharedInstance.suggestCities(pattern);
@@ -296,6 +296,19 @@ class _AddActivity extends GlobalState<AddActivity> {
                 icon: Icons.add_rounded,
               ),
             ],
+          ),
+          Container(
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+              child: Text(
+                AppLocalizations.of(context).translate("fields_mandatory"),
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+            ),
           ),
         ],
       ),

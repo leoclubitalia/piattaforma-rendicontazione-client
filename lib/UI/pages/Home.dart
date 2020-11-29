@@ -10,6 +10,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/SubmittableInputField.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
@@ -236,20 +237,14 @@ class _Home extends GlobalState<Home> {
                   children: [
                     Column(
                       children: [
-                        Text(
-                          AppLocalizations.of(context).translate("members").capitalize,
-                          style: LeoTitleStyle()
-                        ),
                         Container(
                           width: 100,
-                          child: InputField(
-                            textAlign: TextAlign.center,
-                            controller: _inputFieldMembersController,
+                          child: SubmittableInputField(
+                            onSubmit: (String value) {
+                              ModelFacade.sharedInstance.updateQuantityMembers(value);
+                            },
                             keyboardType: TextInputType.number,
-                            multiline: false,
-                            onSubmit: (String a) {
-                              //TODO
-                            }
+                            label: AppLocalizations.of(context).translate("members").capitalize,
                           ),
                         ),
                       ],
@@ -266,13 +261,13 @@ class _Home extends GlobalState<Home> {
                         Container(
                           width: 100,
                           child: InputField(
-                              textAlign: TextAlign.center,
-                              controller: _inputFieldAspirantsController,
-                              keyboardType: TextInputType.number,
-                              multiline: false,
-                              onSubmit: (String a) {
-                                //TODO
-                              }
+                            textAlign: TextAlign.center,
+                            controller: _inputFieldAspirantsController,
+                            keyboardType: TextInputType.number,
+                            multiline: false,
+                            onSubmit: (String value) {
+                              ModelFacade.sharedInstance.updateQuantityAspirants(value);
+                            }
                           ),
                         ),
                       ],

@@ -1,10 +1,13 @@
 class Constants {
   static final String BASE_URL = "localhost:8080";
   static final String API_KEY = "";
+  static final String REQUEST_DEFAULT_PAGE_SIZE = "30";
 
   static final String REQUEST_INFO_CLUB = "/club/details";
   static final String REQUEST_CLUB_QUANTITY_SERVICES = "/club/quantity_services_made";
   static final String REQUEST_CLUB_QUANTITY_ACTIVITIES = "/club/quantity_activities_made";
+  static final String REQUEST_UPDATE_QUANTITY_MEMBERS = "/club/update/quantity_current_members";
+  static final String REQUEST_UPDATE_QUANTITY_ASPIRANTS = "/club/update/quantity_aspirant_members";
   static final String REQUEST_SEARCH_SERVICES_ADVANCED = "/search/service/advanced";
   static final String REQUEST_SEARCH_ACTIVITIES_ADVANCED = "/search/activity/advanced";
   static final String REQUEST_SEARCH_CITIES = "/search/city/by_name";
@@ -16,8 +19,6 @@ class Constants {
   static final String REQUEST_SEARCH_ALL_SATISFACTION_DEGREES = "/search/satisfaction_degree/all";
   static final String REQUEST_ADD_SERVICE = "/services";
   static final String REQUEST_ADD_ACTIVITY = "/activities";
-
-  static final String REQUEST_DEFAULT_PAGE_SIZE = "30";
 
   static final String STATE_CLUB = "club";
   static final String STATE_ALL_SATISFACTION_DEGREES = "all_satisfaction_degrees";
