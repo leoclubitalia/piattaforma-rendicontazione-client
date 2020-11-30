@@ -271,6 +271,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                     child: InputAutocomplete(
                       labelText: AppLocalizations.of(context).translate("type_activity"),
                       controller: _autocompleteTypeActivityController,
+                      typeable: false,
                       onSuggestion: (String pattern) async {
                         return await ModelFacade.sharedInstance.suggestTypesActivity(pattern);
                       },
@@ -332,6 +333,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                     child: InputAutocomplete(
                       labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
                       controller: _autocompleteSatisfactionDegreeController,
+                      typeable: false,
                       onSuggestion: (String pattern) {
                         return _satisfactionDegrees;
                       },

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 
 class InputAutocomplete extends StatelessWidget {
   final String labelText;
+  final bool typeable;
   final Function onSuggestion;
   final Function onSelect;
   final TextEditingController controller;
 
 
-  const InputAutocomplete({Key key, this.labelText, this.controller, this.onSuggestion, this.onSelect}) : super(key: key);
+  const InputAutocomplete({Key key, this.labelText, this.controller, this.onSuggestion, this.onSelect, this.typeable = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,9 @@ class InputAutocomplete extends StatelessWidget {
       padding: EdgeInsets.all(5),
       child: TypeAheadField(
         textFieldConfiguration: TextFieldConfiguration(
+          inputFormatters: [
+            typeable ? FilteringTextInputFormatter.allow(RegExp(r'.')) : FilteringTextInputFormatter.allow(RegExp(r'^$')),
+          ],
           autofocus: false,
           controller: controller,
           decoration: InputDecoration(

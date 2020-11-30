@@ -277,7 +277,7 @@ class _SearchService extends GlobalState<SearchService> {
                   ),
                   Flexible(
                     child: InputAutocomplete(
-                      labelText: AppLocalizations.of(context).translate("compentece_area"),
+                      labelText: AppLocalizations.of(context).translate("competence_area"),
                       controller: _autocompleteCompetenceAreaController,
                       onSuggestion: (String pattern) async {
                         return await ModelFacade.sharedInstance.suggestAreas(pattern);
@@ -391,6 +391,7 @@ class _SearchService extends GlobalState<SearchService> {
                     child: InputAutocomplete(
                       labelText: AppLocalizations.of(context).translate("satisfaction_degree"),
                       controller: _autocompleteSatisfactionDegreeController,
+                      typeable: false,
                       onSuggestion: (String pattern) {
                         return _satisfactionDegrees;
                       },
@@ -437,6 +438,7 @@ class _SearchService extends GlobalState<SearchService> {
                     child: InputAutocomplete(
                       labelText: AppLocalizations.of(context).translate("type_service"),
                       controller: _autocompleteTypeServiceController,
+                      typeable: false,
                       onSuggestion: (String pattern) async {
                         return await ModelFacade.sharedInstance.suggestTypesService(pattern);
                       },

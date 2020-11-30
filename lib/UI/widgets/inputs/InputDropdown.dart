@@ -21,7 +21,7 @@ class InputDropdown extends StatelessWidget {
           padding: EdgeInsets.all(5),
           child: TextField(
             inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp(r'')),
+              FilteringTextInputFormatter.allow(RegExp(r'^$')),
             ],
             onTap: () {},
             controller: controller,

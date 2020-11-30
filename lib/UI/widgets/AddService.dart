@@ -149,6 +149,7 @@ class _AddService extends GlobalState<AddService> {
                 child: InputAutocomplete(
                   labelText: AppLocalizations.of(context).translate("satisfaction_degree") + "*",
                   controller: _autocompleteSatisfactionDegreeController,
+                  typeable: false,
                   onSuggestion: (String pattern) {
                     return _allSatisfactionDegrees;
                   },
