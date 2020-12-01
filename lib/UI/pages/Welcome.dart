@@ -4,7 +4,6 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Credits.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Home.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Search.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/LogIn.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/ExpandableButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
@@ -65,7 +64,7 @@ class _WelcomeState extends GlobalState<Welcome> {
               ),
               ExpandableLogInButton(
                 textOuterButton: AppLocalizations.of(context).translate("club"),
-                onSubmit: (String email, String password){
+                onSubmit: (String email, String password) {
                   //TODO call login to server
                   // TODO fare chiamata asicntrona
                   // TODO apparire rotella e se non buon fine rimanere qui
