@@ -273,7 +273,7 @@ class _AddService extends GlobalState<AddService> {
                 Container(
                   width: 60,
                   child: Text(
-                    AppLocalizations.of(context).translate("type_service").capitalize + "*:",
+                    AppLocalizations.of(context).translate("type_service").capitalize + ":",
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -343,10 +343,6 @@ class _AddService extends GlobalState<AddService> {
                   }
                   if ( _newService.satisfactionDegree == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("satisfaction_degree");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _newService.typesService.isEmpty ) {
-                    message += "\n" + AppLocalizations.of(context).translate("types_service");
                     fieldNotSpecified = true;
                   }
                   if ( _newService.competenceAreasService.isEmpty ) {
