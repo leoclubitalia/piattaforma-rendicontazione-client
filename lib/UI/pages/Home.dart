@@ -1,4 +1,3 @@
-import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/UIConstants.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
@@ -91,14 +90,14 @@ class _Home extends GlobalState<Home> {
                   ),
                 ),
               ),
-              ColorFiltered(
-                child: Image.asset(
-                  "images/logo.png",
-                  width: 200,
-                ),
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context).splashColor,
-                  BlendMode.modulate
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 25, 0, 25),
+                child: Container(
+                  height: 220,
+                  child: Image.asset(
+                    "images/logo.png",
+                    width: MediaQuery.of(context).size.width < 400 ? MediaQuery.of(context).size.width - 100 : 400,
+                  ),
                 ),
               ),
               Text(

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 class InputField extends StatelessWidget {
   final String labelText;
   final bool multiline;
+  final bool isPassword;
   final Function onChanged;
   final Function onSubmit;
   final Function onTap;
@@ -13,13 +14,14 @@ class InputField extends StatelessWidget {
   final TextInputType keyboardType;
 
 
-  const InputField({Key key, this.labelText, this.controller, this.onChanged, this.onSubmit, this.onTap, this.keyboardType, this.multiline, this.textAlign}) : super(key: key);
+  const InputField({Key key, this.labelText, this.controller, this.onChanged, this.onSubmit, this.onTap, this.keyboardType, this.multiline, this.textAlign, this.isPassword = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(5),
       child: TextField(
+        obscureText: isPassword,
         textAlign: this.textAlign == null ? TextAlign.left : this.textAlign,
         maxLines: multiline != null && multiline == true ? null : 1,
         keyboardType: keyboardType,
