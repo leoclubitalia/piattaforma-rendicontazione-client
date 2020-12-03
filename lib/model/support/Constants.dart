@@ -1,5 +1,5 @@
 class Constants {
-  static final String SERVER_ADDRESS_MAIN = "localhost:8080";
+  static final String SERVER_ADDRESS_MAIN = "localhost:8000";
   static final String SERVER_ADDRESS_AUTHENTICATION = "localhost:8081";
   static final String API_KEY = "";
   static final String REQUEST_DEFAULT_PAGE_SIZE = "30";

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:RendicontationPlatformLeo_Client/model/managers/ParsingManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/RestManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/StateManager.dart';
@@ -26,7 +28,7 @@ class ModelFacade implements ErrorListener {
   RestManager _restManager = RestManager();
   ParsingManager _parsingManager = ParsingManager();
 
-  int currentClubId = 1; //TODO temp
+  Club _currentClub;
 
 
   ModelFacade() {
@@ -47,18 +49,31 @@ class ModelFacade implements ErrorListener {
     }
   }
 
-  void loadInfoCurrentClub() {
-    _loadInfoClub(currentClubId);
+  Future<bool> login(String email, String password) async {
+    //TODO make login
+
+
+    bool result = true;
+    if ( result ) {
+      _loadInfoClub(email);
+      Timer.periodic(Duration(seconds: 290), (Timer t) {
+        //TODO refresh token
+
+
+      });
+      return true;
+    }
+    return false;
   }
 
-  void _loadInfoClub(int id) async {
+  void _loadInfoClub(String email) async {
     if ( !appState.existsValue(Constants.STATE_CLUB) ) {
-      Club club = _parsingManager.parseClub(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_INFO_CLUB, {"id": id.toString()}));
-      Quantity quantityServices = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_CLUB_QUANTITY_SERVICES, {"clubId": id.toString()}));
-      club.quantityServices = quantityServices;
-      Quantity quantityActivities = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, {"clubId": id.toString()}));
-      club.quantityActivities = quantityActivities;
-      appState.addValue(Constants.STATE_CLUB, club);
+      _currentClub = _parsingManager.parseClub(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_INFO_CLUB));
+      Quantity quantityServices = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_CLUB_QUANTITY_SERVICES, {"clubId": _currentClub.id.toString()}));
+      _currentClub.quantityServices = quantityServices;
+      Quantity quantityActivities = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, {"clubId": _currentClub.id.toString()}));
+      _currentClub.quantityActivities = quantityActivities;
+      appState.addValue(Constants.STATE_CLUB, _currentClub);
     }
   }
 
@@ -145,14 +160,14 @@ class ModelFacade implements ErrorListener {
 
   void updateQuantityMembers(String value) async {
     Map<String, String> params = Map();
-    params["clubId"] = currentClubId.toString();
+    params["clubId"] = _currentClub.id.toString();
     params["newQuantity"] = value;
     _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_UPDATE_QUANTITY_MEMBERS, params);
   }
 
   void updateQuantityAspirants(String value) async {
     Map<String, String> params = Map();
-    params["clubId"] = currentClubId.toString();
+    params["clubId"] = _currentClub.id.toString();
     params["newQuantity"] = value;
     _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_UPDATE_QUANTITY_ASPIRANTS, params);
   }
@@ -313,7 +328,7 @@ class ModelFacade implements ErrorListener {
   }
 
   void addService(Service service) async {
-    service.club = Club(id: currentClubId);
+    service.club = _currentClub;
     try {
       service = _parsingManager.parseService(await _restManager.makePostRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_ADD_SERVICE, service));
       Club club = appState.getValue(Constants.STATE_CLUB);
@@ -331,7 +346,7 @@ class ModelFacade implements ErrorListener {
   }
 
   void addActivity(Activity activity) async {
-    activity.club = Club(id: currentClubId);
+    activity.club = _currentClub;
     try {
       activity = _parsingManager.parseActivity(await _restManager.makePostRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_ADD_ACTIVITY, activity));
       appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
