@@ -14,6 +14,16 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart'
 class ParsingManager {
 
 
+  String parseToken(String value) {
+    Map<String, String> response = json.decode(value);
+    return response["access_token"];
+  }
+
+  String parseRefreshToken(String value) {
+    Map<String, String> response = json.decode(value);
+    return response["refresh_token"];
+  }
+
   Club parseClub(String value) {
     return Club.fromJson(jsonDecode(value));
   }

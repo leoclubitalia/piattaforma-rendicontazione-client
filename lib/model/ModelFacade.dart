@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:RendicontationPlatformLeo_Client/model/managers/ParsingManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/RestManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/StateManager.dart';
@@ -27,6 +26,7 @@ class ModelFacade implements ErrorListener {
 
   RestManager _restManager = RestManager();
   ParsingManager _parsingManager = ParsingManager();
+  String _refreshToken;
 
   Club _currentClub;
 
@@ -50,20 +50,30 @@ class ModelFacade implements ErrorListener {
   }
 
   Future<bool> login(String email, String password) async {
-    //TODO make login
-
-
-    bool result = true;
-    if ( result ) {
+    try{
+      Map<String, String> params = Map();
+      params["grant_type"] = "password";
+      params["client_id"] = Constants.CLIENT_ID;
+      params["client_secret"] = Constants.CLIENT_SECRET;
+      params["username"] = email;
+      params["password"] = password;
+      String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_LOGIN, params);
+      _restManager.token = _parsingManager.parseToken(result);
+      _refreshToken = _parsingManager.parseRefreshToken(result);
       _loadInfoClub(email);
-      Timer.periodic(Duration(seconds: 290), (Timer t) {
-        //TODO refresh token
-
-
+      Timer.periodic(Duration(seconds: Constants.REFRESH_TOKEN_TIME), (Timer t) async {
+        Map<String, String> params = Map();
+        params["grant_type"] = "refresh_token";
+        params["client_id"] = Constants.CLIENT_ID;
+        params["refresh_token"] = _refreshToken;
+        String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_REFRESH_TOKEN, params);
+        _refreshToken = _parsingManager.parseRefreshToken(result);
       });
       return true;
     }
-    return false;
+    catch (e) {
+      return false;
+    }
   }
 
   void _loadInfoClub(String email) async {
@@ -162,14 +172,14 @@ class ModelFacade implements ErrorListener {
     Map<String, String> params = Map();
     params["clubId"] = _currentClub.id.toString();
     params["newQuantity"] = value;
-    _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_UPDATE_QUANTITY_MEMBERS, params);
+    _restManager.makePutRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_UPDATE_QUANTITY_MEMBERS, params);
   }
 
   void updateQuantityAspirants(String value) async {
     Map<String, String> params = Map();
     params["clubId"] = _currentClub.id.toString();
     params["newQuantity"] = value;
-    _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_UPDATE_QUANTITY_ASPIRANTS, params);
+    _restManager.makePutRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_UPDATE_QUANTITY_ASPIRANTS, params);
   }
 
   void searchServices(String title,

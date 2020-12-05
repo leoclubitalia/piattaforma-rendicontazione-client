@@ -3,6 +3,12 @@ class Constants {
   static final String SERVER_ADDRESS_AUTHENTICATION = "localhost:8081";
   static final String API_KEY = "";
   static final String REQUEST_DEFAULT_PAGE_SIZE = "30";
+  static final int REFRESH_TOKEN_TIME = 290;
+
+  static final String REQUEST_LOGIN = "";
+  static final String REQUEST_REFRESH_TOKEN = "";
+  static final String CLIENT_ID = "";
+  static final String CLIENT_SECRET = "";
 
   static final String REQUEST_INFO_CLUB = "/club/details";
   static final String REQUEST_CLUB_QUANTITY_SERVICES = "/club/quantity_services_made";

@@ -5,9 +5,9 @@ import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/ErrorListener.dart';
 
 
-
 class RestManager {
   ErrorListener delegate;
+  String token;
 
 
   Future<String> _makeRequest(String serverAddress, String servicePath, String type, {Map<String, String> body, dynamic value}) async {
@@ -21,7 +21,7 @@ class RestManager {
             response = await post(
               uri,
               headers: {
-                //HttpHeaders.authorizationHeader: 'Token $token',
+                HttpHeaders.authorizationHeader: 'bearer $token',
                 HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
               },
               body: json.encode(value),
@@ -31,7 +31,7 @@ class RestManager {
             response = await get(
                 uri,
                 headers: {
-                  //HttpHeaders.authorizationHeader: 'Token $token',
+                  HttpHeaders.authorizationHeader: 'bearer $token',
                   HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
                 }
             );
@@ -40,7 +40,7 @@ class RestManager {
             response = await put(
               uri,
               headers: {
-                //HttpHeaders.authorizationHeader: 'Token $token',
+                HttpHeaders.authorizationHeader: 'bearer $token',
                 HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
               },
             );
@@ -70,7 +70,7 @@ class RestManager {
   }
 
   Future<String> makePutRequest(String serverAddress, String servicePath, Map<String, String> body) async {
-    return _makeRequest(serverAddress, servicePath, "put", body: body);
+    return _makeRequest(serverAddress, servicePath, "get", body: body); // this should be put but doesn't work with flutter web actually
   }
 
 
