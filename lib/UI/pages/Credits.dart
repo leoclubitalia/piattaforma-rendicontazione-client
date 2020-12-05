@@ -44,7 +44,7 @@ class _Credits extends GlobalState<Credits> {
                     ),
                     children: [
                       new TextSpan(text: "\n\n"),
-                      new TextSpan(text: AppLocalizations.of(context).translate("developers_manager"), style: new TextStyle(fontWeight: FontWeight.bold)),
+                      new TextSpan(text: AppLocalizations.of(context).translate("developers_manager") + ":", style: new TextStyle(fontWeight: FontWeight.bold)),
                       new TextSpan(text: "\n"),
                       WidgetSpan(
                         child: DeveloperTile (
@@ -56,7 +56,7 @@ class _Credits extends GlobalState<Credits> {
                         ),
                       ),
                       new TextSpan(text: "\n\n\n\n"),
-                      new TextSpan(text: AppLocalizations.of(context).translate("developers_team"), style: new TextStyle(fontWeight: FontWeight.bold)),
+                      new TextSpan(text: AppLocalizations.of(context).translate("developers_team") + ":", style: new TextStyle(fontWeight: FontWeight.bold)),
                       new TextSpan(text: "\n"),
                       WidgetSpan(
                         child: DeveloperTile (
@@ -76,6 +76,9 @@ class _Credits extends GlobalState<Credits> {
                           facebook: "https://www.facebook.com/mattia.ricco.3",
                         ),
                       ),
+                      new TextSpan(text: "\n\n\n\n"),
+                      new TextSpan(text: AppLocalizations.of(context).translate("system_administrator") + ":", style: new TextStyle(fontWeight: FontWeight.bold)),
+                      new TextSpan(text: "\n"),
                       WidgetSpan(
                         child: DeveloperTile (
                           name: "Andrea Germanà",

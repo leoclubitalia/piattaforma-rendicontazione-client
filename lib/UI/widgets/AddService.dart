@@ -36,7 +36,7 @@ class _AddService extends GlobalState<AddService> {
   TextEditingController _inputFieldTitleController = TextEditingController();
   TextEditingController _inputFieldParticipantsController = TextEditingController();
   TextEditingController _inputFieldDurationController = TextEditingController();
-  TextEditingController _inputFieldMoneyRaisedController = TextEditingController();
+  TextEditingController _inputFieldMoneyOrMaterialCollectedController = TextEditingController();
   TextEditingController _inputFieldServedPeopleController = TextEditingController();
   TextEditingController _inputFieldOtherAssociationsController = TextEditingController();
   TextEditingController _inputFieldDescriptionController = TextEditingController();
@@ -88,6 +88,7 @@ class _AddService extends GlobalState<AddService> {
               Flexible(
                 child: InputField(
                   labelText: AppLocalizations.of(context).translate("title") + "*",
+                  maxLength: 50,
                   controller: _inputFieldTitleController,
                   onChanged: (String value) {
                     _newService.title = value;
@@ -121,6 +122,7 @@ class _AddService extends GlobalState<AddService> {
               Flexible(
                 child: InputField(
                   labelText: AppLocalizations.of(context).translate("description") + "*",
+                  maxLength: 500,
                   controller: _inputFieldDescriptionController,
                   multiline: true,
                   onChanged: (String value) {
@@ -200,7 +202,8 @@ class _AddService extends GlobalState<AddService> {
               Flexible(
                 child: InputField(
                   labelText: AppLocalizations.of(context).translate("money_or_material_collected"),
-                  controller: _inputFieldMoneyRaisedController,
+                  controller: _inputFieldMoneyOrMaterialCollectedController,
+                  maxLength: 100,
                   onChanged: (String value) {
                     _newService.moneyOrMaterialCollected = value;
                   },
@@ -316,6 +319,7 @@ class _AddService extends GlobalState<AddService> {
                 child: InputField(
                   labelText: AppLocalizations.of(context).translate("other_associations"),
                   controller: _inputFieldOtherAssociationsController,
+                  maxLength: 400,
                   onChanged: (String value) {
                     _newService.otherAssociations = value;
                   },

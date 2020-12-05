@@ -261,6 +261,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                   Flexible(
                     child: InputField(
                       labelText: AppLocalizations.of(context).translate("title"),
+                      maxLength: 50,
                       controller: _inputFieldTitleController,
                       onChanged: (String value) {
                         _title = value;

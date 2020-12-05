@@ -9,18 +9,20 @@ class InputField extends StatelessWidget {
   final Function onChanged;
   final Function onSubmit;
   final Function onTap;
+  final int maxLength;
   final TextAlign textAlign;
   final TextEditingController controller;
   final TextInputType keyboardType;
 
 
-  const InputField({Key key, this.labelText, this.controller, this.onChanged, this.onSubmit, this.onTap, this.keyboardType, this.multiline, this.textAlign, this.isPassword = false}) : super(key: key);
+  const InputField({Key key, this.labelText, this.controller, this.onChanged, this.onSubmit, this.onTap, this.keyboardType, this.multiline, this.textAlign, this.maxLength, this.isPassword = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(5),
       child: TextField(
+        maxLength: null,
         obscureText: isPassword,
         textAlign: this.textAlign == null ? TextAlign.left : this.textAlign,
         maxLines: multiline != null && multiline == true ? null : 1,

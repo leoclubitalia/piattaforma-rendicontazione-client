@@ -269,6 +269,7 @@ class _SearchService extends GlobalState<SearchService> {
                   Flexible(
                     child: InputField(
                       labelText: AppLocalizations.of(context).translate("title"),
+                      maxLength: 50,
                       controller: _inputFieldTitleController,
                       onChanged: (String value) {
                         _title = value;
@@ -423,6 +424,7 @@ class _SearchService extends GlobalState<SearchService> {
                   Flexible(
                     child: InputField(
                       labelText: AppLocalizations.of(context).translate("money_or_material_collected"),
+                      maxLength: 100,
                       controller: _inputFieldMoneyOrMaterialCollectedController,
                       onChanged: (String value) {
                         if ( value == null || value == "" ) {
@@ -455,6 +457,7 @@ class _SearchService extends GlobalState<SearchService> {
                   Flexible(
                     child: InputField(
                       labelText: AppLocalizations.of(context).translate("other_associations"),
+                      maxLength: 400,
                       controller: _inputFieldOtherAssociationsController,
                       onChanged: (String value) {
                         _otherAssociations = value;

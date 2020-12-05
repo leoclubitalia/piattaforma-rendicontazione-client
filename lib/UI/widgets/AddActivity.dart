@@ -81,6 +81,7 @@ class _AddActivity extends GlobalState<AddActivity> {
               Flexible(
                 child: InputField(
                   labelText: AppLocalizations.of(context).translate("title") + "*",
+                  maxLength: 50,
                   controller: _inputFieldTitleController,
                   onChanged: (String value) {
                     _newActivity.title = value;
@@ -114,6 +115,7 @@ class _AddActivity extends GlobalState<AddActivity> {
               Flexible(
                 child: InputField(
                   labelText: AppLocalizations.of(context).translate("description") + "*",
+                  maxLength: 500,
                   controller: _inputFieldDescriptionController,
                   multiline: true,
                   onChanged: (String value) {
