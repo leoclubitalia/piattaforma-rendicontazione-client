@@ -6,6 +6,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/pages/Home.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Search.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/ExpandableButton.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/MultipleTapButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
@@ -63,9 +64,15 @@ class _WelcomeState extends GlobalState<Welcome> {
                       padding: EdgeInsets.fromLTRB(0, 5, 0, 30),
                       child: Container(
                         height: 230,
-                        child: Image.asset(
-                          "images/logo.png",
-                          width: MediaQuery.of(context).size.width < 400 ? MediaQuery.of(context).size.width - 100 : 400,
+                        child: MultipleTapButton(
+                          taps: 3,
+                          onTaps: () async {
+                            await launch("https://www.youtube.com/watch?v=UsyWQejtJ1o");
+                          },
+                          child: Image.asset(
+                            "images/logo.png",
+                            width: MediaQuery.of(context).size.width < 400 ? MediaQuery.of(context).size.width - 100 : 400,
+                          ),
                         ),
                       ),
                     ),
