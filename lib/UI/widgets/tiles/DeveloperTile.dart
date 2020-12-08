@@ -49,8 +49,8 @@ class DeveloperTile extends StatelessWidget {
                   color:Colors.grey,
                 ),
                 onPressed: () async {
-                    await launch(instagram);
-                  }
+                  await launch(instagram);
+                }
               ),
               facebook == null ? Padding(padding: EdgeInsets.all(0)) :
               IconButton(

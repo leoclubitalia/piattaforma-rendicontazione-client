@@ -57,7 +57,7 @@ class ModelFacade implements ErrorListener {
       params["client_secret"] = Constants.CLIENT_SECRET;
       params["username"] = email;
       params["password"] = password;
-      String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_LOGIN, params);
+      String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_TOKEN_AUTHENTICATION, params);
       _restManager.token = _parsingManager.parseToken(result);
       _refreshToken = _parsingManager.parseRefreshToken(result);
       _loadInfoClub(email);
@@ -66,7 +66,7 @@ class ModelFacade implements ErrorListener {
         params["grant_type"] = "refresh_token";
         params["client_id"] = Constants.CLIENT_ID;
         params["refresh_token"] = _refreshToken;
-        String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_REFRESH_TOKEN, params);
+        String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_TOKEN_AUTHENTICATION, params);
         _refreshToken = _parsingManager.parseRefreshToken(result);
       });
       return true;

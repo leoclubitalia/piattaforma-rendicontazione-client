@@ -1,6 +1,6 @@
 {
   "welcome": "Welcome",
-  "app_title": "MyLeo MD 108",
+  "app_title": "Rendicontation",
   "log_in_as": "Log in as:",
   "log_in_as_description": "By entering as a club you will have the opportunity to enter the services and activities carried out by your club, you will also have some statistics on your work, instead by entering as a guest you will be able to search and see the services and activities carried out by each Italian club.",
   "club": "club",
@@ -71,5 +71,7 @@
   "info_search": "On this page, you can search for services and activities carried out by any club. By pressing the button with the magnifying glass you will start the search, instead by clicking on the '+' button you will access the advanced search panel where you can filter the services and/or activities as you wish!\n\nHappy searching!✌\uD83C\uDFFD",
   "if_other_in_description": "If 'Other' specify it in the description",
   "user_or_password_wrong": "The email or the password are wrong!",
-  "system_administrator": "System Administrator"
+  "system_administrator": "System Administrator",
+  "all_fields_required": "All fields are required!"
+
 }

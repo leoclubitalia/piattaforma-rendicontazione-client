@@ -79,8 +79,8 @@ class _SubmittableInputField extends GlobalState<SubmittableInputField> with Sin
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.green,
-                        shape: BoxShape.circle
+                      color: Colors.green,
+                      shape: BoxShape.circle
                     ),
                     child: SizedBox(
                       width: 30,
@@ -105,8 +105,8 @@ class _SubmittableInputField extends GlobalState<SubmittableInputField> with Sin
                   ),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle
+                      color: Colors.red,
+                      shape: BoxShape.circle
                     ),
                     child: SizedBox(
                       width: 30,

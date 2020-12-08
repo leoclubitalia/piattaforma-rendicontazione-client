@@ -1,6 +1,6 @@
 {
   "welcome": "Benvenuto",
-  "app_title": "MyLeo MD 108",
+  "app_title": "Rendicontazione",
   "log_in_as": "Entra come:",
   "log_in_as_description": "Entrando come club avarai la possibilità di inserire i service e le attività svolte dal tuo club, inoltre avrai alcune satistiche sul vostro operato, invece entrando come ospite potrai cercare e vedere i service e le attività svolte da ogni club italiano.",
   "club": "club",
@@ -70,5 +70,6 @@
   "info_search": "In questa pagina è possibile fare la ricerca di service e attività svolte da qualsiasi club. Premendo sul tasto con la lente di ingrandimento avvierai la ricerca, invece cliccando sul tasto '+' accederai al pannello per la ricerca avanzato ove potrai filtrare i service e/o attività come desideri!\n\nBuona ricerca!✌\uD83C\uDFFD",
   "if_other_in_description": "Se 'Altro' specificarlo nella descrizione",
   "user_or_password_wrong": "L'email o la password inseriti non sono validi!",
-  "system_administrator": "Sistemista"
+  "system_administrator": "Sistemista",
+  "all_fields_required": "Tutti i campi sono necessari!"
 }

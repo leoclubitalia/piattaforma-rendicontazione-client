@@ -120,93 +120,96 @@ class _SearchActivity extends GlobalState<SearchActivity> {
               ),
             ) :
             Padding(padding: EdgeInsets.all(0)),
-            Column(
-              //mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: InputAutocomplete(
-                          labelText: AppLocalizations.of(context).translate("club"),
-                          controller: _autocompleteClubController,
-                          onSuggestion: (String pattern) async {
-                            return await ModelFacade.sharedInstance.suggestClubs(pattern);
-                          },
-                          onSelect: (suggestion) {
-                            _autocompleteClubController.text = suggestion.toString();
-                            _club = suggestion;
-                          },
+            IgnorePointer(
+              ignoring: isCircularMoment(),
+              child: Column(
+                //mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: InputAutocomplete(
+                            labelText: AppLocalizations.of(context).translate("club"),
+                            controller: _autocompleteClubController,
+                            onSuggestion: (String pattern) async {
+                              return await ModelFacade.sharedInstance.suggestClubs(pattern);
+                            },
+                            onSelect: (suggestion) {
+                              _autocompleteClubController.text = suggestion.toString();
+                              _club = suggestion;
+                            },
+                          ),
                         ),
-                      ),
-                      Flexible(
-                        child: InputAutocomplete(
-                          labelText: AppLocalizations.of(context).translate("district"),
-                          controller: _autocompleteDistrictController,
-                          onSuggestion: (String pattern) async {
-                            return await ModelFacade.sharedInstance.suggestDistricts(pattern);
-                          },
-                          onSelect: (suggestion) {
-                            _autocompleteDistrictController.text = suggestion.toString();
-                            _district = suggestion;
-                          },
+                        Flexible(
+                          child: InputAutocomplete(
+                            labelText: AppLocalizations.of(context).translate("district"),
+                            controller: _autocompleteDistrictController,
+                            onSuggestion: (String pattern) async {
+                              return await ModelFacade.sharedInstance.suggestDistricts(pattern);
+                            },
+                            onSelect: (suggestion) {
+                              _autocompleteDistrictController.text = suggestion.toString();
+                              _district = suggestion;
+                            },
+                          ),
                         ),
-                      ),
-                      CircularIconButton(
-                        onPressed: () {
-                          loadSearch();
-                        },
-                        icon: Icons.search_rounded,
-                      ),
-                      CircularIconButton(
-                        onPressed: () {
-                          showAdvancedSearch(context);
-                        },
-                        icon: Icons.add,
-                      ),
-                    ],
-                  ),
-                ),
-                _searchResult == null ?
-                Padding(
-                  padding: EdgeInsets.all(0),
-                ) :
-                _searchResult.length == 0 ?
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: Text(
-                    AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_MESSAGE)),
-                    style: LeoTitleStyle(),
-                  ),
-                ) :
-                Expanded(
-                  child: Container(
-                    child: ListView.builder(
-                      itemCount: _searchResult.length + 1,
-                      controller: _scrollController,
-                      itemBuilder: (context, index) {
-                        if ( index < _searchResult.length ) {
-                          return ActivityTile(
-                            activity: _searchResult[index],
-                          );
-                        }
-                        else {
-                          return Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                            child: CircularIconButton(
-                              icon: Icons.arrow_downward_rounded,
-                              onPressed: () {
-                                loadMore();
-                              },
-                            ),
-                          );
-                        }
-                      },
+                        CircularIconButton(
+                          onPressed: () {
+                            loadSearch();
+                          },
+                          icon: Icons.search_rounded,
+                        ),
+                        CircularIconButton(
+                          onPressed: () {
+                            showAdvancedSearch(context);
+                          },
+                          icon: Icons.add,
+                        ),
+                      ],
                     ),
                   ),
-                )
-              ],
+                  _searchResult == null ?
+                  Padding(
+                    padding: EdgeInsets.all(0),
+                  ) :
+                  _searchResult.length == 0 ?
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: Text(
+                      AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_MESSAGE)),
+                      style: LeoTitleStyle(),
+                    ),
+                  ) :
+                  Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                        itemCount: _searchResult.length + 1,
+                        controller: _scrollController,
+                        itemBuilder: (context, index) {
+                          if ( index < _searchResult.length ) {
+                            return ActivityTile(
+                              activity: _searchResult[index],
+                            );
+                          }
+                          else {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              child: CircularIconButton(
+                                icon: Icons.arrow_downward_rounded,
+                                onPressed: () {
+                                  loadMore();
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),

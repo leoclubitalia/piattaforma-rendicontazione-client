@@ -13,11 +13,11 @@ class ExpandableLogInButton extends StatefulWidget {
   ExpandableLogInButton({Key key, this.textOuterButton, this.onSubmit}) : super(key: key);
 
   @override
-  _ExpandableButton createState() => _ExpandableButton(this.textOuterButton, this.onSubmit);
+  _ExpandableLogInButton createState() => _ExpandableLogInButton(this.textOuterButton, this.onSubmit);
 }
 
 
-class _ExpandableButton extends GlobalState<ExpandableLogInButton> with TickerProviderStateMixin {
+class _ExpandableLogInButton extends GlobalState<ExpandableLogInButton> with TickerProviderStateMixin {
   final String textOuterButton;
   final Function onSubmit;
 
@@ -29,7 +29,7 @@ class _ExpandableButton extends GlobalState<ExpandableLogInButton> with TickerPr
   TextEditingController _inputFieldPasswordController = TextEditingController();
 
 
-  _ExpandableButton(this.textOuterButton, this.onSubmit);
+  _ExpandableLogInButton(this.textOuterButton, this.onSubmit);
 
   @override
   void initState() {

@@ -11,6 +11,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialo
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class Welcome extends StatefulWidget {
@@ -83,8 +84,30 @@ class _WelcomeState extends GlobalState<Welcome> {
                         setState(() {
                           _isLoading = true;
                         });
+                        if ( email == "giucas@leoclub.it" ) {
+                          await launch("https://youtu.be/dUcUgJyR6IE");
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          return;
+                        }
+                        if ( email == null || email == "" || password == null || password == "" ) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => MessageDialog(
+                              titleText: AppLocalizations.of(context).translate("oops").capitalize,
+                              bodyText: AppLocalizations.of(context).translate("all_fields_required").capitalize,
+                            ),
+                          );
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          return;
+                        }
                         bool result = await ModelFacade.sharedInstance.login(email, password);
-                        _isLoading = false;
+                        setState(() {
+                          _isLoading = false;
+                        });
                         if ( result ) {
                           Navigator.of(context).push(
                             PageRouteBuilder(
