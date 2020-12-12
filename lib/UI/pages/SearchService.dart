@@ -105,6 +105,12 @@ class _SearchService extends GlobalState<SearchService> {
     }
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    ModelFacade.sharedInstance.appState.removeValue(Constants.STATE_SEARCH_SERVICE_RESULT);
+  }
+
   bool isCircularMoment() {
     return !(_satisfactionDegrees != null && _districts != null && _types != null && _areas != null && _clubs != null) || _isSearching;
   }

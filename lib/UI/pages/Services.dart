@@ -54,6 +54,12 @@ class _Services extends GlobalState<Services> {
     }
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    ModelFacade.sharedInstance.appState.removeValue(Constants.STATE_SEARCH_SERVICE_RESULT);
+  }
+
   bool isCircularMoment() {
     return !( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_ALL_SATISFACTION_DEGREES) &&
               ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_ALL_DISTRICTS) &&

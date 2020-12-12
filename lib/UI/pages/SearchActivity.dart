@@ -69,7 +69,6 @@ class _SearchActivity extends GlobalState<SearchActivity> {
 
   @override
   void initState() {
-    ModelFacade.sharedInstance.appState.removeValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
     ModelFacade.sharedInstance.loadAllSatisfactionDegrees();
     ModelFacade.sharedInstance.loadAllDistricts();
     ModelFacade.sharedInstance.loadAllTypesActivity();
@@ -97,6 +96,12 @@ class _SearchActivity extends GlobalState<SearchActivity> {
     }
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    ModelFacade.sharedInstance.appState.removeValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
+  }
+  
   bool isCircularMoment() {
     return !(_satisfactionDegrees != null && _districts != null && _types != null && _clubs != null && _lionsParticipationsValues != null) || _isSearching;
   }
