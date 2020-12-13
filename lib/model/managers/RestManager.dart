@@ -5,79 +5,58 @@ import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/ErrorListener.dart';
 
 
+enum TypeHeader {
+  json,
+  urlencoded
+}
+
+
 class RestManager {
   ErrorListener delegate;
   String token;
 
 
-  Future<String> _makeRequest(String serverAddress, String servicePath, String type, {Map<String, String> body, dynamic value}) async {
-    Uri uri = Uri.https(serverAddress, servicePath, value);
-    //HttpClient client = new HttpClient();
-
-
-/*
-    HttpClient httpClient = new HttpClient();
-    httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-    HttpClientRequest request = await httpClient.postUrl(uri);
-    request.headers.add(HttpHeaders.authorizationHeader, 'bearer $token');
-    request.headers.add(HttpHeaders.contentTypeHeader, "application/x-www-form-urlencoded");
-    //request.add(base64UrlEncode(value));
-    await request.write(value);
-    HttpClientResponse response = await request.close();
-    // todo - you should check the response.statusCode
-    String reply = await response.transform(utf8.decoder).join();
-    httpClient.close();
-    print(value);
-    print(reply);
-    return reply;
-
-
-
-    await client.postUrl(uri).then((HttpClientRequest request) {
-      request.headers.add(HttpHeaders.authorizationHeader, 'bearer $token');
-      request.headers.add(HttpHeaders.contentTypeHeader, "application/x-www-form-urlencoded");
-      print(value);
-      request.write(value);
-      return request.close();
-    }
-    ).then((HttpClientResponse response) {
-      response.transform(utf8.decoder).listen((contents) {
-        print(contents);
-
-      });
-    });
-    print("ret");
-    return "asdas";
-*/
+  Future<String> _makeRequest(String serverAddress, String servicePath, String method, TypeHeader type, {Map<String, String> value, dynamic body}) async {
+    Uri uri = Uri.http(serverAddress, servicePath, value);//TODO add s
     bool errorOccurred = false;
     while ( true ) {
       try {
         var response;
-        switch (type) {
+        switch ( method ) {
           case "post":
+            String contentType;
+            dynamic formattedBody;
+            if ( type == TypeHeader.json ) {
+              contentType = "application/json;charset=utf-8";
+              formattedBody = json.encode(body);
+            }
+            else if ( type == TypeHeader.urlencoded ) {
+              contentType = "application/x-www-form-urlencoded";
+              formattedBody = body.keys.map((key) => "$key=${body[key]}").join("&");
+            }
             response = await post(
               uri,
               headers: {
-                HttpHeaders.authorizationHeader: 'bearer $token',
-                HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
+                //HttpHeaders.authorizationHeader: 'bearer $token',
+                HttpHeaders.contentTypeHeader: contentType,
               },
-              body: json.encode(value),
+              body: formattedBody,
             );
             break;
           case "get":
             response = await get(
-                uri,
-                headers: {
-                  HttpHeaders.authorizationHeader: 'bearer $token',
-                  HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
-                }
+              uri,
+              headers: {
+                //HttpHeaders.authorizationHeader: 'bearer $token',
+                HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
+              }
             );
             break;
           case "put":
             response = await put(
               uri,
               headers: {
-                HttpHeaders.authorizationHeader: 'bearer $token',
+                //HttpHeaders.authorizationHeader: 'bearer $token',
                 HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
               },
             );
@@ -101,16 +80,16 @@ class RestManager {
     }
   }
 
-  Future<String> makePostRequest(String serverAddress, String servicePath, dynamic value) async {
-    return _makeRequest(serverAddress, servicePath, "post", value: value);
+  Future<String> makePostRequest(String serverAddress, String servicePath, dynamic value, {TypeHeader type = TypeHeader.json}) async {
+    return _makeRequest(serverAddress, servicePath, "post", type, body: value);
   }
 
-  Future<String> makeGetRequest(String serverAddress, String servicePath, [Map<String, String> body]) async {
-    return _makeRequest(serverAddress, servicePath, "get", body: body);
+  Future<String> makeGetRequest(String serverAddress, String servicePath, [Map<String, String> value, TypeHeader type]) async {
+    return _makeRequest(serverAddress, servicePath, "get", type, value: value);
   }
 
-  Future<String> makePutRequest(String serverAddress, String servicePath, Map<String, String> body) async {
-    return _makeRequest(serverAddress, servicePath, "get", body: body); // this should be put but doesn't work with flutter web actually
+  Future<String> makePutRequest(String serverAddress, String servicePath, [Map<String, String> value, TypeHeader type]) async {
+    return _makeRequest(serverAddress, servicePath, "get", type, value: value); // this should be put but doesn't work with flutter web actually
   }
 
 

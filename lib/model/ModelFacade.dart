@@ -3,6 +3,7 @@ import 'package:RendicontationPlatformLeo_Client/model/managers/ParsingManager.d
 import 'package:RendicontationPlatformLeo_Client/model/managers/RestManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/StateManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/AuthenticationData.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
@@ -26,8 +27,7 @@ class ModelFacade implements ErrorListener {
 
   RestManager _restManager = RestManager();
   ParsingManager _parsingManager = ParsingManager();
-  String _refreshToken;
-
+  AuthenticationData _authenticationData;
   Club _currentClub;
 
 
@@ -50,6 +50,8 @@ class ModelFacade implements ErrorListener {
   }
 
   Future<bool> login(String email, String password) async {
+    _loadInfoClub(email);
+    return true;
     try{
       Map<String, String> params = Map();
       params["grant_type"] = "password";
@@ -57,17 +59,18 @@ class ModelFacade implements ErrorListener {
       params["client_secret"] = Constants.CLIENT_SECRET;
       params["username"] = email;
       params["password"] = password;
-      String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_TOKEN_AUTHENTICATION, params);
-      _restManager.token = _parsingManager.parseToken(result);
-      _refreshToken = _parsingManager.parseRefreshToken(result);
+      String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_TOKEN_AUTHENTICATION, params, type: TypeHeader.urlencoded);
+      _authenticationData = _parsingManager.parseAuthenticationData(result);
+      _restManager.token = _authenticationData.accessToken;
       _loadInfoClub(email);
-      Timer.periodic(Duration(seconds: Constants.REFRESH_TOKEN_TIME), (Timer t) async {
+      Timer.periodic(Duration(seconds: (_authenticationData.expiresIn - 50)), (Timer t) async {
         Map<String, String> params = Map();
         params["grant_type"] = "refresh_token";
         params["client_id"] = Constants.CLIENT_ID;
-        params["refresh_token"] = _refreshToken;
-        String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_TOKEN_AUTHENTICATION, params);
-        _refreshToken = _parsingManager.parseRefreshToken(result);
+        params["refresh_token"] = _authenticationData.refreshToken;
+        String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_TOKEN_AUTHENTICATION, params, type: TypeHeader.urlencoded);
+        _authenticationData = _parsingManager.parseAuthenticationData(result);
+        _restManager.token = _authenticationData.accessToken;
       });
       return true;
     }
@@ -80,8 +83,10 @@ class ModelFacade implements ErrorListener {
     if ( !appState.existsValue(Constants.STATE_CLUB) ) {
       _currentClub = _parsingManager.parseClub(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_INFO_CLUB));
       Quantity quantityServices = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_CLUB_QUANTITY_SERVICES, {"clubId": _currentClub.id.toString()}));
+      quantityServices.currentYear = 13;//TODO
       _currentClub.quantityServices = quantityServices;
       Quantity quantityActivities = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, {"clubId": _currentClub.id.toString()}));
+      quantityActivities.currentYear = 8;//TODO
       _currentClub.quantityActivities = quantityActivities;
       appState.addValue(Constants.STATE_CLUB, _currentClub);
     }

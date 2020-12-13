@@ -258,6 +258,11 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                                       fontStyle: FontStyle.italic,
                                     ),
                                   ),
+                                service.typesService == null || service.typesService.length == 0 ?
+                                TextSpan(
+                                    text: AppLocalizations.of(context).translate("no_one").capitalize
+                                ) :
+                                Padding(padding: EdgeInsets.zero)
                               ],
                             ),
                           ),

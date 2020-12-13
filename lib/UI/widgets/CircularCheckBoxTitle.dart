@@ -21,17 +21,9 @@ class CircularCheckBoxTitle extends StatelessWidget {
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           onChanged: onChanged,
         ),
-        Container(
-          alignment: Alignment.centerLeft,
-          width: 70,
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child:
-            Text(
-              title,
-              textAlign: TextAlign.start,
-            ),
-          )
+        Text(
+          title,
+          textAlign: TextAlign.start,
         ),
       ],
     );

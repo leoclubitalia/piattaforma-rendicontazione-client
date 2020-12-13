@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/AuthenticationData.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/City.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/CompetenceArea.dart';
@@ -14,14 +15,8 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart'
 class ParsingManager {
 
 
-  String parseToken(String value) {
-    Map<String, String> response = json.decode(value);
-    return response["access_token"];
-  }
-
-  String parseRefreshToken(String value) {
-    Map<String, String> response = json.decode(value);
-    return response["refresh_token"];
+  AuthenticationData parseAuthenticationData(String value) {
+    return AuthenticationData.fromJson(jsonDecode(value));
   }
 
   Club parseClub(String value) {

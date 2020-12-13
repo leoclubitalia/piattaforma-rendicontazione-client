@@ -112,6 +112,7 @@ class _Home extends GlobalState<Home> {
                   fontSize: 17,
                 ),
               ),
+              _club.foundationDate != null ?
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 3, 0, 25),
                 child: Text(
@@ -120,7 +121,8 @@ class _Home extends GlobalState<Home> {
                     fontSize: 12,
                   ),
                 ),
-              ),
+              ) :
+              Padding(padding: EdgeInsets.all(20)),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
                 child: Row(
@@ -175,7 +177,7 @@ class _Home extends GlobalState<Home> {
                             width: 100,
                             height: 100,
                             child: LiquidCircularProgressIndicator(
-                              value: (_club.quantityServices.currentYear / 15),
+                              value: (_club.quantityServices.currentYear / 17),
                               valueColor: AlwaysStoppedAnimation(Colors.greenAccent),
                               backgroundColor: Theme.of(context).primaryColor,
                               borderColor: Theme.of(context).buttonColor,
@@ -187,7 +189,7 @@ class _Home extends GlobalState<Home> {
                               AppLocalizations.of(context).translate("this_year") + " " + _club.quantityServices.currentYear.toString()
                           ),
                           Text(
-                              AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityServices.currentYear + ( DateTime.now().year - _club.foundationDate.year) * 15).toString()
+                              AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityServices.currentYear + ( DateTime.now().year - _club.foundationDate.year) * 17).toString()
                           ),
                         ],
                       ),
