@@ -25,7 +25,7 @@ class Club {
     }
     DateTime foundationDate;
     if ( json['foundationDate'] != null ) {
-      foundationDate = DateTime.fromMillisecondsSinceEpoch(json['foundationDate']);
+      //foundationDate = DateTime.fromMillisecondsSinceEpoch(json['foundationDate']);
     }
     return Club(
       id: json['id'],
@@ -35,7 +35,7 @@ class Club {
       aspirantMembers: json['aspirantMembers'],
       city: city,
       district: District.fromJson(json['district']),
-      foundationDate: foundationDate,
+      foundationDate: DateTime.now(),//TODO
     );
   }
 

@@ -22,7 +22,7 @@
   "start_date": "from",
   "end_date": "to",
   "quantity_participants": "participants",
-  "duration": "duration",
+  "duration": "duration in hours",
   "impact": "impact",
   "all": "all",
   "limited": "limited",
@@ -72,6 +72,6 @@
   "if_other_in_description": "If 'Other' specify it in the description",
   "user_or_password_wrong": "The email or the password are wrong!",
   "system_administrator": "System Administrator",
-  "all_fields_required": "All fields are required!"
-
+  "all_fields_required": "All fields are required!",
+  "tutorial": "tutorial"
 }

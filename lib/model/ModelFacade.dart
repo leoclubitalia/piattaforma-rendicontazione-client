@@ -50,8 +50,6 @@ class ModelFacade implements ErrorListener {
   }
 
   Future<bool> login(String email, String password) async {
-    _loadInfoClub(email);
-    return true;
     try{
       Map<String, String> params = Map();
       params["grant_type"] = "password";
@@ -83,10 +81,8 @@ class ModelFacade implements ErrorListener {
     if ( !appState.existsValue(Constants.STATE_CLUB) ) {
       _currentClub = _parsingManager.parseClub(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_INFO_CLUB));
       Quantity quantityServices = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_CLUB_QUANTITY_SERVICES, {"clubId": _currentClub.id.toString()}));
-      quantityServices.currentYear = 13;//TODO
       _currentClub.quantityServices = quantityServices;
       Quantity quantityActivities = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.SERVER_ADDRESS_MAIN, Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, {"clubId": _currentClub.id.toString()}));
-      quantityActivities.currentYear = 8;//TODO
       _currentClub.quantityActivities = quantityActivities;
       appState.addValue(Constants.STATE_CLUB, _currentClub);
     }
@@ -369,7 +365,10 @@ class ModelFacade implements ErrorListener {
       club.quantityActivities.currentYear ++;
       club.quantityActivities.all ++;
       appState.updateValue(Constants.STATE_CLUB, club);
-      appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
+      appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, activity);
+      List<Activity> activities = appState.getAndDestroyValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
+      activities.insert(0, activity);
+      appState.addValue(Constants.STATE_SEARCH_ACTIVITY_RESULT, activities);
     }
     catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");

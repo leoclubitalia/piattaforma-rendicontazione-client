@@ -17,7 +17,8 @@ class RestManager {
 
 
   Future<String> _makeRequest(String serverAddress, String servicePath, String method, TypeHeader type, {Map<String, String> value, dynamic body}) async {
-    Uri uri = Uri.http(serverAddress, servicePath, value);//TODO add s
+    Uri uri = Uri.https(serverAddress, servicePath, value);
+    print(uri);
     bool errorOccurred = false;
     while ( true ) {
       try {
@@ -37,7 +38,7 @@ class RestManager {
             response = await post(
               uri,
               headers: {
-                //HttpHeaders.authorizationHeader: 'bearer $token',
+                HttpHeaders.authorizationHeader: 'bearer $token',
                 HttpHeaders.contentTypeHeader: contentType,
               },
               body: formattedBody,
@@ -47,7 +48,7 @@ class RestManager {
             response = await get(
               uri,
               headers: {
-                //HttpHeaders.authorizationHeader: 'bearer $token',
+                HttpHeaders.authorizationHeader: 'bearer $token',
                 HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
               }
             );
@@ -56,7 +57,7 @@ class RestManager {
             response = await put(
               uri,
               headers: {
-                //HttpHeaders.authorizationHeader: 'bearer $token',
+                HttpHeaders.authorizationHeader: 'bearer $token',
                 HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
               },
             );

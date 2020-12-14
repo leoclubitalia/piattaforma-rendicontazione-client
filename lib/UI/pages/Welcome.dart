@@ -148,6 +148,24 @@ class _WelcomeState extends GlobalState<Welcome> {
                         );
                       },
                     ),
+                    Padding (
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
+                      child: FlatButton(
+                        minWidth: 100000,
+                        color: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        onPressed: () async {
+                          await launch("https://youtu.be/unZFPiwRV9o");
+                        },
+                        child: Text(
+                          AppLocalizations.of(context).translate("tutorial").capitalize,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
                       child: Text(

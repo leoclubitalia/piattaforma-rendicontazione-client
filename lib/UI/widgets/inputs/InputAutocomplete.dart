@@ -23,6 +23,8 @@ class InputAutocomplete extends StatelessWidget {
             typeable ? FilteringTextInputFormatter.allow(RegExp(r'.')) : FilteringTextInputFormatter.allow(RegExp(r'^$')),
           ],
           autofocus: false,
+          
+          
           controller: controller,
           decoration: InputDecoration(
             fillColor: Theme.of(context).primaryColor,

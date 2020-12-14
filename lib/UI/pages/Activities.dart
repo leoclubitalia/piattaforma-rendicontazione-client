@@ -43,17 +43,12 @@ class _Activities extends GlobalState<Activities> {
 
   @override
   void refreshState() {
-    print("1");
     _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
-    print("2");
     if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_ADDED) ) {
-      print("3");
       ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED);
     }
     else {
-      print("4");
       if ( _searchResult != null ) {
-        print("5");
         _isSearching = false;
       }
     }

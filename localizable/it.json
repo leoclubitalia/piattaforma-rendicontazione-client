@@ -21,7 +21,7 @@
   "start_date": "dal",
   "end_date": "al",
   "quantity_participants": "partecipanti",
-  "duration": "durata",
+  "duration": "durata in ore",
   "impact": "impatto",
   "all": "tutti",
   "limited": "limitato",
@@ -71,5 +71,6 @@
   "if_other_in_description": "Se 'Altro' specificarlo nella descrizione",
   "user_or_password_wrong": "L'email o la password inseriti non sono validi!",
   "system_administrator": "Sistemista",
-  "all_fields_required": "Tutti i campi sono necessari!"
+  "all_fields_required": "Tutti i campi sono necessari!",
+  "tutorial": "Guida all'utilizzo"
 }

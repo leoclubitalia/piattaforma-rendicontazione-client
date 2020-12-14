@@ -1,11 +1,11 @@
 class Constants {
-  static final String SERVER_ADDRESS_MAIN = "localhost:9443";
+  static final String SERVER_ADDRESS_MAIN = "rendicontazione.leoclub.it:2096";
   static final String SERVER_ADDRESS_AUTHENTICATION = "rendicontazione.leoclub.it:8443";
   static final String API_KEY = "";
   static final String REQUEST_DEFAULT_PAGE_SIZE = "30";
 
   static final String CLIENT_ID = "rendicontation-flutter";
-  static final String CLIENT_SECRET = "37e5eff1-a963-4726-842d-c0245fdd017f";
+  static final String CLIENT_SECRET = "8134ee44-0322-4fde-adff-f47e58376c86";
   static final String REQUEST_TOKEN_AUTHENTICATION = "/auth/realms/rendicontation/protocol/openid-connect/token";
 
   static final String REQUEST_INFO_CLUB = "/club/details";

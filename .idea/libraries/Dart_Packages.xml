@@ -79,10 +79,31 @@
             </list>
           </value>
         </entry>
+        <entry key="flutter_focus_watcher">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_focus_watcher-0.0.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="flutter_keyboard_visibility">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility-3.3.0/lib" />
+              <option value="$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility-4.0.2/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="flutter_keyboard_visibility_platform_interface">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility_platform_interface-1.0.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="flutter_keyboard_visibility_web">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility_web-1.0.1/lib" />
             </list>
           </value>
         </entry>
@@ -103,7 +124,7 @@
         <entry key="flutter_typeahead">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_typeahead-1.8.8/lib" />
+              <option value="$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_typeahead-1.9.1/lib" />
             </list>
           </value>
         </entry>
@@ -117,7 +138,7 @@
         <entry key="font_awesome_flutter">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-8.10.0/lib" />
+              <option value="$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-8.10.1/lib" />
             </list>
           </value>
         </entry>
@@ -316,9 +337,12 @@
       <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-0.1.3/lib" />
       <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0-nullsafety.3/lib" />
       <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_datetime_picker-1.4.0/lib" />
-      <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility-3.3.0/lib" />
-      <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_typeahead-1.8.8/lib" />
-      <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-8.10.0/lib" />
+      <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_focus_watcher-0.0.1/lib" />
+      <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility-4.0.2/lib" />
+      <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility_platform_interface-1.0.1/lib" />
+      <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility_web-1.0.1/lib" />
+      <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_typeahead-1.9.1/lib" />
+      <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-8.10.1/lib" />
       <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2/lib" />
       <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-3.1.4/lib" />
       <root url="file://$PROJECT_DIR$/../../libraries/Dart/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.16.1/lib" />
