@@ -65,6 +65,7 @@ class ModelFacade implements ErrorListener {
         Map<String, String> params = Map();
         params["grant_type"] = "refresh_token";
         params["client_id"] = Constants.CLIENT_ID;
+        params["client_secret"] = Constants.CLIENT_SECRET;
         params["refresh_token"] = _authenticationData.refreshToken;
         String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_TOKEN_AUTHENTICATION, params, type: TypeHeader.urlencoded);
         _authenticationData = _parsingManager.parseAuthenticationData(result);
@@ -352,6 +353,7 @@ class ModelFacade implements ErrorListener {
       appState.addValue(Constants.STATE_SEARCH_SERVICE_RESULT, services);
     }
     catch (e) {
+      print(e);
       appState.addValue(Constants.STATE_MESSAGE, "message_error");
     }
   }
