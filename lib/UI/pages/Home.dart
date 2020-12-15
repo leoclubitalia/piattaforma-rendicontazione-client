@@ -6,6 +6,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/pages/Credits.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Search.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/Services.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/MultipleTapButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/SubmittableInputField.dart';
@@ -15,6 +16,7 @@ import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class Home extends StatefulWidget {
@@ -91,12 +93,18 @@ class _Home extends GlobalState<Home> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 25, 0, 25),
+                padding: EdgeInsets.fromLTRB(0, 25, 0, 30),
                 child: Container(
-                  height: 220,
-                  child: Image.asset(
-                    "images/logo.png",
-                    width: MediaQuery.of(context).size.width < 400 ? MediaQuery.of(context).size.width - 100 : 400,
+                  height: 230,
+                  child: MultipleTapButton(
+                    taps: 3,
+                    onTaps: () async {
+                      await launch("https://youtu.be/86i69k6H16E?t=45");
+                    },
+                    child: Image.asset(
+                      "images/logo.png",
+                      width: MediaQuery.of(context).size.width < 400 ? MediaQuery.of(context).size.width - 100 : 400,
+                    ),
                   ),
                 ),
               ),

@@ -161,7 +161,8 @@ class _WelcomeState extends GlobalState<Welcome> {
                           AppLocalizations.of(context).translate("tutorial").capitalize,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.white,
+                            fontWeight: FontWeight.w200,
+                            color: Theme.of(context).splashColor,
                           ),
                         ),
                       ),

@@ -46,6 +46,7 @@ class _Activities extends GlobalState<Activities> {
     _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
     if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_ADDED) ) {
       ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED);
+      refreshTable();
     }
     else {
       if ( _searchResult != null ) {
@@ -79,7 +80,9 @@ class _Activities extends GlobalState<Activities> {
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {
-                loadSearch();
+                if ( ! isCircularMoment() ) {
+                  loadSearch();
+                }
               },
               child: Icon(
                 Icons.refresh_rounded,
@@ -91,7 +94,9 @@ class _Activities extends GlobalState<Activities> {
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {
-                showAddActivity(context);
+                if ( ! isCircularMoment() ) {
+                  showAddActivity(context);
+                }
               },
               child: Icon(
                   Icons.add_rounded
@@ -212,6 +217,19 @@ class _Activities extends GlobalState<Activities> {
     setState(() {
       _searchResult = null;
       _isSearching = true;
+    });
+  }
+
+  void refreshTable() { // Isn't good, I know it
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        _searchResult = null;
+      });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        setState(() {
+          _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
+        });
+      });
     });
   }
 

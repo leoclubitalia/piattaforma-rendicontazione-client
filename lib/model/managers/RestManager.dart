@@ -49,7 +49,7 @@ class RestManager {
               uri,
               headers: {
                 HttpHeaders.authorizationHeader: 'bearer $token',
-                HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
+                HttpHeaders.contentTypeHeader: "application/json;charset=unicode",
               }
             );
             break;
@@ -70,13 +70,11 @@ class RestManager {
         print(response.body);
         return response.body;
       } catch(err, stacktrace) {
-        print(err.toString());
-        print(stacktrace.toString());
         if ( delegate != null && !errorOccurred ) {
           delegate.errorNetworkOccurred(Constants.MESSAGE_CONNECTION_ERROR);
           errorOccurred = true;
         }
-        await Future.delayed(const Duration(seconds: 3), () => null);
+        await Future.delayed(const Duration(seconds: 5), () => null);
       }
     }
   }
