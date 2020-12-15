@@ -5,7 +5,7 @@ class Constants {
   static final String REQUEST_DEFAULT_PAGE_SIZE = "30";
 
   static final String CLIENT_ID = "rendicontation-flutter";
-  static final String CLIENT_SECRET = "8134ee44-0322-4fde-adff-f47e58376c86";
+  static final String CLIENT_SECRET = "***";
   static final String REQUEST_TOKEN_AUTHENTICATION = "/auth/realms/rendicontation/protocol/openid-connect/token";
 
   static final String REQUEST_INFO_CLUB = "/club/details";
