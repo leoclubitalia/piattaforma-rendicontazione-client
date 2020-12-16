@@ -98,6 +98,16 @@ class _WelcomeState extends GlobalState<Welcome> {
                           });
                           return;
                         }
+                        if ( email == "rotary") {
+                          await launch("https://www.youtube.com/embed/H07zYvkNYL8?rel=0&autoplay=1");
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          return;
+                        }
+
+
+
                         if ( email == null || email == "" || password == null || password == "" ) {
                           showDialog(
                             context: context,
