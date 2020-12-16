@@ -15,6 +15,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/ErrorListener.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/LogInResult.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/Suggester.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
 
@@ -49,7 +50,7 @@ class ModelFacade implements ErrorListener {
     }
   }
 
-  Future<bool> login(String email, String password) async {
+  Future<LogInResult> login(String email, String password) async {
     try{
       Map<String, String> params = Map();
       params["grant_type"] = "password";
@@ -59,6 +60,17 @@ class ModelFacade implements ErrorListener {
       params["password"] = password;
       String result = await _restManager.makePostRequest(Constants.SERVER_ADDRESS_AUTHENTICATION, Constants.REQUEST_TOKEN_AUTHENTICATION, params, type: TypeHeader.urlencoded);
       _authenticationData = _parsingManager.parseAuthenticationData(result);
+      if ( _authenticationData.hasError() ) {
+        if ( _authenticationData.error == "Invalid user credentials" ) {
+          return LogInResult.error_wrong_credentials;
+        }
+        else if ( _authenticationData.error == "Account is not fully set up" ) {
+          return LogInResult.error_not_fully_setupped;
+        }
+        else {
+          return LogInResult.error_unknown;
+        }
+      }
       _restManager.token = _authenticationData.accessToken;
       _loadInfoClub(email);
       Timer.periodic(Duration(seconds: (_authenticationData.expiresIn - 50)), (Timer t) async {
@@ -71,10 +83,10 @@ class ModelFacade implements ErrorListener {
         _authenticationData = _parsingManager.parseAuthenticationData(result);
         _restManager.token = _authenticationData.accessToken;
       });
-      return true;
+      return LogInResult.logged;
     }
     catch (e) {
-      return false;
+      return LogInResult.error_unknown;
     }
   }
 

@@ -9,6 +9,8 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/ExpandableBu
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/MultipleTapButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/LogInResult.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:flutter/material.dart';
@@ -91,23 +93,20 @@ class _WelcomeState extends GlobalState<Welcome> {
                         setState(() {
                           _isLoading = true;
                         });
-                        if ( email == "giucas@leoclub.it" ) {
+                        if ( email == "giucascasella" ) {
                           await launch("https://youtu.be/dUcUgJyR6IE");
                           setState(() {
                             _isLoading = false;
                           });
                           return;
                         }
-                        if ( email == "rotary") {
+                        if ( email == "rotary" ) {
                           await launch("https://www.youtube.com/embed/H07zYvkNYL8?rel=0&autoplay=1");
                           setState(() {
                             _isLoading = false;
                           });
                           return;
                         }
-
-
-
                         if ( email == null || email == "" || password == null || password == "" ) {
                           showDialog(
                             context: context,
@@ -121,11 +120,11 @@ class _WelcomeState extends GlobalState<Welcome> {
                           });
                           return;
                         }
-                        bool result = await ModelFacade.sharedInstance.login(email, password);
+                        LogInResult result = await ModelFacade.sharedInstance.login(email, password);
                         setState(() {
                           _isLoading = false;
                         });
-                        if ( result ) {
+                        if ( result == LogInResult.logged ) {
                           Navigator.of(context).push(
                             PageRouteBuilder(
                               opaque: false,
@@ -134,12 +133,24 @@ class _WelcomeState extends GlobalState<Welcome> {
                             ),
                           );
                         }
-                        else {
+                        else if ( result == LogInResult.error_wrong_credentials ) {
                           showDialog(
                             context: context,
                             builder: (context) => MessageDialog(
                               titleText: AppLocalizations.of(context).translate("oops").capitalize,
                               bodyText: AppLocalizations.of(context).translate("user_or_password_wrong"),
+                            ),
+                          );
+                        }
+                        else if ( result == LogInResult.error_not_fully_setupped ) {
+                          await launch(Constants.LINK_FIRST_SETUP_PASSWORD);
+                        }
+                        else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => MessageDialog(
+                              titleText: AppLocalizations.of(context).translate("oops").capitalize,
+                              bodyText: AppLocalizations.of(context).translate("unknown_error"),
                             ),
                           );
                         }

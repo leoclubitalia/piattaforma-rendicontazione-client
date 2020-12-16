@@ -18,7 +18,6 @@ class RestManager {
 
   Future<String> _makeRequest(String serverAddress, String servicePath, String method, TypeHeader type, {Map<String, String> value, dynamic body}) async {
     Uri uri = Uri.https(serverAddress, servicePath, value);
-    print(uri);
     bool errorOccurred = false;
     while ( true ) {
       try {

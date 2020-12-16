@@ -2,6 +2,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.d
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -100,26 +101,30 @@ class _ExpandableLogInButton extends GlobalState<ExpandableLogInButton> with Tic
                     isPassword: true,
                   ),
                 ),
-                StadiumButton(
-                  icon: Icons.login,
-                  title: AppLocalizations.of(context).translate("log_in"),
-                  onPressed: () {
-                    onSubmit(_inputFieldEmailController.text, _inputFieldPasswordController.text);
-                  },
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: StadiumButton(
+                    icon: Icons.login,
+                    title: AppLocalizations.of(context).translate("log_in"),
+                    padding: 0,
+                    onPressed: () {
+                      onSubmit(_inputFieldEmailController.text, _inputFieldPasswordController.text);
+                    },
+                  ),
                 ),
-
                 Padding (
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                   child: FlatButton(
                     minWidth: 100000,
                     color: Colors.transparent,
                     hoverColor: Colors.transparent,
                     onPressed: () async {
-                      await launch("https://rendicontazione.leoclub.it:8443/auth/realms/rendicontation/account/");
+                      await launch(Constants.LINK_RESET_PASSWORD);
                     },
                     child: Text(
                       AppLocalizations.of(context).translate("forgot_password").capitalize,
                       textAlign: TextAlign.center,
+                      textScaleFactor: 0.9,
                       style: TextStyle(
                         fontWeight: FontWeight.w200,
                         color: Theme.of(context).splashColor,
@@ -127,7 +132,6 @@ class _ExpandableLogInButton extends GlobalState<ExpandableLogInButton> with Tic
                     ),
                   ),
                 ),
-
               ],
             ),
           ),

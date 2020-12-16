@@ -75,5 +75,5 @@
   "all_fields_required": "All fields are required!",
   "tutorial": "tutorial",
   "forgot_password": "Forgot your password?",
-  "unknown_error": "Oops, Something strange happened!",
+  "unknown_error": "Something unexpected happened, try again!"
 }

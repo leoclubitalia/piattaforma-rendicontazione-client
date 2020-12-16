@@ -6,14 +6,15 @@ class StadiumButton extends StatelessWidget {
   final IconData icon;
   final Function onPressed;
   final bool disabled;
+  final double padding;
 
-  const StadiumButton({Key key, this.title, this.icon, this.onPressed, this.disabled = false}) : super(key: key);
+  const StadiumButton({Key key, this.title, this.icon, this.onPressed, this.disabled = false, this.padding = 10}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
     return Padding (
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(padding),
       child: ButtonTheme(
         minWidth: 150.0,
         height: 25.0,
