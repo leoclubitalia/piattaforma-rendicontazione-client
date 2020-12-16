@@ -73,5 +73,7 @@
   "user_or_password_wrong": "The email or the password are wrong!",
   "system_administrator": "System Administrator",
   "all_fields_required": "All fields are required!",
-  "tutorial": "tutorial"
+  "tutorial": "tutorial",
+  "forgot_password": "Forgot your password?",
+  "unknown_error": "Oops, Something strange happened!",
 }

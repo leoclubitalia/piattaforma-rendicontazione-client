@@ -72,5 +72,7 @@
   "user_or_password_wrong": "L'email o la password inseriti non sono validi!",
   "system_administrator": "Sistemista",
   "all_fields_required": "Tutti i campi sono necessari!",
-  "tutorial": "Guida all'utilizzo"
+  "tutorial": "Guida all'utilizzo",
+  "forgot_password": "Password dimenticata?",
+  "unknown_error": "Oops, è successo qualcosa di inaspettato!"
 }
