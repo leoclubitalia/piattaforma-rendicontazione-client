@@ -7,8 +7,9 @@ class StadiumButton extends StatelessWidget {
   final Function onPressed;
   final bool disabled;
   final double padding;
+  final double minWidth;
 
-  const StadiumButton({Key key, this.title, this.icon, this.onPressed, this.disabled = false, this.padding = 10}) : super(key: key);
+  const StadiumButton({Key key, this.title, this.icon, this.onPressed, this.disabled = false, this.padding = 10, this.minWidth = 150}) : super(key: key);
 
 
   @override
@@ -16,7 +17,7 @@ class StadiumButton extends StatelessWidget {
     return Padding (
       padding: EdgeInsets.all(padding),
       child: ButtonTheme(
-        minWidth: 150.0,
+        minWidth: minWidth,
         height: 25.0,
         child: RaisedButton.icon(
           onPressed: () {

@@ -1,8 +1,8 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/UIConstants.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/SearchActivity.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/SearchService.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/SearchActivity.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/SearchService.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Club.dart';

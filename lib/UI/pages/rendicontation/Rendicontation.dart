@@ -1,9 +1,9 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/Credits.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/Home.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/Search.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Credits.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Home.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Search.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/ExpandableButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/MultipleTapButton.dart';
@@ -17,14 +17,14 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
-class Welcome extends StatefulWidget {
-  Welcome({Key key}) : super(key: key);
+class Rendicontation extends StatefulWidget {
+  Rendicontation({Key key}) : super(key: key);
 
   @override
-  _WelcomeState createState() => _WelcomeState();
+  _RendicontationState createState() => _RendicontationState();
 }
 
-class _WelcomeState extends GlobalState<Welcome> {
+class _RendicontationState extends GlobalState<Rendicontation> {
   bool _isLoading = false;
 
 
@@ -35,7 +35,7 @@ class _WelcomeState extends GlobalState<Welcome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RoundedAppBar(
-        title: AppLocalizations.of(context).translate("app_title"),
+        title: AppLocalizations.of(context).translate("rendicontation").capitalize,
       ),
       body: Stack(
         children: [
@@ -56,10 +56,10 @@ class _WelcomeState extends GlobalState<Welcome> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
                       child: Text(
-                        AppLocalizations.of(context).translate("welcome") + "!",
-                        textAlign: TextAlign.center,
-                        textScaleFactor: 3,
-                        style: LeoBigTitleStyle()
+                          AppLocalizations.of(context).translate("welcome") + "!",
+                          textAlign: TextAlign.center,
+                          textScaleFactor: 3,
+                          style: LeoBigTitleStyle()
                       ),
                     ),
                     Padding(
@@ -81,10 +81,10 @@ class _WelcomeState extends GlobalState<Welcome> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                       child: Text(
-                        AppLocalizations.of(context).translate("log_in_as"),
-                        textAlign: TextAlign.center,
-                        textScaleFactor: 2,
-                        style: LeoTitleStyle()
+                          AppLocalizations.of(context).translate("log_in_as"),
+                          textAlign: TextAlign.center,
+                          textScaleFactor: 2,
+                          style: LeoTitleStyle()
                       ),
                     ),
                     ExpandableLogInButton(
@@ -127,9 +127,9 @@ class _WelcomeState extends GlobalState<Welcome> {
                         if ( result == LogInResult.logged ) {
                           Navigator.of(context).push(
                             PageRouteBuilder(
-                              opaque: false,
-                              transitionDuration: Duration(milliseconds: 700),
-                              pageBuilder: (BuildContext context, _, __) => Home()
+                                opaque: false,
+                                transitionDuration: Duration(milliseconds: 700),
+                                pageBuilder: (BuildContext context, _, __) => Home()
                             ),
                           );
                         }
@@ -162,9 +162,9 @@ class _WelcomeState extends GlobalState<Welcome> {
                       onPressed: () {
                         Navigator.of(context).push(
                           PageRouteBuilder(
-                            opaque: false,
-                            transitionDuration: Duration(milliseconds: 700),
-                            pageBuilder: (BuildContext context, _, __) => Search(true)
+                              opaque: false,
+                              transitionDuration: Duration(milliseconds: 700),
+                              pageBuilder: (BuildContext context, _, __) => Search(true)
                           ),
                         );
                       },
@@ -191,9 +191,9 @@ class _WelcomeState extends GlobalState<Welcome> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
                       child: Text(
-                        AppLocalizations.of(context).translate("log_in_as_description"),
-                        textAlign: TextAlign.center,
-                        style: LeoParagraphStyle()
+                          AppLocalizations.of(context).translate("log_in_as_description"),
+                          textAlign: TextAlign.center,
+                          style: LeoParagraphStyle()
                       ),
                     ),
                     Padding (
@@ -205,9 +205,9 @@ class _WelcomeState extends GlobalState<Welcome> {
                         onPressed: () {
                           Navigator.of(context).push(
                             PageRouteBuilder(
-                              opaque: false,
-                              transitionDuration: Duration(milliseconds: 700),
-                              pageBuilder: (BuildContext context, _, __) => Credits()
+                                opaque: false,
+                                transitionDuration: Duration(milliseconds: 700),
+                                pageBuilder: (BuildContext context, _, __) => Credits()
                             ),
                           );
                         },

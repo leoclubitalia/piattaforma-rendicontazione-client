@@ -1,10 +1,10 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/UIConstants.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/Activities.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/Credits.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/Search.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/Services.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Activities.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Credits.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Search.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Services.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/MultipleTapButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';

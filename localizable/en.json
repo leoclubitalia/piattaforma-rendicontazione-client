@@ -1,6 +1,7 @@
 {
   "welcome": "Welcome",
-  "app_title": "Rendicontation",
+  "app_title": "PortaLeo",
+  "rendicontation": "rendicontation",
   "log_in_as": "Log in as:",
   "log_in_as_description": "By entering as a club you will have the opportunity to enter the services and activities carried out by your club, you will also have some statistics on your work, instead by entering as a guest you will be able to search and see the services and activities carried out by each Italian club.",
   "club": "club",
@@ -75,5 +76,9 @@
   "all_fields_required": "All fields are required!",
   "tutorial": "tutorial",
   "forgot_password": "Forgot your password?",
-  "unknown_error": "Something unexpected happened, try again!"
+  "unknown_error": "Something unexpected happened, try again!",
+  "go_to": "Go to",
+  "yearbook": "yearbook",
+  "request_ton": "ton requests",
+  "hub_description": "The new PortaLeo is the center that contains all the services offered by the Leo 108 multidistrict for members and/or clubs!"
 }
