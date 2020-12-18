@@ -9,13 +9,17 @@ class CircularIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: onPressed,
-      elevation: 2.0,
-      fillColor: Theme.of(context).buttonColor,
-      child: Icon(icon, color: Theme.of(context).accentColor),
-      padding: EdgeInsets.all(15.0),
-      shape: CircleBorder(),
+    return Padding(
+      padding: EdgeInsets.all(3),
+      child: FlatButton(
+        onPressed: onPressed,
+        minWidth: 0,
+        color: Theme.of(context).buttonColor,
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        child: Icon(icon, color: Theme.of(context).accentColor),
+        padding: EdgeInsets.all(18.0),
+        shape: CircleBorder(),
+      ),
     );
   }
 

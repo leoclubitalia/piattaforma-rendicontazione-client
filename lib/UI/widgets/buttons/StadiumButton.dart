@@ -33,7 +33,7 @@ class StadiumButton extends StatelessWidget {
             style: TextStyle(
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.w300,
-              fontSize: 20,
+              fontSize: 18,
             ),
           ),
         ),

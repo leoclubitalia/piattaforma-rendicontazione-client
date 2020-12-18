@@ -185,7 +185,7 @@ class _Home extends GlobalState<Home> {
                             width: 100,
                             height: 100,
                             child: LiquidCircularProgressIndicator(
-                              value: (_club.quantityServices.currentYear / 17),
+                              value: (_club.quantityServices.currentYear / Constants.AVERAGE_SERVICES_PER_CLUB),
                               valueColor: AlwaysStoppedAnimation(Colors.greenAccent),
                               backgroundColor: Theme.of(context).primaryColor,
                               borderColor: Theme.of(context).buttonColor,
@@ -197,7 +197,7 @@ class _Home extends GlobalState<Home> {
                               AppLocalizations.of(context).translate("this_year") + " " + _club.quantityServices.currentYear.toString()
                           ),
                           Text(
-                              AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityServices.currentYear + ( DateTime.now().year - _club.foundationDate.year) * 17).toString()
+                              AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityServices.currentYear + ( DateTime.now().year - _club.foundationDate.year) * Constants.AVERAGE_SERVICES_PER_CLUB).toString()
                           ),
                         ],
                       ),
@@ -217,7 +217,7 @@ class _Home extends GlobalState<Home> {
                             width: 100,
                             height: 100,
                             child: LiquidCircularProgressIndicator(
-                              value: (_club.quantityActivities.currentYear / 17),
+                              value: (_club.quantityActivities.currentYear / Constants.AVERAGE_ACTIVITIES_PER_CLUB),
                               valueColor: AlwaysStoppedAnimation(Colors.blue),
                               backgroundColor: Theme.of(context).primaryColor,
                               borderColor: Theme.of(context).buttonColor,
@@ -229,7 +229,7 @@ class _Home extends GlobalState<Home> {
                               AppLocalizations.of(context).translate("this_year") + " " + _club.quantityActivities.currentYear.toString()
                           ),
                           Text(
-                              AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityActivities.currentYear + ( DateTime.now().year - _club.foundationDate.year) * 17).toString()
+                              AppLocalizations.of(context).translate("since_the_foundation") + " " + (_club.quantityActivities.currentYear + ( DateTime.now().year - _club.foundationDate.year) * Constants.AVERAGE_ACTIVITIES_PER_CLUB).toString()
                           ),
                         ],
                       ),

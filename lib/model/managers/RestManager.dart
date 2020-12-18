@@ -22,43 +22,42 @@ class RestManager {
     while ( true ) {
       try {
         var response;
+        // setting content type
+        String contentType;
+        dynamic formattedBody;
+        if ( type == TypeHeader.json ) {
+          contentType = "application/json;charset=utf-8";
+          formattedBody = json.encode(body);
+        }
+        else if ( type == TypeHeader.urlencoded ) {
+          contentType = "application/x-www-form-urlencoded";
+          formattedBody = body.keys.map((key) => "$key=${body[key]}").join("&");
+        }
+        // setting headers
+        Map<String, String> headers = Map();
+        headers[HttpHeaders.contentTypeHeader] = contentType;
+        if ( token != null ) {
+          headers[HttpHeaders.authorizationHeader] = 'bearer $token';
+        }
+        // making request
         switch ( method ) {
           case "post":
-            String contentType;
-            dynamic formattedBody;
-            if ( type == TypeHeader.json ) {
-              contentType = "application/json;charset=utf-8";
-              formattedBody = json.encode(body);
-            }
-            else if ( type == TypeHeader.urlencoded ) {
-              contentType = "application/x-www-form-urlencoded";
-              formattedBody = body.keys.map((key) => "$key=${body[key]}").join("&");
-            }
             response = await post(
               uri,
-              headers: {
-                HttpHeaders.authorizationHeader: 'bearer $token',
-                HttpHeaders.contentTypeHeader: contentType,
-              },
+              headers: headers,
               body: formattedBody,
             );
             break;
           case "get":
             response = await get(
               uri,
-              headers: {
-                HttpHeaders.authorizationHeader: 'bearer $token',
-                HttpHeaders.contentTypeHeader: "application/json;charset=unicode",
-              }
+              headers: headers,
             );
             break;
           case "put":
             response = await put(
               uri,
-              headers: {
-                HttpHeaders.authorizationHeader: 'bearer $token',
-                HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
-              },
+              headers: headers,
             );
             break;
         }

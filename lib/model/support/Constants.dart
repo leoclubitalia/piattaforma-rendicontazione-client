@@ -1,14 +1,15 @@
 class Constants {
-  static final String SERVER_ADDRESS_MAIN = "rendicontazione.leoclub.it:2096";
-  static final String SERVER_ADDRESS_AUTHENTICATION = "rendicontazione.leoclub.it:8443";
+  static final String ADDRESS_CLIENT = "rendicontazione.leoclub.it";
+  static final String ADDRESS_RENDICONTATION_SERVER = "rendicontazione.leoclub.it:2096";
+  static final String ADDRESS_AUTHENTICATION_SERVER = "rendicontazione.leoclub.it:8443";
   static final String REQUEST_DEFAULT_PAGE_SIZE = "30";
 
   static final String REALM = "rendicontation";
   static final String CLIENT_ID = "rendicontation-flutter";
-  static final String CLIENT_SECRET = "8134ee44-0322-4fde-adff-f47e58376c86";
+  static final String CLIENT_SECRET = "***";
   static final String REQUEST_TOKEN_AUTHENTICATION = "/auth/realms/rendicontation/protocol/openid-connect/token";
-  static final String LINK_FIRST_SETUP_PASSWORD = "https://" + SERVER_ADDRESS_AUTHENTICATION + "/auth/realms/" + REALM + "/account/";
-  static final String LINK_RESET_PASSWORD = "https://" + SERVER_ADDRESS_AUTHENTICATION + "/auth/realms/" + REALM + "/login-actions/reset-credentials?client_id=account";
+  static final String LINK_FIRST_SETUP_PASSWORD = "https://" + ADDRESS_AUTHENTICATION_SERVER + "/auth/realms/" + REALM + "/protocol/openid-connect/auth?response_type=code&client_id=" + CLIENT_ID + "&redirect_uri=https://" + ADDRESS_CLIENT;
+  static final String LINK_RESET_PASSWORD = "https://" + ADDRESS_AUTHENTICATION_SERVER + "/auth/realms/" + REALM + "/login-actions/reset-credentials?client_id=account";
 
   static final String REQUEST_INFO_CLUB = "/club/details";
   static final String REQUEST_CLUB_QUANTITY_SERVICES = "/club/quantity_services_made";
@@ -43,6 +44,9 @@ class Constants {
   static final String STATE_JUST_ADDED = "just_added";
 
   static final String MESSAGE_CONNECTION_ERROR = "connection_error";
+
+  static final int AVERAGE_SERVICES_PER_CLUB = 15;
+  static final int AVERAGE_ACTIVITIES_PER_CLUB = 17;
 
 
 }

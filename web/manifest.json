@@ -1,11 +1,11 @@
 {
-    "name": "RendicontationPlatformLeo_Client",
-    "short_name": "RendicontationPlatformLeo_Client",
+    "name": "PortaLeo",
+    "short_name": "PortaLeo",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "Rendicontation Platform MD leo 180 Italy",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "description": "PortaLeo MD leo 180 Italy",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

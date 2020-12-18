@@ -70,7 +70,7 @@ class _Credits extends GlobalState<Credits> {
                       WidgetSpan(
                         child: DeveloperTile (
                           name: "Mattia Ricco",
-                          imageName: "images/developers/ricco.jpg",
+                          imageName: "images/developers/ricco.png",
                           email: "mattia.ricco.mr@gmail.com",
                           instagram: "https://www.instagram.com/grissinodeludente/?hl=it",
                           facebook: "https://www.facebook.com/mattia.ricco.3",
@@ -82,7 +82,7 @@ class _Credits extends GlobalState<Credits> {
                       WidgetSpan(
                         child: DeveloperTile (
                           name: "Andrea Germanà",
-                          imageName: "images/developers/germana.jpg",
+                          imageName: "images/developers/germana.png",
                           email: "andrea@germana.me",
                           instagram: "https://www.instagram.com/gemandra/",
                           facebook: "https://www.facebook.com/andgermana",
