@@ -52,6 +52,19 @@ class _Home extends GlobalState<Home> {
       appBar: RoundedAppBar (
         title: AppLocalizations.of(context).translate("home").capitalize,
         backable: false,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 20.0),
+          child: GestureDetector(
+            onTap: () {
+              ModelFacade.sharedInstance.logOut();
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.logout,
+              size: 26.0,
+            ),
+          ),
+        ),
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 20.0),

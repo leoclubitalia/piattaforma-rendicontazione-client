@@ -120,7 +120,7 @@ class _RendicontationState extends GlobalState<Rendicontation> {
                           });
                           return;
                         }
-                        LogInResult result = await ModelFacade.sharedInstance.login(email, password);
+                        LogInResult result = await ModelFacade.sharedInstance.logIn(email, password);
                         setState(() {
                           _isLoading = false;
                         });

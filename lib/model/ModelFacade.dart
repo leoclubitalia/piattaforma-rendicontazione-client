@@ -50,7 +50,7 @@ class ModelFacade implements ErrorListener {
     }
   }
 
-  Future<LogInResult> login(String email, String password) async {
+  Future<LogInResult> logIn(String email, String password) async {
     try{
       Map<String, String> params = Map();
       params["grant_type"] = "password";
@@ -58,7 +58,7 @@ class ModelFacade implements ErrorListener {
       params["client_secret"] = Constants.CLIENT_SECRET;
       params["username"] = email;
       params["password"] = password;
-      String result = await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_TOKEN_AUTHENTICATION, params, type: TypeHeader.urlencoded);
+      String result = await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGIN, params, type: TypeHeader.urlencoded);
       _authenticationData = _parsingManager.parseAuthenticationData(result);
       if ( _authenticationData.hasError() ) {
         if ( _authenticationData.error == "Invalid user credentials" ) {
@@ -79,7 +79,7 @@ class ModelFacade implements ErrorListener {
         params["client_id"] = Constants.CLIENT_ID;
         params["client_secret"] = Constants.CLIENT_SECRET;
         params["refresh_token"] = _authenticationData.refreshToken;
-        String result = await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_TOKEN_AUTHENTICATION, params, type: TypeHeader.urlencoded);
+        String result = await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGIN, params, type: TypeHeader.urlencoded);
         _authenticationData = _parsingManager.parseAuthenticationData(result);
         _restManager.token = _authenticationData.accessToken;
       });
@@ -87,6 +87,22 @@ class ModelFacade implements ErrorListener {
     }
     catch (e) {
       return LogInResult.error_unknown;
+    }
+  }
+
+  Future<bool> logOut() async {
+    try{
+      Map<String, String> params = Map();
+      _restManager.token = null;
+      params["client_id"] = Constants.CLIENT_ID;
+      params["client_secret"] = Constants.CLIENT_SECRET;
+      params["refresh_token"] = _authenticationData.refreshToken;
+      await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGOUT, params, type: TypeHeader.urlencoded);
+      appState.resetState();
+      return true;
+    }
+    catch (e) {
+      return false;
     }
   }
 

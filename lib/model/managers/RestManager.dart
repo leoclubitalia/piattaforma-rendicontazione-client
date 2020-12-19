@@ -65,6 +65,7 @@ class RestManager {
           delegate.errorNetworkGone();
           errorOccurred = false;
         }
+        print(response.body);
         return response.body;
       } catch(err) {
         if ( delegate != null && !errorOccurred ) {

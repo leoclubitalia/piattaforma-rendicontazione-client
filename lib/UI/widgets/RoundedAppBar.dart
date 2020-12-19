@@ -8,9 +8,10 @@ class RoundedAppBar extends StatelessWidget with PreferredSizeWidget {
   final Widget bottom;
   final bool backable;
   final List<Widget> actions;
+  final Widget leading;
 
 
-  RoundedAppBar({Key key, this.title, this.bottom, this.backable, this.actions}) : preferredSize = Size.fromHeight(50.0), super(key: key);
+  RoundedAppBar({Key key, this.title, this.bottom, this.backable, this.actions, this.leading}) : preferredSize = Size.fromHeight(50.0), super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,7 @@ class RoundedAppBar extends StatelessWidget with PreferredSizeWidget {
       centerTitle: true,
       bottom: bottom,
       actions: actions,
+      leading: leading,
       backgroundColor: Theme.of(context).dividerColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
