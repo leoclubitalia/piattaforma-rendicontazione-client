@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:RendicontationPlatformLeo_Client/model/managers/ParsingManager.dart';
+import 'package:RendicontationPlatformLeo_Client/model/managers/PersistentStorageManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/RestManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/managers/StateManager.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
@@ -28,6 +29,7 @@ class ModelFacade implements ErrorListener {
 
   RestManager _restManager = RestManager();
   ParsingManager _parsingManager = ParsingManager();
+  PersistentStorageManager _persistentStorageManager = PersistentStorageManager();
   AuthenticationData _authenticationData;
   Club _currentClub;
 
@@ -48,6 +50,19 @@ class ModelFacade implements ErrorListener {
     if ( delegate != null ) {
       delegate.errorNetworkOccurred(message);
     }
+  }
+
+  Future<bool> autoLogIn() async {
+    if ( await _persistentStorageManager.existsValue(Constants.STORAGE_REFRESH_TOKEN) && await _persistentStorageManager.existsValue(Constants.STORAGE_EMAIL) ) {
+      _authenticationData = AuthenticationData();
+      _authenticationData.refreshToken = await _persistentStorageManager.getValue(Constants.STORAGE_REFRESH_TOKEN);
+      bool autoLogInResult = await _refreshToken();
+      if ( autoLogInResult ) {
+        _loadInfoClub(await _persistentStorageManager.getValue(Constants.STORAGE_EMAIL));
+        return true;
+      }
+    }
+    return false;
   }
 
   Future<LogInResult> logIn(String email, String password) async {
@@ -71,22 +86,39 @@ class ModelFacade implements ErrorListener {
           return LogInResult.error_unknown;
         }
       }
+      _persistentStorageManager.addValue(Constants.STORAGE_REFRESH_TOKEN, _authenticationData.refreshToken);
+      _persistentStorageManager.addValue(Constants.STORAGE_EMAIL, email);
       _restManager.token = _authenticationData.accessToken;
       _loadInfoClub(email);
-      Timer.periodic(Duration(seconds: (_authenticationData.expiresIn - 50)), (Timer t) async {
-        Map<String, String> params = Map();
-        params["grant_type"] = "refresh_token";
-        params["client_id"] = Constants.CLIENT_ID;
-        params["client_secret"] = Constants.CLIENT_SECRET;
-        params["refresh_token"] = _authenticationData.refreshToken;
-        String result = await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGIN, params, type: TypeHeader.urlencoded);
-        _authenticationData = _parsingManager.parseAuthenticationData(result);
-        _restManager.token = _authenticationData.accessToken;
+      Timer.periodic(Duration(seconds: (_authenticationData.expiresIn - 50)), (Timer t) {
+        _refreshToken();
       });
       return LogInResult.logged;
     }
     catch (e) {
       return LogInResult.error_unknown;
+    }
+  }
+
+  Future<bool> _refreshToken() async {
+    try {
+      Map<String, String> params = Map();
+      params["grant_type"] = "refresh_token";
+      params["client_id"] = Constants.CLIENT_ID;
+      params["client_secret"] = Constants.CLIENT_SECRET;
+      params["refresh_token"] = _authenticationData.refreshToken;
+      String result = await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGIN, params, type: TypeHeader.urlencoded);
+      _authenticationData = _parsingManager.parseAuthenticationData(result);
+      if ( _authenticationData.hasError() ) {
+        _persistentStorageManager.removeValue(Constants.STORAGE_REFRESH_TOKEN);
+        _persistentStorageManager.removeValue(Constants.STORAGE_EMAIL);
+        return false;
+      }
+      _restManager.token = _authenticationData.accessToken;
+      return true;
+    }
+    catch (e) {
+      return false;
     }
   }
 
@@ -99,6 +131,8 @@ class ModelFacade implements ErrorListener {
       params["refresh_token"] = _authenticationData.refreshToken;
       await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGOUT, params, type: TypeHeader.urlencoded);
       appState.resetState();
+      _persistentStorageManager.removeValue(Constants.STORAGE_REFRESH_TOKEN);
+      _persistentStorageManager.removeValue(Constants.STORAGE_EMAIL);
       return true;
     }
     catch (e) {

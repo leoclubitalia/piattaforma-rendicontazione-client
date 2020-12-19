@@ -44,6 +44,9 @@ class Constants {
   static final String STATE_JUST_ADDED_ACTIVITY = "just_added_activity";
   static final String STATE_JUST_ADDED = "just_added";
 
+  static final String STORAGE_REFRESH_TOKEN = "refresh_token";
+  static final String STORAGE_EMAIL = "email";
+
   static final String MESSAGE_CONNECTION_ERROR = "connection_error";
 
   static final int AVERAGE_SERVICES_PER_CLUB = 15;

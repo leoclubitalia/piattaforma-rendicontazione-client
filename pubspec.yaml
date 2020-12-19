@@ -23,6 +23,7 @@ dependencies:
   circular_check_box: ^1.0.4
   font_awesome_flutter: ^8.10.0
   flutter_focus_watcher: ^0.0.1
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:

@@ -311,6 +311,25 @@ class _Home extends GlobalState<Home> {
                 ),
               ),
               Padding (
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
+                child: FlatButton(
+                  minWidth: 100000,
+                  color: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  onPressed: () async {
+                    await launch("https://youtu.be/unZFPiwRV9o");
+                  },
+                  child: Text(
+                    AppLocalizations.of(context).translate("tutorial").capitalize,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w200,
+                      color: Theme.of(context).splashColor,
+                    ),
+                  ),
+                ),
+              ),
+              Padding (
                 padding: EdgeInsets.fromLTRB(0, 25, 0, 20),
                 child: FlatButton(
                   minWidth: 100000,

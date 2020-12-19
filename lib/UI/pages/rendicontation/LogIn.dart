@@ -17,14 +17,14 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
-class Rendicontation extends StatefulWidget {
-  Rendicontation({Key key}) : super(key: key);
+class LogIn extends StatefulWidget {
+  LogIn({Key key}) : super(key: key);
 
   @override
-  _RendicontationState createState() => _RendicontationState();
+  _LogInState createState() => _LogInState();
 }
 
-class _RendicontationState extends GlobalState<Rendicontation> {
+class _LogInState extends GlobalState<LogIn> {
   bool _isLoading = false;
 
 
