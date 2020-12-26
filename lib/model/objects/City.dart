@@ -10,9 +10,11 @@ class City {
   City({this.id, this.name, this.caps});
 
   factory City.fromJson(Map<String, dynamic> json) {
-    List<Cap> caps = List();
-    for ( Map<String, dynamic> rawCap in json['caps'] ) {
-      caps.add(Cap.fromJson(rawCap));
+    List<Cap> caps = [];
+    if ( json['caps'] != null ) {
+      for ( Map<String, dynamic> rawCap in json['caps'] ) {
+        caps.add(Cap.fromJson(rawCap));
+      }
     }
     return City(
       id: json['id'],

@@ -79,5 +79,11 @@
   "go_to": "Vai a",
   "yearbook": "annuario",
   "request_ton": "richieste ton",
-  "hub_description": "Il nuovo PortaLeo è il centro che contiene tutti servizi offerti dal multidistretto Leo 108 per i soci e/o club!"
+  "hub_description": "Il nuovo PortaLeo è il centro che contiene tutti servizi offerti dal multidistretto Leo 108 per i soci e/o club!",
+  "wiki_leo": "WikiLeo",
+  "resources": "risorse",
+  "downloads": "download",
+  "edit": "modifica",
+  "info_edit_activity": "Qui potrai modificare l'attività selezionata!\n\nBuona modifica! \uD83D\uDE01",
+  "info_edit_service": "Qui potrai modificare il service selezionato!\n\nBuona modifica! \uD83D\uDE01"
 }

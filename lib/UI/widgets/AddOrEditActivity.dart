@@ -19,15 +19,19 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter/material.dart';
 
 
-class AddActivity extends StatefulWidget {
-  AddActivity({Key key}) : super(key: key);
+class AddOrEditActivity extends StatefulWidget {
+  final Activity activity;
+
+
+  AddOrEditActivity({Key key, this.activity}) : super(key: key);
 
   @override
-  _AddActivity createState() => _AddActivity();
+  _AddOrEditActivity createState() => _AddOrEditActivity(activity);
 }
 
-class _AddActivity extends GlobalState<AddActivity> {
-  Activity _newActivity = Activity.newCreation();
+class _AddOrEditActivity extends GlobalState<AddOrEditActivity> {
+  Activity _currentActivity = Activity.newCreation();
+  bool _editing = false;
 
   TextEditingController _dateTextController = TextEditingController();
   TextEditingController _autocompleteSatisfactionDegreeController = TextEditingController();
@@ -39,9 +43,16 @@ class _AddActivity extends GlobalState<AddActivity> {
   List<SatisfactionDegree> _allSatisfactionDegrees;
   List<TypeActivity> _allTypes;
 
-  bool _isAdding = false;
+  bool _processing = false;
   bool _firstLoad = true;
 
+
+  _AddOrEditActivity(Activity activity) {
+    if ( activity != null ) {
+      _currentActivity = activity;
+      _editing = true;
+    }
+  }
 
   @override
   void refreshState() {
@@ -51,8 +62,8 @@ class _AddActivity extends GlobalState<AddActivity> {
       _firstLoad = false;
     }
     Activity justAdded = ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED_ACTIVITY);
-    if ( _isAdding ) {
-      _isAdding = false;
+    if ( _processing ) {
+      _processing = false;
       if ( justAdded == null && ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_MESSAGE) ) {
         showErrorDialog(context, AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_MESSAGE)));
       }
@@ -65,10 +76,22 @@ class _AddActivity extends GlobalState<AddActivity> {
 
   @override
   Widget build(BuildContext context) {
-    _dateTextController.text = _newActivity.date.toStringSlashed();
+    _dateTextController.text = _currentActivity.date.toStringSlashed();
+    if ( _editing ) {
+      _inputFieldTitleController.text = _currentActivity.title;
+      _inputFieldDescriptionController.text = _currentActivity.description;
+      _inputFieldParticipantsController.text = _currentActivity.quantityLeo.toString();
+      _autocompleteSatisfactionDegreeController.text = _currentActivity.satisfactionDegree.toString();
+      _autocompleteCityController.text = _currentActivity.city.toString();
+      for ( TypeActivity type in _allTypes ) {
+        if ( _currentActivity.typesActivity.contains(type) ) {
+          type.selected = true;
+        }
+      }
+    }
     return Container(
       width: MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.2,
-      child: _isAdding ?
+      child: _processing ?
       Center(
         child: CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).buttonColor),
@@ -81,10 +104,10 @@ class _AddActivity extends GlobalState<AddActivity> {
               Flexible(
                 child: InputField(
                   labelText: AppLocalizations.of(context).translate("title") + "*",
-                  maxLength: 50,
+                  maxLength: 30,
                   controller: _inputFieldTitleController,
                   onChanged: (String value) {
-                    _newActivity.title = value;
+                    _currentActivity.title = value;
                   },
                 ),
               ),
@@ -99,7 +122,7 @@ class _AddActivity extends GlobalState<AddActivity> {
                       minTime: DateTime(2000, 1, 1),
                       maxTime: DateTime.now(),
                       onConfirm: (date) {
-                        _newActivity.date = date;
+                        _currentActivity.date = date;
                         _dateTextController.text = date.toStringSlashed();
                       },
                       currentTime: DateTime.now(),
@@ -119,7 +142,7 @@ class _AddActivity extends GlobalState<AddActivity> {
                   controller: _inputFieldDescriptionController,
                   multiline: true,
                   onChanged: (String value) {
-                    _newActivity.description = value;
+                    _currentActivity.description = value;
                   },
                 ),
               ),
@@ -133,7 +156,7 @@ class _AddActivity extends GlobalState<AddActivity> {
                   controller: _inputFieldParticipantsController,
                   keyboardType: TextInputType.number,
                   onChanged: (String value) {
-                    _newActivity.quantityLeo = int.parse(value);
+                    _currentActivity.quantityLeo = int.parse(value);
                   },
                 ),
               ),
@@ -147,7 +170,7 @@ class _AddActivity extends GlobalState<AddActivity> {
                   },
                   onSelect: (suggestion) {
                     _autocompleteSatisfactionDegreeController.text = suggestion.toString();
-                    _newActivity.satisfactionDegree = suggestion;
+                    _currentActivity.satisfactionDegree = suggestion;
                   },
                 ),
               ),
@@ -181,11 +204,11 @@ class _AddActivity extends GlobalState<AddActivity> {
                           setState(() {
                             _allTypes[index].selected = !_allTypes[index].selected;
                             if ( _allTypes[index].selected ) {
-                              _newActivity.typesActivity.add(_allTypes[index]);
+                              _currentActivity.typesActivity.add(_allTypes[index]);
                             }
                             else {
-                              if ( _newActivity.typesActivity.contains(_allTypes[index]) ) {
-                                _newActivity.typesActivity.remove(_allTypes[index]);
+                              if ( _currentActivity.typesActivity.contains(_allTypes[index]) ) {
+                                _currentActivity.typesActivity.remove(_allTypes[index]);
                               }
                             }
                           });
@@ -220,10 +243,10 @@ class _AddActivity extends GlobalState<AddActivity> {
                         children: [
                           CircularCheckBoxTitle(
                               title: AppLocalizations.of(context).translate("yes"),
-                              value: _newActivity.lionsParticipation,
+                              value: _currentActivity.lionsParticipation,
                               onChanged: ( bool x ) {
                                 setState(() {
-                                  _newActivity.lionsParticipation = !_newActivity.lionsParticipation;
+                                  _currentActivity.lionsParticipation = !_currentActivity.lionsParticipation;
                                 });
                               }
                           ),
@@ -246,7 +269,7 @@ class _AddActivity extends GlobalState<AddActivity> {
                   },
                   onSelect: (suggestion) {
                     _autocompleteCityController.text = suggestion.toString();
-                    _newActivity.city = suggestion;
+                    _currentActivity.city = suggestion;
                   },
                 ),
               ),
@@ -254,35 +277,35 @@ class _AddActivity extends GlobalState<AddActivity> {
                 onPressed: () async {
                   bool fieldNotSpecified = false;
                   String message = AppLocalizations.of(context).translate("these_field_are_missed") + "\n";
-                  if ( _newActivity.title == null || _newActivity.title == "" ) {
+                  if ( _currentActivity.title == null || _currentActivity.title == "" ) {
                     message += "\n" + AppLocalizations.of(context).translate("title");
                     fieldNotSpecified = true;
                   }
-                  if ( _newActivity.description == null || _newActivity.description == "" ) {
+                  if ( _currentActivity.description == null || _currentActivity.description == "" ) {
                     message += "\n" + AppLocalizations.of(context).translate("description");
                     fieldNotSpecified = true;
                   }
-                  if ( _newActivity.date == null ) {
+                  if ( _currentActivity.date == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("date");
                     fieldNotSpecified = true;
                   }
-                  if ( _newActivity.quantityLeo == null ) {
+                  if ( _currentActivity.quantityLeo == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("quantity_participants");
                     fieldNotSpecified = true;
                   }
-                  if ( _newActivity.lionsParticipation == null ) {
+                  if ( _currentActivity.lionsParticipation == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("lions_participation");
                     fieldNotSpecified = true;
                   }
-                  if ( _newActivity.city == null ) {
+                  if ( _currentActivity.city == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("city");
                     fieldNotSpecified = true;
                   }
-                  if ( _newActivity.satisfactionDegree == null ) {
+                  if ( _currentActivity.satisfactionDegree == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("satisfaction_degree");
                     fieldNotSpecified = true;
                   }
-                  if ( _newActivity.typesActivity.isEmpty ) {
+                  if ( _currentActivity.typesActivity.isEmpty ) {
                     message += "\n" + AppLocalizations.of(context).translate("types_activity");
                     fieldNotSpecified = true;
                   }
@@ -290,13 +313,18 @@ class _AddActivity extends GlobalState<AddActivity> {
                     showErrorDialog(context, message);
                   }
                   else {
-                    ModelFacade.sharedInstance.addActivity(_newActivity);
+                    if ( _editing ) {
+                      ModelFacade.sharedInstance.editActivity(_currentActivity);
+                    }
+                    else {
+                      ModelFacade.sharedInstance.addActivity(_currentActivity);
+                    }
                     setState(() {
-                      _isAdding = true;
+                      _processing = true;
                     });
                   }
                 },
-                icon: Icons.add_rounded,
+                icon: _editing ? Icons.edit_rounded : Icons.add_rounded,
               ),
             ],
           ),

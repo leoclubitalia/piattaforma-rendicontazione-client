@@ -17,7 +17,7 @@ class RestManager {
 
 
   Future<String> _makeRequest(String serverAddress, String servicePath, String method, TypeHeader type, {Map<String, String> value, dynamic body}) async {
-    Uri uri = Uri.https(serverAddress, servicePath, value);
+    Uri uri = Uri.http(serverAddress, servicePath, value);
     bool errorOccurred = false;
     while ( true ) {
       try {
@@ -30,6 +30,7 @@ class RestManager {
           formattedBody = json.encode(body);
         }
         else if ( type == TypeHeader.urlencoded ) {
+          uri = Uri.https(serverAddress, servicePath, value);
           contentType = "application/x-www-form-urlencoded";
           formattedBody = body.keys.map((key) => "$key=${body[key]}").join("&");
         }
@@ -67,6 +68,7 @@ class RestManager {
         }
         return response.body;
       } catch(err) {
+        print(err);
         if ( delegate != null && !errorOccurred ) {
           delegate.errorNetworkOccurred(Constants.MESSAGE_CONNECTION_ERROR);
           errorOccurred = true;

@@ -32,5 +32,9 @@ class TypeActivity extends Cloneable {
     return name;
   }
 
+  bool operator == (other) {
+    return (other is TypeActivity && other.id == id);
+  }
+
 
 }

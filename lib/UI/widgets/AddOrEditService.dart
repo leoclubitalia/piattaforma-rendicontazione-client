@@ -20,15 +20,19 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter/material.dart';
 
 
-class AddService extends StatefulWidget {
-  AddService({Key key}) : super(key: key);
+class AddOrEditService extends StatefulWidget {
+  final Service service;
+
+
+  AddOrEditService({Key key, this.service}) : super(key: key);
 
   @override
-  _AddService createState() => _AddService();
+  _AddOrEditService createState() => _AddOrEditService(service);
 }
 
-class _AddService extends GlobalState<AddService> {
-  Service _newService = Service.newCreation();
+class _AddOrEditService extends GlobalState<AddOrEditService> {
+  Service _currentService = Service.newCreation();
+  bool _editing = false;
 
   TextEditingController _dateTextController = TextEditingController();
   TextEditingController _autocompleteSatisfactionDegreeController = TextEditingController();
@@ -45,9 +49,16 @@ class _AddService extends GlobalState<AddService> {
   List<TypeService> _allTypes;
   List<CompetenceArea> _allAreas;
 
-  bool _isAdding = false;
+  bool _processing = false;
   bool _firstLoad = true;
 
+
+  _AddOrEditService(Service service) {
+    if ( service != null ) {
+      _currentService = service;
+      _editing = true;
+    }
+  }
 
   @override
   void refreshState() {
@@ -58,8 +69,8 @@ class _AddService extends GlobalState<AddService> {
       _firstLoad = false;
     }
     Service justAdded = ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED_SERVICE);
-    if ( _isAdding ) {
-      _isAdding = false;
+    if ( _processing ) {
+      _processing = false;
       if ( justAdded == null && ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_MESSAGE) ) {
         showErrorDialog(context, AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_MESSAGE)));
       }
@@ -72,10 +83,36 @@ class _AddService extends GlobalState<AddService> {
 
   @override
   Widget build(BuildContext context) {
-    _dateTextController.text = _newService.date.toStringSlashed();
+    _dateTextController.text = _currentService.date.toStringSlashed();
+    if ( _editing ) {
+      _inputFieldTitleController.text = _currentService.title;
+      _inputFieldDescriptionController.text = _currentService.description;
+      _autocompleteCityController.text = _currentService.city.toString();
+      _autocompleteSatisfactionDegreeController.text = _currentService.satisfactionDegree.toString();
+      if ( _currentService.quantityParticipants != null ) {
+        _inputFieldParticipantsController.text = _currentService.quantityParticipants.toString();
+      }
+      if ( _currentService.quantityServedPeople != null ) {
+        _inputFieldServedPeopleController.text = _currentService.quantityServedPeople.toString();
+      }
+      if ( _currentService.duration != null ) {
+        _inputFieldDurationController.text = _currentService.duration.toString();
+      }
+      _inputFieldMoneyOrMaterialCollectedController.text = _currentService.moneyOrMaterialCollected;
+      for ( TypeService type in _allTypes ) {
+        if ( _currentService.typesService.contains(type) ) {
+          type.selected = true;
+        }
+      }
+      for ( CompetenceArea area in _allAreas ) {
+        if ( _currentService.competenceAreasService.contains(area) ) {
+          area.selected = true;
+        }
+      }
+    }
     return Container(
       width: MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.2,
-      child: _isAdding ?
+      child: _processing ?
       Center(
         child: CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).buttonColor),
@@ -88,10 +125,10 @@ class _AddService extends GlobalState<AddService> {
               Flexible(
                 child: InputField(
                   labelText: AppLocalizations.of(context).translate("title") + "*",
-                  maxLength: 50,
+                  maxLength: 30,
                   controller: _inputFieldTitleController,
                   onChanged: (String value) {
-                    _newService.title = value;
+                    _currentService.title = value;
                   },
                 ),
               ),
@@ -106,7 +143,7 @@ class _AddService extends GlobalState<AddService> {
                       minTime: DateTime(2000, 1, 1),
                       maxTime: DateTime.now(),
                       onConfirm: (date) {
-                        _newService.date = date;
+                        _currentService.date = date;
                         _dateTextController.text = date.toStringSlashed();
                       },
                       currentTime: DateTime.now(),
@@ -126,7 +163,7 @@ class _AddService extends GlobalState<AddService> {
                   controller: _inputFieldDescriptionController,
                   multiline: true,
                   onChanged: (String value) {
-                    _newService.description = value;
+                    _currentService.description = value;
                   },
                 ),
               ),
@@ -143,7 +180,7 @@ class _AddService extends GlobalState<AddService> {
                   },
                   onSelect: (suggestion) {
                     _autocompleteCityController.text = suggestion.toString();
-                    _newService.city = suggestion;
+                    _currentService.city = suggestion;
                   },
                 ),
               ),
@@ -157,7 +194,7 @@ class _AddService extends GlobalState<AddService> {
                   },
                   onSelect: (suggestion) {
                     _autocompleteSatisfactionDegreeController.text = suggestion.toString();
-                    _newService.satisfactionDegree = suggestion;
+                    _currentService.satisfactionDegree = suggestion;
                   },
                 ),
               ),
@@ -171,7 +208,7 @@ class _AddService extends GlobalState<AddService> {
                   controller: _inputFieldParticipantsController,
                   keyboardType: TextInputType.number,
                   onChanged: (String value) {
-                    _newService.quantityParticipants = int.parse(value);
+                    _currentService.quantityParticipants = int.parse(value);
                   },
                 ),
               ),
@@ -181,7 +218,7 @@ class _AddService extends GlobalState<AddService> {
                   controller: _inputFieldServedPeopleController,
                   keyboardType: TextInputType.number,
                   onChanged: (String value) {
-                    _newService.quantityServedPeople = int.parse(value);
+                    _currentService.quantityServedPeople = int.parse(value);
                   },
                 ),
               ),
@@ -195,7 +232,7 @@ class _AddService extends GlobalState<AddService> {
                   controller: _inputFieldDurationController,
                   keyboardType: TextInputType.number,
                   onChanged: (String value) {
-                    _newService.duration = int.parse(value);
+                    _currentService.duration = int.parse(value);
                   },
                 ),
               ),
@@ -205,7 +242,7 @@ class _AddService extends GlobalState<AddService> {
                   controller: _inputFieldMoneyOrMaterialCollectedController,
                   maxLength: 100,
                   onChanged: (String value) {
-                    _newService.moneyOrMaterialCollected = value;
+                    _currentService.moneyOrMaterialCollected = value;
                   },
                 ),
               ),
@@ -241,11 +278,11 @@ class _AddService extends GlobalState<AddService> {
                                 setState(() {
                                   _allAreas[index].selected = !_allAreas[index].selected;
                                   if ( _allAreas[index].selected ) {
-                                    _newService.competenceAreasService.add(_allAreas[index]);
+                                    _currentService.competenceAreasService.add(_allAreas[index]);
                                   }
                                   else {
-                                    if ( _newService.competenceAreasService.contains(_allAreas[index]) ) {
-                                      _newService.competenceAreasService.remove(_allAreas[index]);
+                                    if ( _currentService.competenceAreasService.contains(_allAreas[index]) ) {
+                                      _currentService.competenceAreasService.remove(_allAreas[index]);
                                     }
                                   }
                                 });
@@ -297,11 +334,11 @@ class _AddService extends GlobalState<AddService> {
                           setState(() {
                             _allTypes[index].selected = !_allTypes[index].selected;
                             if ( _allTypes[index].selected ) {
-                              _newService.typesService.add(_allTypes[index]);
+                              _currentService.typesService.add(_allTypes[index]);
                             }
                             else {
-                              if ( _newService.typesService.contains(_allTypes[index]) ) {
-                                _newService.typesService.remove(_allTypes[index]);
+                              if ( _currentService.typesService.contains(_allTypes[index]) ) {
+                                _currentService.typesService.remove(_allTypes[index]);
                               }
                             }
                           });
@@ -321,7 +358,7 @@ class _AddService extends GlobalState<AddService> {
                   controller: _inputFieldOtherAssociationsController,
                   maxLength: 400,
                   onChanged: (String value) {
-                    _newService.otherAssociations = value;
+                    _currentService.otherAssociations = value;
                   },
                 ),
               ),
@@ -329,27 +366,27 @@ class _AddService extends GlobalState<AddService> {
                 onPressed: () async {
                   bool fieldNotSpecified = false;
                   String message = AppLocalizations.of(context).translate("these_field_are_missed") + "\n";
-                  if ( _newService.title == null || _newService.title == "" ) {
+                  if ( _currentService.title == null || _currentService.title == "" ) {
                     message += "\n" + AppLocalizations.of(context).translate("title");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.description == null || _newService.description == "" ) {
+                  if ( _currentService.description == null || _currentService.description == "" ) {
                     message += "\n" + AppLocalizations.of(context).translate("description");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.date == null ) {
+                  if ( _currentService.date == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("date");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.city == null ) {
+                  if ( _currentService.city == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("city");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.satisfactionDegree == null ) {
+                  if ( _currentService.satisfactionDegree == null ) {
                     message += "\n" + AppLocalizations.of(context).translate("satisfaction_degree");
                     fieldNotSpecified = true;
                   }
-                  if ( _newService.competenceAreasService.isEmpty ) {
+                  if ( _currentService.competenceAreasService.isEmpty ) {
                     message += "\n" + AppLocalizations.of(context).translate("areas");
                     fieldNotSpecified = true;
                   }
@@ -357,13 +394,18 @@ class _AddService extends GlobalState<AddService> {
                     showErrorDialog(context, message);
                   }
                   else {
-                    ModelFacade.sharedInstance.addService(_newService);
+                    if ( _editing ) {
+                      ModelFacade.sharedInstance.editService(_currentService);
+                    }
+                    else {
+                      ModelFacade.sharedInstance.addService(_currentService);
+                    }
                     setState(() {
-                      _isAdding = true;
+                      _processing = true;
                     });
                   }
                 },
-                icon: Icons.add_rounded,
+                icon: _editing ? Icons.edit_rounded : Icons.add_rounded,
               ),
             ],
           ),

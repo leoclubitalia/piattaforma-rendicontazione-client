@@ -30,6 +30,9 @@ class CompetenceArea extends Cloneable {
     return name;
   }
 
+  bool operator == (other) {
+    return (other is CompetenceArea && other.id == id);
+  }
 
 
 }

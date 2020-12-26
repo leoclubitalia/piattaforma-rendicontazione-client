@@ -420,19 +420,38 @@ class ModelFacade implements ErrorListener {
     }
   }
 
+  void editService(Service service) async {
+    try {
+      _parsingManager.parseService(await _restManager.makePostRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_EDIT_SERVICE, service));
+      appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, service);
+    }
+    catch (e) {
+      appState.addValue(Constants.STATE_MESSAGE, "message_error");
+    }
+  }
+
   void addActivity(Activity activity) async {
     activity.club = _currentClub;
     try {
       activity = _parsingManager.parseActivity(await _restManager.makePostRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_ADD_ACTIVITY, activity));
-      appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
       Club club = appState.getValue(Constants.STATE_CLUB);
       club.quantityActivities.currentYear ++;
       club.quantityActivities.all ++;
       appState.updateValue(Constants.STATE_CLUB, club);
-      appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, activity);
+      appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
       List<Activity> activities = appState.getAndDestroyValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
       activities.insert(0, activity);
       appState.addValue(Constants.STATE_SEARCH_ACTIVITY_RESULT, activities);
+    }
+    catch (e) {
+      appState.addValue(Constants.STATE_MESSAGE, "message_error");
+    }
+  }
+
+  void editActivity(Activity activity) async {
+    try {
+      _parsingManager.parseActivity(await _restManager.makePostRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_EDIT_ACTIVITY, activity));
+      appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
     }
     catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");

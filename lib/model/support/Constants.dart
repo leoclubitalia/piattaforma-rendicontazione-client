@@ -28,6 +28,8 @@ class Constants {
   static final String REQUEST_SEARCH_ALL_SATISFACTION_DEGREES = "/search/satisfaction_degree/all";
   static final String REQUEST_ADD_SERVICE = "/services";
   static final String REQUEST_ADD_ACTIVITY = "/activities";
+  static final String REQUEST_EDIT_SERVICE = "/services/edit";
+  static final String REQUEST_EDIT_ACTIVITY = "/activities/edit";
 
   static final String STATE_CLUB = "club";
   static final String STATE_ALL_SATISFACTION_DEGREES = "all_satisfaction_degrees";

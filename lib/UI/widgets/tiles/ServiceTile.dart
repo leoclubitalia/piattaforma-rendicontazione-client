@@ -1,6 +1,9 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/UIConstants.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/AddOrEditService.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/RoundedDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
@@ -131,25 +134,6 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                     ],
                   ),
                   Column(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context).translate("areas") + ":",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      service.competenceAreasService == null ?
-                      Text(
-                        AppLocalizations.of(context).translate("no_one") + "!",
-                      ) :
-                      Column(
-                        children: <Widget>[
-                          for( var item in service.competenceAreasService ) Text(item.name)
-                        ],
-                      ),
-                    ],
-                  ),
-                  Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       RichText(
@@ -182,19 +166,56 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                                 fontStyle: FontStyle.italic,
                               ),
                             ),
-                            TextSpan(text: "\n"),
-                            TextSpan(
-                                text: AppLocalizations.of(context).translate("duration")
-                            ),
-                            TextSpan(text: ": "),
-                            TextSpan(
-                              text: service.duration == null ? UIConstants.NOT_DEFINED_TEXT : service.duration.toString() + " h",
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
                           ],
                         ),
+                      ),
+                      ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB) != null &&
+                      ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB).id == service.club.id ?
+                      IconButton(
+                        icon: Icon(Icons.edit_rounded),
+                        iconSize: 20,
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => RoundedDialog(
+                              title: Stack(
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    child: Text(
+                                      AppLocalizations.of(context).translate("edit").capitalize,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: 0,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => MessageDialog(
+                                            titleText: AppLocalizations.of(context).translate("info").capitalize,
+                                            bodyText: AppLocalizations.of(context).translate("info_edit_service"),
+                                          ),
+                                        );
+                                      },
+                                      child: Icon(
+                                        Icons.info_outline,
+                                        size: 26.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              body: AddOrEditService(
+                                service: service,
+                              ),
+                            ),
+                          );
+                        },
+                      ) :
+                      Padding(
+                          padding: EdgeInsets.all(5)
                       ),
                     ],
                   ),
@@ -205,6 +226,43 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                 sizeFactor: collapseAnimation,
                 child: Column(
                   children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Row(
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.start,
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).splashColor,
+                                fontStyle: FontStyle.normal,
+                              ),
+                              children: [
+                                TextSpan(
+                                    text: AppLocalizations.of(context).translate("areas")
+                                ),
+                                TextSpan(text: ": "),
+                                for( var item in service.competenceAreasService )
+                                  TextSpan(
+                                    text: item.name + " ",
+                                    style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                service.competenceAreasService == null || service.competenceAreasService.length == 0 ?
+                                TextSpan(
+                                    text: AppLocalizations.of(context).translate("no_one").capitalize
+                                ) :
+                                TextSpan(
+                                    text: ""
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: Row(
@@ -290,6 +348,35 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                                 TextSpan(text: ": "),
                                 TextSpan(
                                   text: service.moneyOrMaterialCollected == null ? UIConstants.NOT_DEFINED_TEXT : service.moneyOrMaterialCollected,
+                                  style: TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Row(
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.start,
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).splashColor,
+                                fontStyle: FontStyle.normal,
+                              ),
+                              children: [
+                                TextSpan(
+                                    text: AppLocalizations.of(context).translate("duration").capitalize
+                                ),
+                                TextSpan(text: ": "),
+                                TextSpan(
+                                  text: service.duration == null ? UIConstants.NOT_DEFINED_TEXT : service.duration.toString() + " h",
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                   ),

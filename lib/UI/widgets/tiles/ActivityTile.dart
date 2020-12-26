@@ -1,6 +1,11 @@
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/AddOrEditActivity.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/RoundedDialog.dart';
+import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Activity.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:flutter/material.dart';
@@ -128,25 +133,6 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
                     ],
                   ),
                   Column(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context).translate("type_activity") + ":",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      activity.typesActivity == null ?
-                      Text(
-                        AppLocalizations.of(context).translate("no_one") + "!",
-                      ) :
-                      Column(
-                        children: <Widget>[
-                          for( var item in activity.typesActivity ) Text(item.name)
-                        ],
-                      ),
-                    ],
-                  ),
-                  Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       RichText(
@@ -171,6 +157,57 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
                           ],
                         ),
                       ),
+                      Padding(
+                          padding: EdgeInsets.all(10)
+                      ),
+                      ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB) != null &&
+                      ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB).id == activity.club.id ?
+                      IconButton(
+                        icon: Icon(Icons.edit_rounded),
+                        iconSize: 20,
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => RoundedDialog(
+                              title: Stack(
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    child: Text(
+                                      AppLocalizations.of(context).translate("edit").capitalize,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: 0,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => MessageDialog(
+                                            titleText: AppLocalizations.of(context).translate("info").capitalize,
+                                            bodyText: AppLocalizations.of(context).translate("info_edit_activity"),
+                                          ),
+                                        );
+                                      },
+                                      child: Icon(
+                                        Icons.info_outline,
+                                        size: 26.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              body: AddOrEditActivity(
+                                activity: activity,
+                              ),
+                            ),
+                          );
+                        },
+                      ) :
+                      Padding(
+                          padding: EdgeInsets.all(5)
+                      ),
                     ],
                   ),
                 ],
@@ -180,6 +217,43 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
                 sizeFactor: collapseAnimation,
                 child: Column(
                   children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Row(
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.start,
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Theme.of(context).splashColor,
+                                fontStyle: FontStyle.normal,
+                              ),
+                              children: [
+                                TextSpan(
+                                    text: AppLocalizations.of(context).translate("type_activity").capitalize
+                                ),
+                                TextSpan(text: ": "),
+                                for( var item in activity.typesActivity )
+                                  TextSpan(
+                                    text: item.name + " ",
+                                    style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                activity.typesActivity == null || activity.typesActivity.length == 0 ?
+                                TextSpan(
+                                    text: AppLocalizations.of(context).translate("no_one").capitalize
+                                ) :
+                                TextSpan(
+                                    text: ""
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: Row(

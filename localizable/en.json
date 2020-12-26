@@ -80,5 +80,11 @@
   "go_to": "Go to",
   "yearbook": "yearbook",
   "request_ton": "ton requests",
-  "hub_description": "The new PortaLeo is the center that contains all the services offered by the Leo 108 multidistrict for members and/or clubs!"
+  "hub_description": "The new PortaLeo is the center that contains all the services offered by the Leo 108 multidistrict for members and/or clubs!",
+  "wiki_leo": "WikiLeo",
+  "resources": "resources",
+  "downloads": "downloads",
+  "edit": "edit",
+  "info_edit_activity": "Here you can edit the selected activity!\n\nHappy editing! \uD83D\uDE01",
+  "info_edit_service": "Here you can ediit the selected service!\n\nHappy editing! \uD83D\uDE01"
 }

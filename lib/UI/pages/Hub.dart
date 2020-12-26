@@ -84,7 +84,7 @@ class _HubState extends GlobalState<Hub> {
                     ),
                     StadiumButton(
                       icon: Icons.book,
-                      minWidth: 200,
+                      minWidth: 190,
                       title: AppLocalizations.of(context).translate("yearbook"),
                       onPressed: () async {
                         await launch("https://annuario.leoclub.it");
@@ -92,7 +92,7 @@ class _HubState extends GlobalState<Hub> {
                     ),
                     StadiumButton(
                       icon: Icons.assessment_rounded,
-                      minWidth: 200,
+                      minWidth: 190,
                       title: AppLocalizations.of(context).translate("rendicontation"),
                       onPressed: () async {
                         setState(() {
@@ -127,11 +127,40 @@ class _HubState extends GlobalState<Hub> {
                     ),
                     StadiumButton(
                       icon: Icons.medical_services_rounded,
-                      minWidth: 200,
+                      minWidth: 190,
                       title: AppLocalizations.of(context).translate("request_ton"),
                       onPressed: () async {
                         await launch("https://richiesteton.leoclub.it");
                       },
+                    ),
+                    StadiumButton(
+                      icon: Icons.bookmark_rounded,
+                      minWidth: 190,
+                      title: AppLocalizations.of(context).translate("wiki_leo"),
+                      onPressed: () async {
+                        await launch("https://wikileo.leoclub.it/");
+                      },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        StadiumButton(
+                          icon: Icons.arrow_downward_rounded,
+                          minWidth: 150,
+                          title: AppLocalizations.of(context).translate("downloads"),
+                          onPressed: () async {
+                            await launch("https://drive.google.com/drive/folders/1Vn2K1OMnXjA5ShE03nsfw4V7YxpElIUf");
+                          },
+                        ),
+                        StadiumButton(
+                          icon: Icons.star_rounded,
+                          minWidth: 150,
+                          title: AppLocalizations.of(context).translate("resources"),
+                          onPressed: () async {
+                            await launch("https://www.leoclub.it/risorse-soci/");
+                          },
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(10, 50, 10, 10),

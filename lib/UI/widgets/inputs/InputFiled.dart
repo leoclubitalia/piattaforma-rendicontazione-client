@@ -34,7 +34,7 @@ class InputField extends StatelessWidget {
         onSubmitted: onSubmit,
         onTap: onTap,
         controller: controller,
-        cursorColor: Theme.of(context).hoverColor,
+        cursorColor: Theme.of(context).splashColor,
         style: TextStyle(height: 1.0),
         decoration: InputDecoration(
           fillColor: Theme.of(context).primaryColor,

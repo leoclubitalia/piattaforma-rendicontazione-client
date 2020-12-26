@@ -1,7 +1,7 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/AddActivity.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/AddOrEditActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/CircularIconButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';
@@ -195,7 +195,7 @@ class _Activities extends GlobalState<Activities> {
             ),
           ],
         ),
-        body: AddActivity(),
+        body: AddOrEditActivity(),
       ),
     );
   }

@@ -32,5 +32,9 @@ class TypeService extends Cloneable {
     return name;
   }
 
+  bool operator == (other) {
+    return (other is TypeService && other.id == id);
+  }
+
 
 }
