@@ -10,7 +10,7 @@ class Constants {
   static final String LINK_FIRST_SETUP_PASSWORD = "https://" + ADDRESS_AUTHENTICATION_SERVER + "/auth/realms/" + REALM + "/protocol/openid-connect/auth?response_type=code&client_id=" + CLIENT_ID + "&redirect_uri=https://" + ADDRESS_CLIENT;
   static final String LINK_RESET_PASSWORD = "https://" + ADDRESS_AUTHENTICATION_SERVER + "/auth/realms/" + REALM + "/login-actions/reset-credentials?client_id=account";
   static final String REQUEST_LOGIN = "/auth/realms/" + REALM + "/protocol/openid-connect/token";
-  static final String REQUEST_LOGOUT = "auth/realms/" + REALM + "/protocol/openid-connect/logout";
+  static final String REQUEST_LOGOUT = "/auth/realms/" + REALM + "/protocol/openid-connect/logout";
 
   static final String REQUEST_INFO_CLUB = "/club/details";
   static final String REQUEST_CLUB_QUANTITY_SERVICES = "/club/quantity_services_made";
