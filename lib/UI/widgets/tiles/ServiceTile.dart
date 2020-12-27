@@ -135,7 +135,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                               ),
                               children: [
                                 TextSpan(
-                                    text: AppLocalizations.of(context).translate("satisfaction_degree").capitalize
+                                    text: AppLocalizations.of(context).translate("impact").capitalize
                                 ),
                                 TextSpan(text: ": "),
                                 TextSpan(

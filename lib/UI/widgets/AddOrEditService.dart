@@ -189,7 +189,7 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
               ),
               Flexible(
                 child: InputAutocomplete(
-                  labelText: AppLocalizations.of(context).translate("satisfaction_degree") + "*",
+                  labelText: AppLocalizations.of(context).translate("impact") + "*",
                   controller: _autocompleteSatisfactionDegreeController,
                   typeable: false,
                   onSuggestion: (String pattern) {
@@ -368,51 +368,54 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
                   },
                 ),
               ),
-              CircularIconButton(
-                onPressed: () async {
-                  bool fieldNotSpecified = false;
-                  String message = AppLocalizations.of(context).translate("these_field_are_missed") + "\n";
-                  if ( _currentService.title == null || _currentService.title == "" ) {
-                    message += "\n" + AppLocalizations.of(context).translate("title");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _currentService.description == null || _currentService.description == "" ) {
-                    message += "\n" + AppLocalizations.of(context).translate("description");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _currentService.date == null ) {
-                    message += "\n" + AppLocalizations.of(context).translate("date");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _currentService.city == null ) {
-                    message += "\n" + AppLocalizations.of(context).translate("city");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _currentService.satisfactionDegree == null ) {
-                    message += "\n" + AppLocalizations.of(context).translate("satisfaction_degree");
-                    fieldNotSpecified = true;
-                  }
-                  if ( _currentService.competenceAreasService.isEmpty ) {
-                    message += "\n" + AppLocalizations.of(context).translate("areas");
-                    fieldNotSpecified = true;
-                  }
-                  if ( fieldNotSpecified ) {
-                    showErrorDialog(context, message);
-                  }
-                  else {
-                    if ( _editing ) {
-                      ModelFacade.sharedInstance.editService(_currentService);
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                child: CircularIconButton(
+                  onPressed: () async {
+                    bool fieldNotSpecified = false;
+                    String message = AppLocalizations.of(context).translate("these_field_are_missed") + "\n";
+                    if ( _currentService.title == null || _currentService.title == "" ) {
+                      message += "\n" + AppLocalizations.of(context).translate("title");
+                      fieldNotSpecified = true;
+                    }
+                    if ( _currentService.description == null || _currentService.description == "" ) {
+                      message += "\n" + AppLocalizations.of(context).translate("description");
+                      fieldNotSpecified = true;
+                    }
+                    if ( _currentService.date == null ) {
+                      message += "\n" + AppLocalizations.of(context).translate("date");
+                      fieldNotSpecified = true;
+                    }
+                    if ( _currentService.city == null ) {
+                      message += "\n" + AppLocalizations.of(context).translate("city");
+                      fieldNotSpecified = true;
+                    }
+                    if ( _currentService.satisfactionDegree == null ) {
+                      message += "\n" + AppLocalizations.of(context).translate("impact");
+                      fieldNotSpecified = true;
+                    }
+                    if ( _currentService.competenceAreasService.isEmpty ) {
+                      message += "\n" + AppLocalizations.of(context).translate("areas");
+                      fieldNotSpecified = true;
+                    }
+                    if ( fieldNotSpecified ) {
+                      showErrorDialog(context, message);
                     }
                     else {
-                      ModelFacade.sharedInstance.addService(_currentService);
+                      if ( _editing ) {
+                        ModelFacade.sharedInstance.editService(_currentService);
+                      }
+                      else {
+                        ModelFacade.sharedInstance.addService(_currentService);
+                      }
+                      setState(() {
+                        _processing = true;
+                      });
                     }
-                    setState(() {
-                      _processing = true;
-                    });
-                  }
-                },
-                icon: _editing ? Icons.edit_rounded : Icons.add_rounded,
-              ),
+                  },
+                  icon: _editing ? Icons.edit_rounded : Icons.add_rounded,
+                ),
+              )
             ],
           ),
           Container(

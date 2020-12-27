@@ -1,13 +1,13 @@
 class Constants {
   static final String APP_VERSION = "0.1.2";
   static final String ADDRESS_CLIENT = "portaleo.leoclub.it";
-  static final String ADDRESS_RENDICONTATION_SERVER = "rendicontazione.leoclub.it:2096";
+  static final String ADDRESS_RENDICONTATION_SERVER = "localhost:2096";
   static final String ADDRESS_AUTHENTICATION_SERVER = "rendicontazione.leoclub.it:8443";
   static final String REQUEST_DEFAULT_PAGE_SIZE = "30";
 
   static final String REALM = "rendicontation";
   static final String CLIENT_ID = "rendicontation-flutter";
-  static final String CLIENT_SECRET = "***";
+  static final String CLIENT_SECRET = "8134ee44-0322-4fde-adff-f47e58376c86";
   static final String LINK_FIRST_SETUP_PASSWORD = "https://" + ADDRESS_AUTHENTICATION_SERVER + "/auth/realms/" + REALM + "/protocol/openid-connect/auth?response_type=code&client_id=" + CLIENT_ID + "&redirect_uri=https://" + ADDRESS_CLIENT;
   static final String LINK_RESET_PASSWORD = "https://" + ADDRESS_AUTHENTICATION_SERVER + "/auth/realms/" + REALM + "/login-actions/reset-credentials?client_id=account";
   static final String REQUEST_LOGIN = "/auth/realms/" + REALM + "/protocol/openid-connect/token";

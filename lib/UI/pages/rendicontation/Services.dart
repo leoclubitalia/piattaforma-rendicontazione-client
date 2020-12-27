@@ -46,6 +46,7 @@ class _Services extends GlobalState<Services> {
     _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_SERVICE_RESULT);
     if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_ADDED) ) {
       ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED);
+      showMessageDialog(context, AppLocalizations.of(context).translate("thanks").capitalize);
       refreshTable();
     }
     else {
@@ -218,6 +219,16 @@ class _Services extends GlobalState<Services> {
       _searchResult = null;
       _isSearching = true;
     });
+  }
+
+  void showMessageDialog(BuildContext context, String text) {
+    showDialog(
+      context: context,
+      builder: (context) => MessageDialog(
+        titleText: text,
+        bodyText: "😊",
+      ),
+    );
   }
 
   void refreshTable() { // Isn't good, I know it

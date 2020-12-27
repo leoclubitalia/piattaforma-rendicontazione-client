@@ -99,6 +99,9 @@ class _ExpandableLogInButton extends GlobalState<ExpandableLogInButton> with Tic
                     labelText: AppLocalizations.of(context).translate("password"),
                     controller: _inputFieldPasswordController,
                     isPassword: true,
+                    onSubmit: (_) {
+                      onSubmit(_inputFieldEmailController.text, _inputFieldPasswordController.text);
+                    },
                   ),
                 ),
                 Padding(
