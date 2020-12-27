@@ -1,3 +1,4 @@
+import 'package:RendicontationPlatformLeo_Client/UI/aspects/UIConstants.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/AddOrEditActivity.dart';
@@ -63,153 +64,19 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
+              !isSmallDevice() ?
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        activity.title,
-                        style: TextStyle(
-                          fontSize: 19,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: RichText(
-                          text: TextSpan(
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Theme.of(context).splashColor,
-                            ),
-                            children: [
-                              TextSpan(text: activity.club.name),
-                              TextSpan(text: " "),
-                              TextSpan(
-                                text: AppLocalizations.of(context).translate("district"),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              TextSpan(text: " "),
-                              TextSpan(text: activity.club.district.name),
-                            ],
-                          ),
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Theme.of(context).splashColor,
-                            fontStyle: FontStyle.normal,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: AppLocalizations.of(context).translate("made_in_date")
-                            ),
-                            TextSpan(text: " "),
-                            TextSpan(
-                              text: activity.date.toStringSlashed(),
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                            TextSpan(text: " "),
-                            TextSpan(
-                              text: AppLocalizations.of(context).translate("in_place"),
-                              style: TextStyle(
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                            TextSpan(text: " "),
-                            TextSpan(text: activity.city.name),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      RichText(
-                        textAlign: TextAlign.end,
-                        text: TextSpan(
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Theme.of(context).splashColor,
-                            fontStyle: FontStyle.normal,
-                          ),
-                          children: [
-                            TextSpan(
-                                text: AppLocalizations.of(context).translate("quantity_participants")
-                            ),
-                            TextSpan(text: ": "),
-                            TextSpan(
-                              text: activity.quantityLeo.toString(),
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                          padding: EdgeInsets.all(10)
-                      ),
-                      ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB) != null &&
-                      ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB).id == activity.club.id ?
-                      IconButton(
-                        icon: Icon(Icons.edit_rounded),
-                        iconSize: 20,
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => RoundedDialog(
-                              title: Stack(
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    child: Text(
-                                      AppLocalizations.of(context).translate("edit").capitalize,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) => MessageDialog(
-                                            titleText: AppLocalizations.of(context).translate("info").capitalize,
-                                            bodyText: AppLocalizations.of(context).translate("info_edit_activity"),
-                                          ),
-                                        );
-                                      },
-                                      child: Icon(
-                                        Icons.info_outline,
-                                        size: 26.0,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              body: AddOrEditActivity(
-                                activity: activity,
-                              ),
-                            ),
-                          );
-                        },
-                      ) :
-                      Padding(
-                          padding: EdgeInsets.all(5)
-                      ),
-                    ],
-                  ),
+                  leftContent(),
+                  rightContent(),
+                ],
+              ) :
+              Stack(
+                children: [
+                  leftContent(),
+                  rightContent(),
                 ],
               ),
               SizeTransition(
@@ -312,6 +179,16 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
                         ],
                       ),
                     ),
+                    !isSmallDevice() ?
+                    Container() :
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Row(
+                        children: [
+                          showQuatities(TextAlign.start),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
                       child: Text(
@@ -329,6 +206,173 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
           )
         ),
       ),
+    );
+  }
+
+  bool isSmallDevice() {
+    return MediaQuery.of(context).size.width <= UIConstants.WIDTH_SMALL_DEVICE;
+  }
+
+  bool isOwner() {
+    return ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB) != null &&
+           ModelFacade.sharedInstance.appState.getValue(Constants.STATE_CLUB).id == activity.club.id;
+  }
+
+  Widget rightContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        isSmallDevice() ?
+        Container() :
+        showQuatities(TextAlign.end),
+        isOwner() ?
+        IconButton(
+          icon: Icon(Icons.edit_rounded),
+          iconSize: 20,
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => RoundedDialog(
+                title: Stack(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child: Text(
+                        AppLocalizations.of(context).translate("edit").capitalize,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => MessageDialog(
+                              titleText: AppLocalizations.of(context).translate("info").capitalize,
+                              bodyText: AppLocalizations.of(context).translate("info_edit_activity"),
+                            ),
+                          );
+                        },
+                        child: Icon(
+                          Icons.info_outline,
+                          size: 26.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                body: AddOrEditActivity(
+                  activity: activity,
+                ),
+              ),
+            );
+          },
+        ) :
+        Padding(
+            padding: EdgeInsets.all(5)
+        ),
+      ],
+    );
+  }
+
+  Widget leftContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          activity.title,
+          style: TextStyle(
+            fontSize: 19,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+          child: RichText(
+            text: TextSpan(
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                color: Theme.of(context).splashColor,
+              ),
+              children: [
+                TextSpan(text: activity.club.name),
+                TextSpan(text: " "),
+                TextSpan(
+                  text: AppLocalizations.of(context).translate("district"),
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                TextSpan(text: " "),
+                TextSpan(text: activity.club.district.name),
+              ],
+            ),
+          ),
+        ),
+        RichText(
+          text: TextSpan(
+            style: TextStyle(
+              fontSize: 15,
+              color: Theme.of(context).splashColor,
+              fontStyle: FontStyle.normal,
+            ),
+            children: [
+              TextSpan(
+                  text: AppLocalizations.of(context).translate("made_in_date")
+              ),
+              TextSpan(text: " "),
+              TextSpan(
+                text: activity.date.toStringSlashed(),
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              TextSpan(text: " "),
+              TextSpan(
+                text: AppLocalizations.of(context).translate("in_place"),
+                style: TextStyle(
+                  fontStyle: FontStyle.normal,
+                ),
+              ),
+              TextSpan(text: " "),
+              TextSpan(text: activity.city.name),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget showQuatities(TextAlign alignement) {
+    return Column (
+      children: [
+        Container(
+          width: 143,
+          child: RichText(
+            textAlign: alignement,
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: 15,
+                color: Theme.of(context).splashColor,
+                fontStyle: FontStyle.normal,
+              ),
+              children: [
+                TextSpan(
+                    text: AppLocalizations.of(context).translate("quantity_participants").capitalize
+                ),
+                TextSpan(text: ": "),
+                TextSpan(
+                  text: activity.quantityLeo.toString(),
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 

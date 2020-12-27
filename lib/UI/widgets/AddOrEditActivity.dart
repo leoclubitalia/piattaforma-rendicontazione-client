@@ -104,7 +104,7 @@ class _AddOrEditActivity extends GlobalState<AddOrEditActivity> {
               Flexible(
                 child: InputField(
                   labelText: AppLocalizations.of(context).translate("title") + "*",
-                  maxLength: 30,
+                  maxLength: 35,
                   controller: _inputFieldTitleController,
                   onChanged: (String value) {
                     _currentActivity.title = value;
@@ -112,23 +112,26 @@ class _AddOrEditActivity extends GlobalState<AddOrEditActivity> {
                 ),
               ),
               Flexible(
-                child: InputButton(
-                  text: AppLocalizations.of(context).translate("date") + "*",
-                  controller: _dateTextController,
-                  onPressed: () {
-                    DatePicker.showDatePicker(
-                      context,
-                      showTitleActions: true,
-                      minTime: DateTime(2000, 1, 1),
-                      maxTime: DateTime.now(),
-                      onConfirm: (date) {
-                        _currentActivity.date = date;
-                        _dateTextController.text = date.toStringSlashed();
-                      },
-                      currentTime: DateTime.now(),
-                      locale: LocaleType.it
-                    );
-                  },
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  child: InputButton(
+                    text: AppLocalizations.of(context).translate("date") + "*",
+                    controller: _dateTextController,
+                    onPressed: () {
+                      DatePicker.showDatePicker(
+                          context,
+                          showTitleActions: true,
+                          minTime: DateTime(2000, 1, 1),
+                          maxTime: DateTime.now(),
+                          onConfirm: (date) {
+                            _currentActivity.date = date;
+                            _dateTextController.text = date.toStringSlashed();
+                          },
+                          currentTime: DateTime.now(),
+                          locale: LocaleType.it
+                      );
+                    },
+                  ),
                 ),
               ),
             ],

@@ -209,7 +209,7 @@ class ModelFacade implements ErrorListener {
     if ( value != null && value.replaceAll(" ", "") != "" ) {
       return _parsingManager.parseCities(await _restManager.makeGetRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_SEARCH_CITIES, {"name": value}));
     }
-    return List<City>();
+    return [];
   }
 
   Future<List<TypeService>> suggestTypesService(String value) async {
@@ -325,7 +325,7 @@ class ModelFacade implements ErrorListener {
     }
     catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");
-      appState.addValue(Constants.STATE_SEARCH_SERVICE_RESULT, List<Service>());
+      appState.addValue(Constants.STATE_SEARCH_SERVICE_RESULT, []);
     }
   }
 
@@ -397,33 +397,50 @@ class ModelFacade implements ErrorListener {
     }
     catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");
-      appState.addValue(Constants.STATE_SEARCH_ACTIVITY_RESULT, List<Activity>());
+      appState.addValue(Constants.STATE_SEARCH_ACTIVITY_RESULT, []);
     }
   }
 
   void addService(Service service) async {
     service.club = _currentClub;
     try {
-      service = _parsingManager.parseService(await _restManager.makePostRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_ADD_SERVICE, service));
-      Club club = appState.getValue(Constants.STATE_CLUB);
-      club.quantityServices.currentYear ++;
-      club.quantityServices.all ++;
-      appState.updateValue(Constants.STATE_CLUB, club);
-      appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, service);
-      List<Service> services = appState.getAndDestroyValue(Constants.STATE_SEARCH_SERVICE_RESULT);
-      services.insert(0, service);
-      appState.addValue(Constants.STATE_SEARCH_SERVICE_RESULT, services);
+      String rawResult = await _restManager.makePostRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_ADD_SERVICE, service);
+      if ( rawResult.contains(Constants.RESPONSE_SERVICE_ALREADY_EXIST) ) {
+        appState.addValue(Constants.STATE_MESSAGE, "message_error_service_already_exists");
+      }
+      else if ( rawResult.contains(Constants.RESPONSE_UNABLE_TO_ADD_FOR_SOMEONE_ELSE) ) {
+        appState.addValue(Constants.STATE_MESSAGE, "message_error_unable_to_add_for_someone_else");
+      }
+      else {
+        service = _parsingManager.parseService(rawResult);
+        Club club = appState.getValue(Constants.STATE_CLUB);
+        club.quantityServices.currentYear ++;
+        club.quantityServices.all ++;
+        appState.updateValue(Constants.STATE_CLUB, club);
+        appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, service);
+        List<Service> services = appState.getAndDestroyValue(Constants.STATE_SEARCH_SERVICE_RESULT);
+        services.insert(0, service);
+        appState.addValue(Constants.STATE_SEARCH_SERVICE_RESULT, services);
+      }
     }
     catch (e) {
-      print(e);
       appState.addValue(Constants.STATE_MESSAGE, "message_error");
     }
   }
 
   void editService(Service service) async {
     try {
-      _parsingManager.parseService(await _restManager.makePostRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_EDIT_SERVICE, service));
-      appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, service);
+      String rawResult = await _restManager.makePostRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_EDIT_SERVICE, service);
+      if ( rawResult.contains(Constants.RESPONSE_SERVICE_ALREADY_EXIST) ) {
+        appState.addValue(Constants.STATE_MESSAGE, "message_error_service_already_exists");
+      }
+      else if ( rawResult.contains(Constants.RESPONSE_UNABLE_TO_EDIT_FOR_SOMEONE_ELSE) ) {
+        appState.addValue(Constants.STATE_MESSAGE, "message_error_unable_to_edit_for_someone_else");
+      }
+      else {
+        _parsingManager.parseService(rawResult);
+        appState.addValue(Constants.STATE_JUST_ADDED_SERVICE, service);
+      }
     }
     catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");
@@ -433,15 +450,24 @@ class ModelFacade implements ErrorListener {
   void addActivity(Activity activity) async {
     activity.club = _currentClub;
     try {
-      activity = _parsingManager.parseActivity(await _restManager.makePostRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_ADD_ACTIVITY, activity));
-      Club club = appState.getValue(Constants.STATE_CLUB);
-      club.quantityActivities.currentYear ++;
-      club.quantityActivities.all ++;
-      appState.updateValue(Constants.STATE_CLUB, club);
-      appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
-      List<Activity> activities = appState.getAndDestroyValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
-      activities.insert(0, activity);
-      appState.addValue(Constants.STATE_SEARCH_ACTIVITY_RESULT, activities);
+      String rawResult = await _restManager.makePostRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_ADD_ACTIVITY, activity);
+      if ( rawResult.contains(Constants.RESPONSE_ACTIVITY_ALREADY_EXIST) ) {
+        appState.addValue(Constants.STATE_MESSAGE, "message_error_activity_already_exists");
+      }
+      else if ( rawResult.contains(Constants.RESPONSE_UNABLE_TO_ADD_FOR_SOMEONE_ELSE) ) {
+        appState.addValue(Constants.STATE_MESSAGE, "message_error_unable_to_add_for_someone_else");
+      }
+      else {
+        activity = _parsingManager.parseActivity(rawResult);
+        Club club = appState.getValue(Constants.STATE_CLUB);
+        club.quantityActivities.currentYear ++;
+        club.quantityActivities.all ++;
+        appState.updateValue(Constants.STATE_CLUB, club);
+        appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
+        List<Activity> activities = appState.getAndDestroyValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
+        activities.insert(0, activity);
+        appState.addValue(Constants.STATE_SEARCH_ACTIVITY_RESULT, activities);
+      }
     }
     catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");
@@ -450,8 +476,17 @@ class ModelFacade implements ErrorListener {
 
   void editActivity(Activity activity) async {
     try {
-      _parsingManager.parseActivity(await _restManager.makePostRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_EDIT_ACTIVITY, activity));
-      appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
+      String rawResult = await _restManager.makePostRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_EDIT_ACTIVITY, activity);
+      if ( rawResult.contains(Constants.RESPONSE_ACTIVITY_ALREADY_EXIST) ) {
+        appState.addValue(Constants.STATE_MESSAGE, "message_error_activity_already_exists");
+      }
+      else if ( rawResult.contains(Constants.RESPONSE_UNABLE_TO_EDIT_FOR_SOMEONE_ELSE) ) {
+        appState.addValue(Constants.STATE_MESSAGE, "message_error_unable_to_edit_for_someone_else");
+      }
+      else {
+        _parsingManager.parseActivity(rawResult);
+        appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
+      }
     }
     catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");

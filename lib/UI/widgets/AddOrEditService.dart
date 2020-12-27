@@ -125,7 +125,7 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
               Flexible(
                 child: InputField(
                   labelText: AppLocalizations.of(context).translate("title") + "*",
-                  maxLength: 30,
+                  maxLength: 35,
                   controller: _inputFieldTitleController,
                   onChanged: (String value) {
                     _currentService.title = value;
@@ -133,23 +133,26 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
                 ),
               ),
               Flexible(
-                child: InputButton(
-                  text: AppLocalizations.of(context).translate("date") + "*",
-                  controller: _dateTextController,
-                  onPressed: () {
-                    DatePicker.showDatePicker(
-                      context,
-                      showTitleActions: true,
-                      minTime: DateTime(2000, 1, 1),
-                      maxTime: DateTime.now(),
-                      onConfirm: (date) {
-                        _currentService.date = date;
-                        _dateTextController.text = date.toStringSlashed();
-                      },
-                      currentTime: DateTime.now(),
-                      locale: LocaleType.it
-                    );
-                  },
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  child: InputButton(
+                    text: AppLocalizations.of(context).translate("date") + "*",
+                    controller: _dateTextController,
+                    onPressed: () {
+                      DatePicker.showDatePicker(
+                          context,
+                          showTitleActions: true,
+                          minTime: DateTime(2000, 1, 1),
+                          maxTime: DateTime.now(),
+                          onConfirm: (date) {
+                            _currentService.date = date;
+                            _dateTextController.text = date.toStringSlashed();
+                          },
+                          currentTime: DateTime.now(),
+                          locale: LocaleType.it
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
@@ -227,13 +230,16 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
           Row(
             children: [
               Flexible(
-                child: InputField(
-                  labelText: AppLocalizations.of(context).translate("duration"),
-                  controller: _inputFieldDurationController,
-                  keyboardType: TextInputType.number,
-                  onChanged: (String value) {
-                    _currentService.duration = int.parse(value);
-                  },
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  child: InputField(
+                    labelText: AppLocalizations.of(context).translate("duration"),
+                    controller: _inputFieldDurationController,
+                    keyboardType: TextInputType.number,
+                    onChanged: (String value) {
+                      _currentService.duration = int.parse(value);
+                    },
+                  ),
                 ),
               ),
               Flexible(

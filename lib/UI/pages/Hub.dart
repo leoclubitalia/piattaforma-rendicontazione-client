@@ -8,6 +8,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/MultipleTapButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -146,7 +147,7 @@ class _HubState extends GlobalState<Hub> {
                       children: [
                         StadiumButton(
                           icon: Icons.arrow_downward_rounded,
-                          minWidth: 150,
+                          minWidth: 140,
                           title: AppLocalizations.of(context).translate("downloads"),
                           onPressed: () async {
                             await launch("https://drive.google.com/drive/folders/1Vn2K1OMnXjA5ShE03nsfw4V7YxpElIUf");
@@ -154,7 +155,7 @@ class _HubState extends GlobalState<Hub> {
                         ),
                         StadiumButton(
                           icon: Icons.star_rounded,
-                          minWidth: 150,
+                          minWidth: 140,
                           title: AppLocalizations.of(context).translate("resources"),
                           onPressed: () async {
                             await launch("https://www.leoclub.it/risorse-soci/");
@@ -192,6 +193,14 @@ class _HubState extends GlobalState<Hub> {
                             color: Colors.grey,
                           ),
                         ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
+                      child: Text(
+                          "v" + Constants.APP_VERSION,
+                          textAlign: TextAlign.center,
+                          style: LeoParagraphStyle()
                       ),
                     ),
                   ],

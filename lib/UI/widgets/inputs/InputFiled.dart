@@ -22,7 +22,7 @@ class InputField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(5),
       child: TextField(
-        maxLength: null,
+        maxLength: maxLength,
         obscureText: isPassword,
         textAlign: this.textAlign == null ? TextAlign.left : this.textAlign,
         maxLines: multiline != null && multiline == true ? null : 1,

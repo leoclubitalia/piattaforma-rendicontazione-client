@@ -86,5 +86,10 @@
   "downloads": "downloads",
   "edit": "edit",
   "info_edit_activity": "Here you can edit the selected activity!\n\nHappy editing! \uD83D\uDE01",
-  "info_edit_service": "Here you can ediit the selected service!\n\nHappy editing! \uD83D\uDE01"
+  "info_edit_service": "Here you can edit the selected service!\n\nHappy editing! \uD83D\uDE01",
+  "message_error_service_already_exists": "This service already exists!\nRemember there cannot be 2 services with the same title and same date!",
+  "message_error_activity_already_exists": "This activity already exists!\nRemember there cannot be 2 activities with the same title and same date!",
+  "message_error_unable_to_add_for_someone_else": "If you get this error you are blowing everything!",
+  "message_error_unable_to_edit_for_someone_else": "If you get this error you are blowing everything!"
+
 }

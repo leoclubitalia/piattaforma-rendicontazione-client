@@ -1,4 +1,5 @@
 class Constants {
+  static final String APP_VERSION = "0.1.2";
   static final String ADDRESS_CLIENT = "portaleo.leoclub.it";
   static final String ADDRESS_RENDICONTATION_SERVER = "rendicontazione.leoclub.it:2096";
   static final String ADDRESS_AUTHENTICATION_SERVER = "rendicontazione.leoclub.it:8443";
@@ -53,6 +54,12 @@ class Constants {
 
   static final int AVERAGE_SERVICES_PER_CLUB = 15;
   static final int AVERAGE_ACTIVITIES_PER_CLUB = 17;
+
+  static final String RESPONSE_SERVICE_ALREADY_EXIST = "SERVICE_ALREADY_EXIST";
+  static final String RESPONSE_ACTIVITY_ALREADY_EXIST = "ACTIVITY_ALREADY_EXIST";
+  static final String RESPONSE_UNABLE_TO_ADD_FOR_SOMEONE_ELSE = "UNABLE_TO_ADD_FOR_SOMEONE_ELSE";
+  static final String RESPONSE_UNABLE_TO_EDIT_FOR_SOMEONE_ELSE = "UNABLE_TO_EDIT_FOR_SOMEONE_ELSE";
+
 
 
 }
