@@ -7,7 +7,7 @@ class Constants {
 
   static final String REALM = "rendicontation";
   static final String CLIENT_ID = "rendicontation-flutter";
-  static final String CLIENT_SECRET = "8134ee44-0322-4fde-adff-f47e58376c86";
+  static final String CLIENT_SECRET = "***";
   static final String LINK_FIRST_SETUP_PASSWORD = "https://" + ADDRESS_AUTHENTICATION_SERVER + "/auth/realms/" + REALM + "/protocol/openid-connect/auth?response_type=code&client_id=" + CLIENT_ID + "&redirect_uri=https://" + ADDRESS_CLIENT;
   static final String LINK_RESET_PASSWORD = "https://" + ADDRESS_AUTHENTICATION_SERVER + "/auth/realms/" + REALM + "/login-actions/reset-credentials?client_id=account";
   static final String REQUEST_LOGIN = "/auth/realms/" + REALM + "/protocol/openid-connect/token";
