@@ -12,6 +12,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Quantity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/Statistics.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
@@ -398,6 +399,32 @@ class ModelFacade implements ErrorListener {
     catch (e) {
       appState.addValue(Constants.STATE_MESSAGE, "message_error");
       appState.addValue(Constants.STATE_SEARCH_ACTIVITY_RESULT, []);
+    }
+  }
+
+  void getStatistics(Club club,
+                     District district,
+                     DateTime startDate,
+                     DateTime endDate) async {
+    Map<String, String> params = Map();
+    if ( club != null ) {
+      params["clubId"] = club.id.toString();
+    }
+    if ( district != null ) {
+      params["districtId"] = district.id.toString();
+    }
+    if ( startDate != null ) {
+      params["startDate"] = startDate.toStringUnslashed();
+    }
+    if ( endDate != null ) {
+      params["endDate"] = endDate.toStringUnslashed();
+    }
+    try {
+      Statistics statistics = _parsingManager.parseStatistics(await _restManager.makeGetRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_GET_STATISTICS, params));
+      appState.addValue(Constants.STATE_GET_STATISTICS_RESULT, statistics);
+    }
+    catch (e) {
+      appState.addValue(Constants.STATE_MESSAGE, "message_error");
     }
   }
 

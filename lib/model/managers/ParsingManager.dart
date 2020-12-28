@@ -8,6 +8,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/District.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Quantity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/SatisfacionDegree.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
+import 'package:RendicontationPlatformLeo_Client/model/objects/Statistics.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeActivity.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 
@@ -69,6 +70,10 @@ class ParsingManager {
 
   List<City> parseCities(String value) {
     return List<City>.from(json.decode(value).map((i) => City.fromJson(i)).toList());
+  }
+
+  Statistics parseStatistics(String value) {
+    return Statistics.fromJson(jsonDecode(value));
   }
 
 
