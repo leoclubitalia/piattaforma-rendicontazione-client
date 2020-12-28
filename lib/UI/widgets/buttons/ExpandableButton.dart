@@ -65,7 +65,7 @@ class _ExpandableLogInButton extends GlobalState<ExpandableLogInButton> with Tic
             child: Column(
               children: [
                 StadiumButton(
-                  icon: Icons.people,
+                  icon: Icons.people_rounded,
                   title: textOuterButton,
                   onPressed: () {
                     if (_bottomAnimationController.status == AnimationStatus.dismissed) {

@@ -6,6 +6,7 @@ class UIConstants {
   static final IconData ICON_ACTIVITY = Icons.import_contacts_rounded;
   static final IconData ICON_SERVICE = Icons.tour_rounded;
   static final IconData ICON_STATISTICS = Icons.show_chart_rounded;
+  static final IconData ICON_MEMBERS = Icons.people_rounded;
 
   // colors
   static final Color COLOR_LIGHT_NAV_BAR_BACKGROUND = Colors.amber;

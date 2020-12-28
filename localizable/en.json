@@ -92,5 +92,9 @@
   "message_error_unable_to_add_for_someone_else": "If you get this error you are blowing everything!",
   "message_error_unable_to_edit_for_someone_else": "If you get this error you are blowing everything!",
   "statistics": "statistics",
-  "thanks": "thanks!"
+  "thanks": "thanks!",
+  "people": "people",
+  "overall": "overall",
+  "per_area": "per area",
+  "per_type": "per type"
 }

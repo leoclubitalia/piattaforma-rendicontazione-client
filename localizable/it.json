@@ -91,5 +91,9 @@
   "message_error_unable_to_add_for_someone_else": "Se ti appare questo errore stai facendo scoppiare tutto!",
   "message_error_unable_to_edit_for_someone_else": "Se ti appare questo errore stai facendo scoppiare tutto!",
   "statistics": "statistiche",
-  "thanks": "grazie!"
+  "thanks": "grazie!",
+  "people": "persone",
+  "overall": "totali",
+  "per_area": "per area",
+  "per_type": "per tipo"
 }
