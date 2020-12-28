@@ -74,6 +74,8 @@ class _SearchStatistics extends GlobalState<SearchStatistics> {
 
   @override
   Widget build(BuildContext context) {
+    _startDateTextController.text = _startDate.toStringSlashed();
+    _endDateTextController.text = _endDate.toStringSlashed();
     return FocusWatcher(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -368,7 +370,7 @@ class _SearchStatistics extends GlobalState<SearchStatistics> {
                          Padding(
                            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
                            child: Icon(
-                             UIConstants.ICON_SERVICE,
+                             UIConstants.ICON_ACTIVITY,
                              size: 30,
                            ),
                          ),
