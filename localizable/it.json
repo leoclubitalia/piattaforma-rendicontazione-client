@@ -90,10 +90,15 @@
   "message_error_activity_already_exists": "Questa attività esiste già!\nRicorda non possono esistere 2 attività con lo stesso titolo e stessa data!",
   "message_error_unable_to_add_for_someone_else": "Se ti appare questo errore stai facendo scoppiare tutto!",
   "message_error_unable_to_edit_for_someone_else": "Se ti appare questo errore stai facendo scoppiare tutto!",
+  "message_error_unable_to_delete_for_someone_else": "Se ti appare questo errore stai facendo scoppiare tutto!",
   "statistics": "statistiche",
   "thanks": "grazie!",
   "people": "persone",
   "overall": "totali",
   "per_area": "per area",
-  "per_type": "per tipo"
+  "per_type": "per tipo",
+  "are_you_sure_delete_service": "Sei sicuro di voler rimuovere questo service?",
+  "are_you_sure_delete_activity": "Sei sicuro di voler rimuovere questa attività?",
+  "yes": "si",
+  "no": "no"
 }

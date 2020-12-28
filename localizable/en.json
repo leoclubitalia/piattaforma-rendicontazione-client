@@ -91,10 +91,15 @@
   "message_error_activity_already_exists": "This activity already exists!\nRemember there cannot be 2 activities with the same title and same date!",
   "message_error_unable_to_add_for_someone_else": "If you get this error you are blowing everything!",
   "message_error_unable_to_edit_for_someone_else": "If you get this error you are blowing everything!",
+  "message_error_unable_to_delete_for_someone_else": "If you get this error you are blowing everything!",
   "statistics": "statistics",
   "thanks": "thanks!",
   "people": "people",
   "overall": "overall",
   "per_area": "per area",
-  "per_type": "per type"
+  "per_type": "per type",
+  "are_you_sure_delete_service": "Are you sure you want to remove this service?",
+  "are_you_sure_delete_activity": "Are you sure you want to remove this activity?",
+  "yes": "yes",
+  "no": "no"
 }

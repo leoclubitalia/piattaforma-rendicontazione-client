@@ -104,6 +104,10 @@ class _SearchService extends GlobalState<SearchService> {
     if ( _searchResult != null ) {
       _isSearching = false;
     }
+    if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_DELETED_SERVICE) ) {
+      _searchResult.remove(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_DELETED_SERVICE));
+      refreshTable();
+    }
   }
 
   @override
@@ -560,6 +564,19 @@ class _SearchService extends GlobalState<SearchService> {
     setState(() {
       _searchResult = null;
       _isSearching = true;
+    });
+  }
+
+  void refreshTable() { // Isn't good, I know it
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        _searchResult = null;
+      });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        setState(() {
+          _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_SERVICE_RESULT);
+        });
+      });
     });
   }
 

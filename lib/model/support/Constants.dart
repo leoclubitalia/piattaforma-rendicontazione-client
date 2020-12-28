@@ -1,7 +1,7 @@
 class Constants {
-  static final String APP_VERSION = "0.1.2";
+  static final String APP_VERSION = "0.2.0";
   static final String ADDRESS_CLIENT = "portaleo.leoclub.it";
-  static final String ADDRESS_RENDICONTATION_SERVER = "localhost:2096";
+  static final String ADDRESS_RENDICONTATION_SERVER = "rendicontazione.leoclub.it:2096";
   static final String ADDRESS_AUTHENTICATION_SERVER = "rendicontazione.leoclub.it:8443";
   static final String REQUEST_DEFAULT_PAGE_SIZE = "30";
 
@@ -31,6 +31,9 @@ class Constants {
   static final String REQUEST_ADD_ACTIVITY = "/activities";
   static final String REQUEST_EDIT_SERVICE = "/services/edit";
   static final String REQUEST_EDIT_ACTIVITY = "/activities/edit";
+  static final String REQUEST_GET_STATISTICS = "/statistics/counters/advanced";
+  static final String REQUEST_DELETE_SERVICE = "/services/delete";
+  static final String REQUEST_DELETE_ACTIVITY = "/activities/delete";
 
   static final String STATE_CLUB = "club";
   static final String STATE_ALL_SATISFACTION_DEGREES = "all_satisfaction_degrees";
@@ -46,6 +49,10 @@ class Constants {
   static final String STATE_JUST_ADDED_SERVICE = "just_added_service";
   static final String STATE_JUST_ADDED_ACTIVITY = "just_added_activity";
   static final String STATE_JUST_ADDED = "just_added";
+  static final String STATE_GET_STATISTICS_RESULT = "statistics_result";
+  static final String STATE_JUST_DELETED_SERVICE = "just_deleted_service";
+  static final String STATE_JUST_DELETED_ACTIVITY = "just_delete_activity";
+
 
   static final String STORAGE_REFRESH_TOKEN = "refresh_token";
   static final String STORAGE_EMAIL = "email";
@@ -59,6 +66,7 @@ class Constants {
   static final String RESPONSE_ACTIVITY_ALREADY_EXIST = "ACTIVITY_ALREADY_EXIST";
   static final String RESPONSE_UNABLE_TO_ADD_FOR_SOMEONE_ELSE = "UNABLE_TO_ADD_FOR_SOMEONE_ELSE";
   static final String RESPONSE_UNABLE_TO_EDIT_FOR_SOMEONE_ELSE = "UNABLE_TO_EDIT_FOR_SOMEONE_ELSE";
+  static final String RESPONSE_UNABLE_TO_DELETE_FOR_SOMEONE_ELSE = "UNABLE_TO_DELETE_FOR_SOMEONE_ELSE";
 
 
 

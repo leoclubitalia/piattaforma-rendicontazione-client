@@ -474,6 +474,24 @@ class ModelFacade implements ErrorListener {
     }
   }
 
+  void deleteService(Service service) async {
+    try {
+      Map<String, String> params = Map();
+      params["serviceId"] = service.id.toString();
+      String rawResult = await _restManager.makeDeleteRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_DELETE_SERVICE, params);
+      if ( rawResult.contains(Constants.RESPONSE_UNABLE_TO_DELETE_FOR_SOMEONE_ELSE) ) {
+        appState.addValue(Constants.STATE_MESSAGE, "message_error_unable_to_delete_for_someone_else");
+      }
+      else {
+        _parsingManager.parseService(rawResult);
+        appState.addValue(Constants.STATE_JUST_DELETED_SERVICE, service);
+      }
+    }
+    catch (e) {
+      appState.addValue(Constants.STATE_MESSAGE, "message_error");
+    }
+  }
+
   void addActivity(Activity activity) async {
     activity.club = _currentClub;
     try {
@@ -513,6 +531,24 @@ class ModelFacade implements ErrorListener {
       else {
         _parsingManager.parseActivity(rawResult);
         appState.addValue(Constants.STATE_JUST_ADDED_ACTIVITY, activity);
+      }
+    }
+    catch (e) {
+      appState.addValue(Constants.STATE_MESSAGE, "message_error");
+    }
+  }
+
+  void deleteActivity(Activity activity) async {
+    try {
+      Map<String, String> params = Map();
+      params["activityId"] = activity.id.toString();
+      String rawResult = await _restManager.makeDeleteRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_DELETE_ACTIVITY, params);
+      if ( rawResult.contains(Constants.RESPONSE_UNABLE_TO_DELETE_FOR_SOMEONE_ELSE) ) {
+        appState.addValue(Constants.STATE_MESSAGE, "message_error_unable_to_delete_for_someone_else");
+      }
+      else {
+        _parsingManager.parseActivity(rawResult);
+        appState.addValue(Constants.STATE_JUST_DELETED_ACTIVITY, activity);
       }
     }
     catch (e) {

@@ -49,6 +49,10 @@ class _Activities extends GlobalState<Activities> {
       showMessageDialog(context, AppLocalizations.of(context).translate("thanks").capitalize);
       refreshTable();
     }
+    else if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_DELETED_ACTIVITY) ) {
+      _searchResult.remove(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_DELETED_ACTIVITY));
+      refreshTable();
+    }
     else {
       if ( _searchResult != null ) {
         _isSearching = false;

@@ -49,6 +49,10 @@ class _Services extends GlobalState<Services> {
       showMessageDialog(context, AppLocalizations.of(context).translate("thanks").capitalize);
       refreshTable();
     }
+    else if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_DELETED_SERVICE) ) {
+      _searchResult.remove(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_DELETED_SERVICE));
+      refreshTable();
+    }
     else {
       if ( _searchResult != null ) {
         _isSearching = false;

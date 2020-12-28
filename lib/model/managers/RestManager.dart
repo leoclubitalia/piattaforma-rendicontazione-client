@@ -60,6 +60,12 @@ class RestManager {
               headers: headers,
             );
             break;
+          case "delete":
+            response = await put(
+              uri,
+              headers: headers,
+            );
+            break;
         }
         if ( delegate != null && errorOccurred ) {
           delegate.errorNetworkGone();
@@ -86,6 +92,10 @@ class RestManager {
 
   Future<String> makePutRequest(String serverAddress, String servicePath, [Map<String, String> value, TypeHeader type]) async {
     return _makeRequest(serverAddress, servicePath, "get", type, value: value); // this should be put but doesn't work with flutter web actually
+  }
+
+  Future<String> makeDeleteRequest(String serverAddress, String servicePath, [Map<String, String> value, TypeHeader type]) async {
+    return _makeRequest(serverAddress, servicePath, "get", type, value: value); // this should be delete but doesn't work with flutter web actually
   }
 
 

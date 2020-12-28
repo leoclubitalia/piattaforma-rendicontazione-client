@@ -151,6 +151,7 @@ class _Home extends GlobalState<Home> {
                   children: [
                     StadiumButton(
                       icon: UIConstants.ICON_SERVICE,
+                      minWidth: 140,
                       title: AppLocalizations.of(context).translate("service").capitalize,
                       onPressed: () {
                         Navigator.of(context).push(
@@ -164,6 +165,7 @@ class _Home extends GlobalState<Home> {
                     ),
                     StadiumButton(
                       icon: UIConstants.ICON_ACTIVITY,
+                      minWidth: 140,
                       title: AppLocalizations.of(context).translate("activity").capitalize,
                       onPressed: () {
                         Navigator.of(context).push(

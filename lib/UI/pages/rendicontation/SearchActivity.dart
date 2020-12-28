@@ -95,6 +95,10 @@ class _SearchActivity extends GlobalState<SearchActivity> {
     if ( _searchResult != null ) {
       _isSearching = false;
     }
+    if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_DELETED_ACTIVITY) ) {
+      _searchResult.remove(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_DELETED_ACTIVITY));
+      refreshTable();
+    }
   }
 
   @override
@@ -468,6 +472,20 @@ class _SearchActivity extends GlobalState<SearchActivity> {
     setState(() {
       _searchResult = null;
       _isSearching = true;
+    });
+  }
+
+  void refreshTable() { // Isn't good, I know it
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        _searchResult = null;
+      });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        setState(() {
+          print("ref");
+          _searchResult = ModelFacade.sharedInstance.appState.getValue(Constants.STATE_SEARCH_ACTIVITY_RESULT);
+        });
+      });
     });
   }
 
