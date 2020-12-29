@@ -32,7 +32,7 @@
   "quantity_served_people": "served people",
   "district": "district",
   "city": "city",
-  "type_service": "type",
+  "type_service": "extra",
   "competence_area": "area",
   "no_results": "Oops... no results!",
   "made_in_date": "Carried out in",
@@ -43,7 +43,7 @@
   "money_or_material_collected": "money or material collected",
   "advanced": "advanced",
   "advanced_search": "Advanced Search",
-  "types_service": "Types service",
+  "types_service": "Extra",
   "message_error": "Oops... something went wrong!",
   "type_activity": "type",
   "yes": "yes",
@@ -101,5 +101,6 @@
   "are_you_sure_delete_service": "Are you sure you want to remove this service?",
   "are_you_sure_delete_activity": "Are you sure you want to remove this activity?",
   "yes": "yes",
-  "no": "no"
+  "no": "no",
+  "not_calculable": "not calculable"
 }

@@ -201,7 +201,7 @@ class _AddOrEditActivity extends GlobalState<AddOrEditActivity> {
                     itemCount: _allTypes.length,
                     itemBuilder: (context, index) {
                       return CircularCheckBoxTitle(
-                        title: _allTypes[index].name,
+                        title: _allTypes[index].name.capitalize,
                         value: _allTypes[index].selected,
                         onChanged: (bool x) {
                           setState(() {

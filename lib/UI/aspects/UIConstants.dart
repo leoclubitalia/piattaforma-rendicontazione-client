@@ -34,7 +34,7 @@ class UIConstants {
   static final String NOT_DEFINED_TEXT = "n/a";
 
   // values
-  static final int WIDTH_SMALL_DEVICE = 450;
+  static final int WIDTH_SMALL_DEVICE = 512;
 
 
 }

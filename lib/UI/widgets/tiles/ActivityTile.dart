@@ -325,7 +325,7 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          activity.title,
+          activity.title.capitalize,
           style: TextStyle(
             fontSize: 19,
           ),

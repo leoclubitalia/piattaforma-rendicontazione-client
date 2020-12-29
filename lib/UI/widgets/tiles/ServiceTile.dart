@@ -310,7 +310,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          service.title,
+          service.title.capitalize,
           style: TextStyle(
             fontSize: 19,
           ),
@@ -487,7 +487,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
     return Column (
       children: [
         Container(
-          width: 143,
+          width: 220,
           child: RichText(
             textAlign: alignement,
             text: TextSpan(
@@ -502,7 +502,10 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                 ),
                 TextSpan(text: ": "),
                 TextSpan(
-                  text: service.quantityServedPeople == null ? UIConstants.NOT_DEFINED_TEXT : service.quantityServedPeople.toString(),
+                  text: service.quantityServedPeople == null ?
+                        UIConstants.NOT_DEFINED_TEXT :
+                        service.quantityServedPeople == -1 ?
+                        AppLocalizations.of(context).translate("not_calculable").capitalize : service.quantityServedPeople.toString(),
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                   ),
@@ -517,7 +520,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
           padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
         ),
         Container(
-          width: 143,
+          width: 220,
           child: RichText(
             textAlign: alignement,
             text: TextSpan(
@@ -532,7 +535,10 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
                 ),
                 TextSpan(text: ": "),
                 TextSpan(
-                  text: service.quantityParticipants == null ? UIConstants.NOT_DEFINED_TEXT : service.quantityParticipants.toString(),
+                  text: service.quantityParticipants == null ?
+                        UIConstants.NOT_DEFINED_TEXT :
+                        service.quantityParticipants == -1 ?
+                        AppLocalizations.of(context).translate("not_calculable").capitalize : service.quantityParticipants.toString(),
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                   ),

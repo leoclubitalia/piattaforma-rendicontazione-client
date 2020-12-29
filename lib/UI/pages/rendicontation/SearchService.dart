@@ -1,6 +1,7 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/CircularCheckBoxTitle.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/RoundedDialog.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputAutocomplete.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputButton.dart';
@@ -17,6 +18,7 @@ import 'package:RendicontationPlatformLeo_Client/model/objects/Service.dart';
 import 'package:RendicontationPlatformLeo_Client/model/objects/TypeService.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/DateFormatter.dart';
+import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_focus_watcher/flutter_focus_watcher.dart';
@@ -45,6 +47,8 @@ class _SearchService extends GlobalState<SearchService> {
   Club _club;
   DateTime _startDate = DateTime(2000, 1, 1);
   DateTime _endDate = DateTime.now();
+  bool _participants_not_calculable = false;
+  bool _served_people_not_calculable = false;
 
   List<SatisfactionDegree> _satisfactionDegrees;
   List<District> _districts;
@@ -293,16 +297,19 @@ class _SearchService extends GlobalState<SearchService> {
                     ),
                   ),
                   Flexible(
-                    child: InputAutocomplete(
-                      labelText: AppLocalizations.of(context).translate("competence_area"),
-                      controller: _autocompleteCompetenceAreaController,
-                      onSuggestion: (String pattern) async {
-                        return await ModelFacade.sharedInstance.suggestAreas(pattern);
-                      },
-                      onSelect: (suggestion) {
-                        _autocompleteCompetenceAreaController.text = suggestion.toString();
-                        _area = suggestion;
-                      },
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                      child: InputAutocomplete(
+                        labelText: AppLocalizations.of(context).translate("competence_area"),
+                        controller: _autocompleteCompetenceAreaController,
+                        onSuggestion: (String pattern) async {
+                          return await ModelFacade.sharedInstance.suggestAreas(pattern);
+                        },
+                        onSelect: (suggestion) {
+                          _autocompleteCompetenceAreaController.text = suggestion.toString();
+                          _area = suggestion;
+                        },
+                      ),
                     ),
                   ),
                 ],
@@ -354,33 +361,73 @@ class _SearchService extends GlobalState<SearchService> {
               Row(
                 children: [
                   Flexible(
-                    child: InputField(
-                      labelText: AppLocalizations.of(context).translate("quantity_participants"),
-                      controller: _inputFieldParticipantsController,
-                      keyboardType: TextInputType.number,
-                      onChanged: (String value) {
-                        if ( value == null || value == "" ) {
-                          _quantityParticipants = null;
-                        }
-                        else {
-                          _quantityParticipants = int.parse(value);
-                        }
-                      },
+                    child: Column(
+                      children: [
+                        InputField(
+                          labelText: AppLocalizations.of(context).translate("quantity_participants"),
+                          controller: _inputFieldParticipantsController,
+                          enabled: !_participants_not_calculable,
+                          keyboardType: TextInputType.number,
+                          onChanged: (String value) {
+                            if ( value == null || value == "" ) {
+                              _quantityParticipants = null;
+                            }
+                            else {
+                              _quantityParticipants = int.parse(value);
+                            }
+                          },
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(3, 0, 0, 0),
+                          child: CircularCheckBoxTitle(
+                            title: AppLocalizations.of(context).translate("not_calculable").capitalize,
+                            value: _participants_not_calculable,
+                            onChanged: (bool x) {
+                              setState(() {
+                                _participants_not_calculable = x;
+                                if ( !_participants_not_calculable ) {
+                                  _inputFieldParticipantsController.text = "";
+                                }
+                              });
+                            }
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Flexible(
-                    child: InputField(
-                      labelText: AppLocalizations.of(context).translate("duration"),
-                      controller: _inputFieldDurationController,
-                      keyboardType: TextInputType.number,
-                      onChanged: (String value) {
-                        if ( value == null || value == "" ) {
-                          _duration = null;
-                        }
-                        else {
-                          _duration = int.parse(value);
-                        }
-                      },
+                    child: Column(
+                      children: [
+                        InputField(
+                          labelText: AppLocalizations.of(context).translate("quantity_served_people"),
+                          controller: _inputFieldServedPeopleController,
+                          enabled: !_served_people_not_calculable,
+                          keyboardType: TextInputType.number,
+                          onChanged: (String value) {
+                            if ( value == null || value == "" ) {
+                              _quantityServedPeople = null;
+                            }
+                            else {
+                              _quantityServedPeople = int.parse(value);
+                            }
+                          },
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(3, 0, 0, 0),
+                          child: CircularCheckBoxTitle(
+                            title: AppLocalizations.of(context).translate("not_calculable").capitalize,
+                            value: _served_people_not_calculable,
+                            onChanged: (bool x) {
+                              setState(() {
+                                _served_people_not_calculable = x;
+                                if ( !_served_people_not_calculable ) {
+                                  _inputFieldServedPeopleController.text = "";
+                                }
+                              });
+                            }
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -420,15 +467,15 @@ class _SearchService extends GlobalState<SearchService> {
                   ),
                   Flexible(
                     child: InputField(
-                      labelText: AppLocalizations.of(context).translate("quantity_served_people"),
-                      controller: _inputFieldServedPeopleController,
+                      labelText: AppLocalizations.of(context).translate("duration"),
+                      controller: _inputFieldDurationController,
                       keyboardType: TextInputType.number,
                       onChanged: (String value) {
                         if ( value == null || value == "" ) {
-                          _quantityServedPeople = null;
+                          _duration = null;
                         }
                         else {
-                          _quantityServedPeople = int.parse(value);
+                          _duration = int.parse(value);
                         }
                       },
                     ),
@@ -453,17 +500,20 @@ class _SearchService extends GlobalState<SearchService> {
                     ),
                   ),
                   Flexible(
-                    child: InputAutocomplete(
-                      labelText: AppLocalizations.of(context).translate("type_service"),
-                      controller: _autocompleteTypeServiceController,
-                      typeable: false,
-                      onSuggestion: (String pattern) async {
-                        return await ModelFacade.sharedInstance.suggestTypesService(pattern);
-                      },
-                      onSelect: (suggestion) {
-                        _autocompleteTypeServiceController.text = suggestion.toString();
-                        _type = suggestion;
-                      },
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                      child: InputAutocomplete(
+                        labelText: AppLocalizations.of(context).translate("type_service"),
+                        controller: _autocompleteTypeServiceController,
+                        typeable: false,
+                        onSuggestion: (String pattern) async {
+                          return await ModelFacade.sharedInstance.suggestTypesService(pattern);
+                        },
+                        onSelect: (suggestion) {
+                          _autocompleteTypeServiceController.text = suggestion.toString();
+                          _type = suggestion;
+                        },
+                      ),
                     ),
                   ),
                 ],
@@ -480,12 +530,15 @@ class _SearchService extends GlobalState<SearchService> {
                       },
                     ),
                   ),
-                  CircularIconButton(
-                    onPressed: () async {
-                      Navigator.pop(context);
-                      loadSearch();
-                    },
-                    icon: Icons.search_rounded,
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                    child: CircularIconButton(
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        loadSearch();
+                      },
+                      icon: Icons.search_rounded,
+                    ),
                   ),
                 ],
               ),
@@ -559,6 +612,12 @@ class _SearchService extends GlobalState<SearchService> {
     }
     if ( _autocompleteCompetenceAreaController.text == null || _autocompleteCompetenceAreaController.text == "" ) {
       _area = null;
+    }
+    if ( _participants_not_calculable ) {
+      _quantityParticipants = -1;
+    }
+    if ( _served_people_not_calculable ) {
+      _quantityServedPeople = -1;
     }
     ModelFacade.sharedInstance.searchServices(_title, _otherAssociations, _quantityParticipants, _duration, _moneyOrMaterialCollected, _quantityServedPeople, _district, _satisfactionDegree == _allDegrees ? null : _satisfactionDegree, _city, _type, _area, _club, _startDate, _endDate, _currentPage);
     setState(() {

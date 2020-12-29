@@ -31,7 +31,7 @@
   "quantity_served_people": "persone servite",
   "district": "distretto",
   "city": "città",
-  "type_service": "tipo",
+  "type_service": "extra",
   "competence_area": "area",
   "no_results": "Oops... nessun risultato!",
   "made_in_date": "Svolto il",
@@ -42,7 +42,7 @@
   "money_or_material_collected": "denaro o materiale raccolto",
   "advanced": "avanzata",
   "advanced_search": "Ricerca avanzata",
-  "types_service": "Tipologia di service",
+  "types_service": "Extra",
   "message_error": "Oops... qualcosa è andato storto!",
   "type_activity": "tipo",
   "yes": "si",
@@ -100,5 +100,6 @@
   "are_you_sure_delete_service": "Sei sicuro di voler rimuovere questo service?",
   "are_you_sure_delete_activity": "Sei sicuro di voler rimuovere questa attività?",
   "yes": "si",
-  "no": "no"
+  "no": "no",
+  "not_calculable": "non calcolabile"
 }

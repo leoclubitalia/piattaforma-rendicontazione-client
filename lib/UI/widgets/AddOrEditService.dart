@@ -32,6 +32,8 @@ class AddOrEditService extends StatefulWidget {
 
 class _AddOrEditService extends GlobalState<AddOrEditService> {
   Service _currentService = Service.newCreation();
+  bool _participants_not_calculable = false;
+  bool _served_people_not_calculable = false;
   bool _editing = false;
 
   TextEditingController _dateTextController = TextEditingController();
@@ -206,23 +208,67 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
           Row(
             children: [
               Flexible(
-                child: InputField(
-                  labelText: AppLocalizations.of(context).translate("quantity_participants"),
-                  controller: _inputFieldParticipantsController,
-                  keyboardType: TextInputType.number,
-                  onChanged: (String value) {
-                    _currentService.quantityParticipants = int.parse(value);
-                  },
-                ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InputField(
+                        labelText: AppLocalizations.of(context).translate("quantity_served_people"),
+                        controller: _inputFieldServedPeopleController,
+                        enabled: !_served_people_not_calculable,
+                        keyboardType: TextInputType.number,
+                        onChanged: (String value) {
+                          _currentService.quantityServedPeople = int.parse(value);
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(3, 0, 0, 0),
+                        child: CircularCheckBoxTitle(
+                            title: AppLocalizations.of(context).translate("not_calculable").capitalize,
+                            value: _served_people_not_calculable,
+                            onChanged: (bool x) {
+                              setState(() {
+                                _served_people_not_calculable = !_served_people_not_calculable;
+                                if ( !_served_people_not_calculable ) {
+                                  _inputFieldServedPeopleController.text = "";
+                                }
+                              });
+                            }
+                        ),
+                      ),
+                    ],
+                  ),
               ),
               Flexible(
-                child: InputField(
-                  labelText: AppLocalizations.of(context).translate("quantity_served_people"),
-                  controller: _inputFieldServedPeopleController,
-                  keyboardType: TextInputType.number,
-                  onChanged: (String value) {
-                    _currentService.quantityServedPeople = int.parse(value);
-                  },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InputField(
+                      labelText: AppLocalizations.of(context).translate("quantity_participants"),
+                      enabled: !_participants_not_calculable,
+                      controller: _inputFieldParticipantsController,
+                      keyboardType: TextInputType.number,
+                      onChanged: (String value) {
+                        _currentService.quantityParticipants = int.parse(value);
+                      },
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(3, 0, 0, 0),
+                      child: CircularCheckBoxTitle(
+                        title: AppLocalizations.of(context).translate("not_calculable").capitalize,
+                        value: _participants_not_calculable,
+                        onChanged: (bool x) {
+                          setState(() {
+                            _participants_not_calculable = !_participants_not_calculable;
+                            if ( !_participants_not_calculable ) {
+                              _inputFieldParticipantsController.text = "";
+                            }
+                          });
+                        }
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -278,17 +324,17 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
                         itemCount: _allAreas.length,
                         itemBuilder: (context, index) {
                           return CircularCheckBoxTitle(
-                              title: _allAreas[index].name,
-                              value: _allAreas[index].selected,
+                              title: _allAreas[_allAreas.length - index - 1].name.capitalize,
+                              value: _allAreas[_allAreas.length - index - 1].selected,
                               onChanged: (bool x) {
                                 setState(() {
-                                  _allAreas[index].selected = !_allAreas[index].selected;
-                                  if ( _allAreas[index].selected ) {
-                                    _currentService.competenceAreasService.add(_allAreas[index]);
+                                  _allAreas[_allAreas.length - index - 1].selected = !_allAreas[_allAreas.length - index - 1].selected;
+                                  if ( _allAreas[_allAreas.length - index - 1].selected ) {
+                                    _currentService.competenceAreasService.add(_allAreas[_allAreas.length - index - 1]);
                                   }
                                   else {
-                                    if ( _currentService.competenceAreasService.contains(_allAreas[index]) ) {
-                                      _currentService.competenceAreasService.remove(_allAreas[index]);
+                                    if ( _currentService.competenceAreasService.contains(_allAreas[_allAreas.length - index - 1]) ) {
+                                      _currentService.competenceAreasService.remove(_allAreas[_allAreas.length - index - 1]);
                                     }
                                   }
                                 });
@@ -334,7 +380,7 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
                     itemCount: _allTypes.length,
                     itemBuilder: (context, index) {
                       return CircularCheckBoxTitle(
-                        title: _allTypes[index].name,
+                        title: _allTypes[index].name.capitalize,
                         value: _allTypes[index].selected,
                         onChanged: (bool x) {
                           setState(() {
@@ -402,6 +448,12 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
                       showErrorDialog(context, message);
                     }
                     else {
+                      if ( _participants_not_calculable ) {
+                        _currentService.quantityParticipants = -1;
+                      }
+                      if ( _served_people_not_calculable ) {
+                        _currentService.quantityServedPeople = -1;
+                      }
                       if ( _editing ) {
                         ModelFacade.sharedInstance.editService(_currentService);
                       }
