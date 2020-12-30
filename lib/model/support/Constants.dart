@@ -53,7 +53,6 @@ class Constants {
   static final String STATE_JUST_DELETED_SERVICE = "just_deleted_service";
   static final String STATE_JUST_DELETED_ACTIVITY = "just_delete_activity";
 
-
   static final String STORAGE_REFRESH_TOKEN = "refresh_token";
   static final String STORAGE_EMAIL = "email";
 
@@ -67,7 +66,6 @@ class Constants {
   static final String RESPONSE_UNABLE_TO_ADD_FOR_SOMEONE_ELSE = "UNABLE_TO_ADD_FOR_SOMEONE_ELSE";
   static final String RESPONSE_UNABLE_TO_EDIT_FOR_SOMEONE_ELSE = "UNABLE_TO_EDIT_FOR_SOMEONE_ELSE";
   static final String RESPONSE_UNABLE_TO_DELETE_FOR_SOMEONE_ELSE = "UNABLE_TO_DELETE_FOR_SOMEONE_ELSE";
-
 
 
 }

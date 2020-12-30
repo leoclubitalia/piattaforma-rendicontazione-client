@@ -112,6 +112,13 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
       _allSatisfactionDegrees = (ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES) as List<SatisfactionDegree>).deepClone();
       _allTypes = (ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_TYPE_SERVICE) as List<TypeService>).deepClone();
       _allAreas = (ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_AREAS) as List<CompetenceArea>).deepClone();
+      for ( int i = 0; i < _allAreas.length; i ++ ) {
+        if ( _allAreas[i].id == 1 ) {
+          CompetenceArea area = _allAreas.removeAt(i);
+          _allAreas.add(area);
+          break;
+        }
+      }
       _firstLoad = false;
     }
     Service justAdded = ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_ADDED_SERVICE);
@@ -335,7 +342,7 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
                     ),
                     Container(
                       height: 50,
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: (MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width/100*20)) - 70,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: _allAreas.length,
@@ -391,7 +398,7 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
                 ),
                 Container(
                   height: 50,
-                  width: MediaQuery.of(context).size.width * 0.7,
+                  width: (MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width/100*20)) - 70,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: _allTypes.length,

@@ -102,5 +102,6 @@
   "are_you_sure_delete_activity": "Are you sure you want to remove this activity?",
   "yes": "yes",
   "no": "no",
-  "not_calculable": "not calculable"
+  "not_calculable": "not calculable",
+  "deleting": "Deleting..."
 }

@@ -24,6 +24,9 @@ class CircularCheckBoxTitle extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.start,
+          style: TextStyle(
+            fontSize: 11,
+          ),
         ),
       ],
     );

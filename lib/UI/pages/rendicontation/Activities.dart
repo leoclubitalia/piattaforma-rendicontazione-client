@@ -50,6 +50,7 @@ class _Activities extends GlobalState<Activities> {
       refreshTable();
     }
     else if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_DELETED_ACTIVITY) ) {
+      Navigator.pop(context);
       _searchResult.remove(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_DELETED_ACTIVITY));
       refreshTable();
     }

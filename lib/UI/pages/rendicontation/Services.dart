@@ -50,6 +50,7 @@ class _Services extends GlobalState<Services> {
       refreshTable();
     }
     else if ( ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_JUST_DELETED_SERVICE) ) {
+      Navigator.pop(context);
       _searchResult.remove(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_JUST_DELETED_SERVICE));
       refreshTable();
     }

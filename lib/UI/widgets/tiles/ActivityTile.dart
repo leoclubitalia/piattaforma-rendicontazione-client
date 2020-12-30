@@ -294,6 +294,21 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
                           icon: Icons.check,
                           onPressed: () {
                             Navigator.pop(context);
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) => RoundedDialog(
+                                title: Text(
+                                  AppLocalizations.of(context).translate("deleting").capitalize,
+                                  textAlign: TextAlign.center,
+                                ),
+                                body: Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).buttonColor),
+                                  ),
+                                ),
+                              ),
+                            );
                             ModelFacade.sharedInstance.deleteActivity(activity);
                           },
                         ),
