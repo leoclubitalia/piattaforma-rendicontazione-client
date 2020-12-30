@@ -7,6 +7,7 @@ class InputField extends StatelessWidget {
   final bool multiline;
   final bool enabled;
   final bool isPassword;
+  final bool isUsername;
   final Function onChanged;
   final Function onSubmit;
   final Function onTap;
@@ -16,7 +17,7 @@ class InputField extends StatelessWidget {
   final TextInputType keyboardType;
 
 
-  const InputField({Key key, this.labelText, this.controller, this.onChanged, this.onSubmit, this.onTap, this.keyboardType, this.multiline, this.textAlign, this.maxLength, this.isPassword = false, this.enabled = true}) : super(key: key);
+  const InputField({Key key, this.labelText, this.controller, this.onChanged, this.onSubmit, this.onTap, this.keyboardType, this.multiline, this.textAlign, this.maxLength, this.isPassword = false, this.isUsername = false, this.enabled = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

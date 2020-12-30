@@ -484,6 +484,10 @@ class ModelFacade implements ErrorListener {
       }
       else {
         _parsingManager.parseService(rawResult);
+        Club club = appState.getValue(Constants.STATE_CLUB);
+        club.quantityServices.currentYear --;
+        club.quantityServices.all --;
+        appState.updateValue(Constants.STATE_CLUB, club);
         appState.addValue(Constants.STATE_JUST_DELETED_SERVICE, service);
       }
     }
@@ -548,6 +552,10 @@ class ModelFacade implements ErrorListener {
       }
       else {
         _parsingManager.parseActivity(rawResult);
+        Club club = appState.getValue(Constants.STATE_CLUB);
+        club.quantityActivities.currentYear --;
+        club.quantityActivities.all --;
+        appState.updateValue(Constants.STATE_CLUB, club);
         appState.addValue(Constants.STATE_JUST_DELETED_ACTIVITY, activity);
       }
     }

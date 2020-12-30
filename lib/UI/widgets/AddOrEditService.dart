@@ -63,6 +63,50 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _dateTextController.text = _currentService.date.toStringSlashed();
+    if ( _editing ) {
+      _inputFieldTitleController.text = _currentService.title;
+      _inputFieldDescriptionController.text = _currentService.description;
+      _autocompleteCityController.text = _currentService.city.toString();
+      _autocompleteSatisfactionDegreeController.text = _currentService.satisfactionDegree.toString();
+      if ( _currentService.quantityParticipants != null ) {
+        if ( _currentService.quantityParticipants == -1 ) {
+          _currentService.quantityParticipants = null;
+          _participants_not_calculable = true;
+        }
+        else{
+          _inputFieldParticipantsController.text = _currentService.quantityParticipants.toString();
+        }
+      }
+      if ( _currentService.quantityServedPeople != null ) {
+        if ( _currentService.quantityServedPeople == -1 ) {
+          _currentService.quantityServedPeople = null;
+          _served_people_not_calculable = true;
+        }
+        else {
+          _inputFieldServedPeopleController.text = _currentService.quantityServedPeople.toString();
+        }
+      }
+      if ( _currentService.duration != null ) {
+        _inputFieldDurationController.text = _currentService.duration.toString();
+      }
+      _inputFieldMoneyOrMaterialCollectedController.text = _currentService.moneyOrMaterialCollected;
+      for ( TypeService type in _allTypes ) {
+        if ( _currentService.typesService.contains(type) ) {
+          type.selected = true;
+        }
+      }
+      for ( CompetenceArea area in _allAreas ) {
+        if ( _currentService.competenceAreasService.contains(area) ) {
+          area.selected = true;
+        }
+      }
+    }
+  }
+
+  @override
   void refreshState() {
     if ( _firstLoad ) {
       _allSatisfactionDegrees = (ModelFacade.sharedInstance.appState.getValue(Constants.STATE_ALL_SATISFACTION_DEGREES) as List<SatisfactionDegree>).deepClone();
@@ -85,33 +129,6 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
 
   @override
   Widget build(BuildContext context) {
-    _dateTextController.text = _currentService.date.toStringSlashed();
-    if ( _editing ) {
-      _inputFieldTitleController.text = _currentService.title;
-      _inputFieldDescriptionController.text = _currentService.description;
-      _autocompleteCityController.text = _currentService.city.toString();
-      _autocompleteSatisfactionDegreeController.text = _currentService.satisfactionDegree.toString();
-      if ( _currentService.quantityParticipants != null ) {
-        _inputFieldParticipantsController.text = _currentService.quantityParticipants.toString();
-      }
-      if ( _currentService.quantityServedPeople != null ) {
-        _inputFieldServedPeopleController.text = _currentService.quantityServedPeople.toString();
-      }
-      if ( _currentService.duration != null ) {
-        _inputFieldDurationController.text = _currentService.duration.toString();
-      }
-      _inputFieldMoneyOrMaterialCollectedController.text = _currentService.moneyOrMaterialCollected;
-      for ( TypeService type in _allTypes ) {
-        if ( _currentService.typesService.contains(type) ) {
-          type.selected = true;
-        }
-      }
-      for ( CompetenceArea area in _allAreas ) {
-        if ( _currentService.competenceAreasService.contains(area) ) {
-          area.selected = true;
-        }
-      }
-    }
     return Container(
       width: MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.2,
       child: _processing ?
@@ -142,16 +159,16 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
                     controller: _dateTextController,
                     onPressed: () {
                       DatePicker.showDatePicker(
-                          context,
-                          showTitleActions: true,
-                          minTime: DateTime(2000, 1, 1),
-                          maxTime: DateTime.now(),
-                          onConfirm: (date) {
-                            _currentService.date = date;
-                            _dateTextController.text = date.toStringSlashed();
-                          },
-                          currentTime: DateTime.now(),
-                          locale: LocaleType.it
+                        context,
+                        showTitleActions: true,
+                        minTime: DateTime(2000, 1, 1),
+                        maxTime: DateTime.now(),
+                        onConfirm: (date) {
+                          _currentService.date = date;
+                          _dateTextController.text = date.toStringSlashed();
+                        },
+                        currentTime: DateTime.now(),
+                        locale: LocaleType.it
                       );
                     },
                   ),
@@ -224,16 +241,16 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(3, 0, 0, 0),
                         child: CircularCheckBoxTitle(
-                            title: AppLocalizations.of(context).translate("not_calculable").capitalize,
-                            value: _served_people_not_calculable,
-                            onChanged: (bool x) {
-                              setState(() {
-                                _served_people_not_calculable = !_served_people_not_calculable;
-                                if ( !_served_people_not_calculable ) {
-                                  _inputFieldServedPeopleController.text = "";
-                                }
-                              });
-                            }
+                          title: AppLocalizations.of(context).translate("not_calculable").capitalize,
+                          value: _served_people_not_calculable,
+                          onChanged: (bool x) {
+                            setState(() {
+                              _served_people_not_calculable = !_served_people_not_calculable;
+                              if ( !_served_people_not_calculable ) {
+                                _inputFieldServedPeopleController.text = "";
+                              }
+                            });
+                          }
                         ),
                       ),
                     ],
@@ -311,8 +328,8 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
                       child: Text(
                         AppLocalizations.of(context).translate("areas").capitalize + "*:",
                         style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                     ),
@@ -324,21 +341,21 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
                         itemCount: _allAreas.length,
                         itemBuilder: (context, index) {
                           return CircularCheckBoxTitle(
-                              title: _allAreas[_allAreas.length - index - 1].name.capitalize,
-                              value: _allAreas[_allAreas.length - index - 1].selected,
-                              onChanged: (bool x) {
-                                setState(() {
-                                  _allAreas[_allAreas.length - index - 1].selected = !_allAreas[_allAreas.length - index - 1].selected;
-                                  if ( _allAreas[_allAreas.length - index - 1].selected ) {
-                                    _currentService.competenceAreasService.add(_allAreas[_allAreas.length - index - 1]);
+                            title: _allAreas[index].name.capitalize,
+                            value: _allAreas[index].selected,
+                            onChanged: (bool x) {
+                              setState(() {
+                                _allAreas[index].selected = !_allAreas[index].selected;
+                                if ( _allAreas[index].selected ) {
+                                  _currentService.competenceAreasService.add(_allAreas[index]);
+                                }
+                                else {
+                                  if ( _currentService.competenceAreasService.contains(_allAreas[index]) ) {
+                                    _currentService.competenceAreasService.remove(_allAreas[index]);
                                   }
-                                  else {
-                                    if ( _currentService.competenceAreasService.contains(_allAreas[_allAreas.length - index - 1]) ) {
-                                      _currentService.competenceAreasService.remove(_allAreas[_allAreas.length - index - 1]);
-                                    }
-                                  }
-                                });
-                              }
+                                }
+                              });
+                            }
                           );
                         },
                       ),
@@ -490,11 +507,11 @@ class _AddOrEditService extends GlobalState<AddOrEditService> {
 
   void showErrorDialog(BuildContext context, String text) {
     showDialog(
-        context: context,
-        builder: (context) => MessageDialog(
-          titleText: AppLocalizations.of(context).translate("oops"),
-          bodyText: text,
-        ),
+      context: context,
+      builder: (context) => MessageDialog(
+        titleText: AppLocalizations.of(context).translate("oops"),
+        bodyText: text,
+      ),
     );
   }
 

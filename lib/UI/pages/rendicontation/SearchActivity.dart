@@ -190,7 +190,7 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Text(
-                        AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getValue(Constants.STATE_MESSAGE)),
+                        ModelFacade.sharedInstance.appState.existsValue(Constants.STATE_MESSAGE) ? AppLocalizations.of(context).translate(ModelFacade.sharedInstance.appState.getAndDestroyValue(Constants.STATE_MESSAGE)) : AppLocalizations.of(context).translate("no_results"),
                         style: LeoTitleStyle(),
                       ),
                     ) :

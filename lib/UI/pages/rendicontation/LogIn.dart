@@ -5,7 +5,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Credits
 import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Home.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Search.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/ExpandableButton.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/ExpandableLogInButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/MultipleTapButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/dialogs/MessageDialog.dart';

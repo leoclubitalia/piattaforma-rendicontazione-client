@@ -91,6 +91,7 @@ class _ExpandableLogInButton extends GlobalState<ExpandableLogInButton> with Tic
                   child: InputField(
                     labelText: AppLocalizations.of(context).translate("email"),
                     controller: _inputFieldEmailController,
+                    isUsername: true,
                   ),
                 ),
                 Container(
