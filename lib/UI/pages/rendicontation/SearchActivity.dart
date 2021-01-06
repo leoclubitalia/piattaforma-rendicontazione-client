@@ -285,17 +285,20 @@ class _SearchActivity extends GlobalState<SearchActivity> {
                     ),
                   ),
                   Flexible(
-                    child: InputAutocomplete(
-                      labelText: AppLocalizations.of(context).translate("type_activity"),
-                      controller: _autocompleteTypeActivityController,
-                      typeable: false,
-                      onSuggestion: (String pattern) async {
-                        return await ModelFacade.sharedInstance.suggestTypesActivity(pattern);
-                      },
-                      onSelect: (suggestion) {
-                        _autocompleteTypeActivityController.text = suggestion.toString();
-                        _type = suggestion;
-                      },
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                      child: InputAutocomplete(
+                        labelText: AppLocalizations.of(context).translate("type_activity"),
+                        controller: _autocompleteTypeActivityController,
+                        typeable: false,
+                        onSuggestion: (String pattern) async {
+                          return await ModelFacade.sharedInstance.suggestTypesActivity(pattern);
+                        },
+                        onSelect: (suggestion) {
+                          _autocompleteTypeActivityController.text = suggestion.toString();
+                          _type = suggestion;
+                        },
+                      ),
                     ),
                   ),
                 ],

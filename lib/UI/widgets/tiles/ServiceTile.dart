@@ -312,7 +312,7 @@ class _ServiceTile extends GlobalState<ServiceTile> with SingleTickerProviderSta
         Text(
           service.title.capitalize,
           style: TextStyle(
-            fontSize: 19,
+            fontSize: 17,
           ),
         ),
         Padding(

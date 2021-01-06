@@ -53,6 +53,10 @@ class ModelFacade implements ErrorListener {
     }
   }
 
+  Future<String> getLastEmailAccess() async {
+    return _persistentStorageManager.getValue(Constants.STORAGE_EMAIL);
+  }
+
   Future<bool> autoLogIn() async {
     if ( await _persistentStorageManager.existsValue(Constants.STORAGE_REFRESH_TOKEN) && await _persistentStorageManager.existsValue(Constants.STORAGE_EMAIL) ) {
       _authenticationData = AuthenticationData();
@@ -112,7 +116,6 @@ class ModelFacade implements ErrorListener {
       _authenticationData = _parsingManager.parseAuthenticationData(result);
       if ( _authenticationData.hasError() ) {
         _persistentStorageManager.removeValue(Constants.STORAGE_REFRESH_TOKEN);
-        _persistentStorageManager.removeValue(Constants.STORAGE_EMAIL);
         return false;
       }
       _restManager.token = _authenticationData.accessToken;

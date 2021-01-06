@@ -2,6 +2,7 @@ import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.d
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/inputs/InputFiled.dart';
+import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/extensions/StringCapitalization.dart';
@@ -45,6 +46,11 @@ class _ExpandableLogInButton extends GlobalState<ExpandableLogInButton> with Tic
     _bottomAnimationController.value = 0;
     _bottomAnimationController.addListener(() {
       setState(() {});
+    });
+    ModelFacade.sharedInstance.getLastEmailAccess().then((value) {
+      setState(() {
+        _inputFieldEmailController.text = value;
+      });
     });
   }
 

@@ -60,16 +60,22 @@ class _HubState extends GlobalState<Hub> {
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 5, 0, 30),
-                      child: Container(
-                        height: 230,
-                        child: MultipleTapButton(
-                          taps: 3,
-                          onTaps: () async {
-                            await launch("https://www.youtube.com/watch?v=UsyWQejtJ1o");
-                          },
-                          child: Image.asset(
-                            "images/logo.png",
-                            width: MediaQuery.of(context).size.width < 400 ? MediaQuery.of(context).size.width - 100 : 400,
+                      child: Semantics (
+                        enabled: true,
+                        label: Constants.APP_NAME,
+                        readOnly: true,
+                        hidden: false,
+                        child: Container(
+                          height: 230,
+                          child: MultipleTapButton(
+                            taps: 3,
+                            onTaps: () async {
+                              await launch("https://www.youtube.com/watch?v=UsyWQejtJ1o");
+                            },
+                            child: Image.asset(
+                              "images/logo.png",
+                              width: MediaQuery.of(context).size.width < 400 ? MediaQuery.of(context).size.width - 100 : 400,
+                            ),
                           ),
                         ),
                       ),

@@ -342,7 +342,7 @@ class _ActivityTile extends GlobalState<ActivityTile> with SingleTickerProviderS
         Text(
           activity.title.capitalize,
           style: TextStyle(
-            fontSize: 19,
+            fontSize: 17,
           ),
         ),
         Padding(

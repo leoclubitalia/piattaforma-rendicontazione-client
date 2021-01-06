@@ -32,7 +32,7 @@ class _SearchStatistics extends GlobalState<SearchStatistics> {
 
   List<District> _districts;
   List<Club> _clubs;
-  DateTime _startDate = DateTime(2000, 1, 1);
+  DateTime _startDate = getStartDateSocialYear();
   DateTime _endDate = DateTime.now();
 
   Statistics _searchResult;
@@ -437,6 +437,15 @@ class _SearchStatistics extends GlobalState<SearchStatistics> {
       _searchResult = null;
       _isSearching = true;
     });
+  }
+
+  static DateTime getStartDateSocialYear() {
+    DateTime currentDate = DateTime.now();
+    int year = currentDate.year;
+    if (currentDate.month < 7 ) {
+      year -= 1;
+    }
+    return DateTime(year, 6, 1);
   }
 
 
