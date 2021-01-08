@@ -119,6 +119,7 @@ class _ExpandableLogInButton extends GlobalState<ExpandableLogInButton> with Tic
                     padding: 0,
                     onPressed: () {
                       onSubmit(_inputFieldEmailController.text, _inputFieldPasswordController.text);
+                      _inputFieldPasswordController.text = "";
                     },
                   ),
                 ),
