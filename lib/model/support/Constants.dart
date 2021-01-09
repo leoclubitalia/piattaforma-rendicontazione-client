@@ -14,11 +14,11 @@ class Constants {
   static final String REQUEST_LOGIN = "/auth/realms/" + REALM + "/protocol/openid-connect/token";
   static final String REQUEST_LOGOUT = "/auth/realms/" + REALM + "/protocol/openid-connect/logout";
 
-  static final String REQUEST_INFO_CLUB = "/club/details";
+  static final String REQUEST_CLUB_INFO = "/club/details";
   static final String REQUEST_CLUB_QUANTITY_SERVICES = "/club/quantity_services_made";
   static final String REQUEST_CLUB_QUANTITY_ACTIVITIES = "/club/quantity_activities_made";
-  static final String REQUEST_UPDATE_QUANTITY_MEMBERS = "/club/update/quantity_current_members";
-  static final String REQUEST_UPDATE_QUANTITY_ASPIRANTS = "/club/update/quantity_aspirant_members";
+  static final String REQUEST_CLUB_EDIT_QUANTITY_MEMBERS = "/club/update/quantity_current_members";
+  static final String REQUEST_CLUB_EDIT_QUANTITY_ASPIRANTS = "/club/update/quantity_aspirant_members";
   static final String REQUEST_SEARCH_SERVICES_ADVANCED = "/search/service/advanced";
   static final String REQUEST_SEARCH_ACTIVITIES_ADVANCED = "/search/activity/advanced";
   static final String REQUEST_SEARCH_CITIES = "/search/city/by_name";
@@ -28,11 +28,11 @@ class Constants {
   static final String REQUEST_SEARCH_ALL_AREAS = "/search/competence_area/all";
   static final String REQUEST_SEARCH_ALL_CLUBS = "/search/club/all";
   static final String REQUEST_SEARCH_ALL_SATISFACTION_DEGREES = "/search/satisfaction_degree/all";
+  static final String REQUEST_GET_STATISTICS = "/statistics/counters/advanced";
   static final String REQUEST_ADD_SERVICE = "/services";
   static final String REQUEST_ADD_ACTIVITY = "/activities";
   static final String REQUEST_EDIT_SERVICE = "/services/edit";
   static final String REQUEST_EDIT_ACTIVITY = "/activities/edit";
-  static final String REQUEST_GET_STATISTICS = "/statistics/counters/advanced";
   static final String REQUEST_DELETE_SERVICE = "/services/delete";
   static final String REQUEST_DELETE_ACTIVITY = "/activities/delete";
 

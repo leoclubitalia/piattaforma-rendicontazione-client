@@ -146,7 +146,7 @@ class ModelFacade implements ErrorListener {
 
   void _loadInfoClub(String email) async {
     if ( !appState.existsValue(Constants.STATE_CLUB) ) {
-      _currentClub = _parsingManager.parseClub(await _restManager.makeGetRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_INFO_CLUB));
+      _currentClub = _parsingManager.parseClub(await _restManager.makeGetRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_CLUB_INFO));
       Quantity quantityServices = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_CLUB_QUANTITY_SERVICES, {"clubId": _currentClub.id.toString()}));
       _currentClub.quantityServices = quantityServices;
       Quantity quantityActivities = _parsingManager.parseQuantity(await _restManager.makeGetRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_CLUB_QUANTITY_ACTIVITIES, {"clubId": _currentClub.id.toString()}));
@@ -240,14 +240,14 @@ class ModelFacade implements ErrorListener {
     Map<String, String> params = Map();
     params["clubId"] = _currentClub.id.toString();
     params["newQuantity"] = value;
-    _restManager.makePutRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_UPDATE_QUANTITY_MEMBERS, params);
+    _restManager.makePutRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_CLUB_EDIT_QUANTITY_MEMBERS, params);
   }
 
   void updateQuantityAspirants(String value) async {
     Map<String, String> params = Map();
     params["clubId"] = _currentClub.id.toString();
     params["newQuantity"] = value;
-    _restManager.makePutRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_UPDATE_QUANTITY_ASPIRANTS, params);
+    _restManager.makePutRequest(Constants.ADDRESS_RENDICONTATION_SERVER, Constants.REQUEST_CLUB_EDIT_QUANTITY_ASPIRANTS, params);
   }
 
   void searchServices(String title,
