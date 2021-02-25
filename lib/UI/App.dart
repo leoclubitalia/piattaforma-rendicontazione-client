@@ -1,6 +1,6 @@
 import 'package:RendicontationPlatformLeo_Client/UI/aspects/UIConstants.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/Hub.dart';
+import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/LogIn.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +47,7 @@ class App extends StatelessWidget {
         accentColor: UIConstants.COLOR_DARK_ACCENT,
         splashColor: UIConstants.COLOR_DARK_INVERSE_PRIMARY,
       ),
-      home: Hub(),
+      home: LogIn(),
     );
   }
 

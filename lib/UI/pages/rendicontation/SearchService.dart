@@ -231,7 +231,7 @@ class _SearchService extends GlobalState<SearchService> {
                           },
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

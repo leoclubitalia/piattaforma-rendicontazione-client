@@ -1,5 +1,4 @@
 class Constants {
-  static final String APP_VERSION = "0.2.2";
   static final String APP_NAME = "PortaLeo";
   static final String ADDRESS_CLIENT = "portaleo.leoclub.it";
   static final String ADDRESS_RENDICONTATION_SERVER = "rendicontazione.leoclub.it:2096";

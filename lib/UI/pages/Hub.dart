@@ -2,12 +2,10 @@ import 'package:RendicontationPlatformLeo_Client/UI/aspects/LeoTextStyles.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/AppLocalizations.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/behaviors/GlobalState.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Credits.dart';
-import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/Home.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/pages/rendicontation/LogIn.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/RoundedAppBar.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/MultipleTapButton.dart';
 import 'package:RendicontationPlatformLeo_Client/UI/widgets/buttons/StadiumButton.dart';
-import 'package:RendicontationPlatformLeo_Client/model/ModelFacade.dart';
 import 'package:RendicontationPlatformLeo_Client/model/support/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -101,35 +99,14 @@ class _HubState extends GlobalState<Hub> {
                       icon: Icons.assessment_rounded,
                       minWidth: 190,
                       title: AppLocalizations.of(context).translate("rendicontation"),
-                      onPressed: () async {
-                        setState(() {
-                          _isLoading = true;
-                        });
-                        bool result = await ModelFacade.sharedInstance.autoLogIn();
-                        if ( result ) {
-                          setState(() {
-                            _isLoading = false;
-                          });
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                              opaque: false,
-                              transitionDuration: Duration(milliseconds: 700),
-                              pageBuilder: (BuildContext context, _, __) => Home(),
-                            ),
-                          );
-                        }
-                        else {
-                          setState(() {
-                            _isLoading = false;
-                          });
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                              opaque: false,
-                              transitionDuration: Duration(milliseconds: 700),
-                              pageBuilder: (BuildContext context, _, __) => LogIn(),
-                            ),
-                          );
-                        }
+                      onPressed: ()  {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            opaque: false,
+                            transitionDuration: Duration(milliseconds: 700),
+                            pageBuilder: (BuildContext context, _, __) => LogIn(),
+                          ),
+                        );
                       },
                     ),
                     StadiumButton(

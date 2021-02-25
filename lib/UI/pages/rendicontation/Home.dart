@@ -252,7 +252,10 @@ class _Home extends GlobalState<Home> {
                   ],
                 ),
               ),
-              Divider(),
+              Container(
+                width: 200,
+                child: Divider(),
+              ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Row(

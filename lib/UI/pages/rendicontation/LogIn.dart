@@ -29,6 +29,12 @@ class _LogInState extends GlobalState<LogIn> {
 
 
   @override
+  void initState() {
+    checkAutoLogIn();
+    super.initState();
+  }
+
+  @override
   void refreshState() {}
 
   @override
@@ -228,6 +234,27 @@ class _LogInState extends GlobalState<LogIn> {
         ],
       ),
     );
+  }
+
+  void checkAutoLogIn() async {
+    bool result = await ModelFacade.sharedInstance.autoLogIn();
+    if ( result ) {
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).push(
+        PageRouteBuilder(
+          opaque: false,
+          transitionDuration: Duration(milliseconds: 700),
+          pageBuilder: (BuildContext context, _, __) => Home(),
+        ),
+      );
+    }
+    else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
 
